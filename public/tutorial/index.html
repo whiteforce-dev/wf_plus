@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from zenix.dexignzone.com/xhtml/app-calender.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Feb 2023 07:12:23 GMT -->
+
+<head>
+	<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Zenix - Crypto Admin Dashboard" />
+	<meta property="og:title" content="Zenix - Crypto Admin Dashboard" />
+	<meta property="og:description" content="Zenix - Crypto Admin Dashboard" />
+	<meta property="og:image" content="page-error-404.html" />
+	<meta name="format-detection" content="telephone=no">
+	<title>White-Force Plus</title>
+	<!-- Favicon icon -->
+	<link rel="icon" type="image/png" sizes="16x16" href="asset/white-force-logo.png">
+
+	<link href="vendor/fullcalendar/css/main.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="sk-three-bounce">
+			<div class="sk-child sk-bounce1"></div>
+			<div class="sk-child sk-bounce2"></div>
+			<div class="sk-child sk-bounce3"></div>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div class="nav-header">
+			<a href="#" class="brand-logo">
+
+				<img class="logo-abbr" width="50" height="40" viewBox="0 0 50 50" src="asset/white-force-logo.png"
+					alt="">
+
+				<img class="brand-title" width="100" height="52" viewBox="0 0 74 22" src="asset/white-force-text.png"
+					alt="">
+				<img class="plus" src="asset/plus-logo.png" alt="plus">
+			</a>
+
+			<div class="nav-control">
+				<div class="hamburger">
+					<span class="line"></span><span class="line"></span><span class="line"></span>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+
+
+
+
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div class="header">
+			<nav class="navbar navbar-expand">
+				<div class="collapse navbar-collapse justify-content-between">
+					<ul class="navbar-nav header-right main-notification">
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link bell dz-theme-mode" href="#">
+								<i id="icon-light" class="fas fa-sun"></i>
+								<i id="icon-dark" class="fas fa-moon"></i>
+							</a>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link bell dz-fullscreen" href="#">
+								<svg id="icon-full" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+									stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+									class="css-i6dzq1">
+									<path
+										d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+										style="stroke-dasharray: 37, 57; stroke-dashoffset: 0;"></path>
+								</svg>
+								<svg id="icon-minimize" width="20" height="20" viewBox="0 0 24 24" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" class="feather feather-minimize">
+									<path
+										d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
+										style="stroke-dasharray: 37, 57; stroke-dashoffset: 0;"></path>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<style>
+								.styled {
+									border: 0;
+									line-height: 2.5;
+									padding: 0 20px;
+									white-space: nowrap;
+									margin: 15px 700px;
+									font-size: 1rem;
+									text-align: center;
+									color: #fff;
+									text-shadow: 1px 1px 1px #000;
+									border-radius: 10px;
+									background-color: rgba(220, 0, 0, 1);
+									background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+									box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+								}
+
+								.styled:hover {
+									background-color: rgba(255, 0, 0, 1);
+								}
+
+								.styled:active {
+									box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+								}
+							</style>
+							<a href="./wfp-hindi.html"><button class="favorite styled" type="button">
+									Change to Hindi
+								</button>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+		</div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="deznav">
+			<div class="deznav-scroll">
+				<div class="main-profile">
+					<div class="image-bx">
+						<img style="border-radius: 35px;" src="asset/boss.png" alt="">
+						<a href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+					</div>
+					<h5 class="name"><span class="font-w400">Hello,</span> Team</h5>
+
+				</div>
+				<ul class="metismenu" id="menu">
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="feather feather-home">
+								<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+								<polyline points="9 22 9 12 15 12 15 22"></polyline>
+							</svg>
+
+							<span class="nav-text">Home Section</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="#dashdiv">Dashboard</a></li>
+
+						</ul>
+					</li>
+
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="feather feather-users">
+								<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+								<circle cx="9" cy="7" r="4"></circle>
+								<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+								<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+							</svg>
+							<span class="nav-text">Manage Team Section</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="#teamdiv">My Teams</a></li>
+						</ul>
+					</li>
+
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="feather feather-briefcase">
+								<rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+								<path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+							</svg> <span class="nav-text">Client Section</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="#clientdiv">Client's List</a></li>
+							<li><a href="#addclientdiv">Add New Client</a></li>
+
+							<ul>
+								<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+											stroke-linecap="round" stroke-linejoin="round"
+											class="feather feather-user-plus">
+											<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+											<circle cx="8.5" cy="7" r="4"></circle>
+											<line x1="20" y1="8" x2="20" y2="14"></line>
+											<line x1="23" y1="11" x2="17" y2="11"></line>
+										</svg> <span class="nav-text" style="font-weight:600;">HR Section</span>
+									</a>
+
+									<ul aria-expanded="false">
+										<li><a href="#hrdiv">Client's HR List</a></li>
+
+										<li><a href="#addhrdiv">Add New HR</a></li>
+
+									</ul>
+								</li>
+							</ul>
+
+
+						</ul>
+					</li>
+
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="feather feather-layout">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<line x1="3" y1="9" x2="21" y2="9"></line>
+								<line x1="9" y1="21" x2="9" y2="9"></line>
+							</svg> <span class="nav-text">Position Section</span>
+						</a>
+
+						<ul aria-expanded="false">
+							<li><a href="#positiondiv">Position's List</a></li>
+							<li><a href="#positionlistdiv">Add New Position</a></li>
+							<li><a href="#positionholddiv">Hold Positions</a></li>
+
+
+							<li><a href="#positionclosediv">Closed Positions</a></li>
+							<ul>
+								<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+											stroke-linecap="round" stroke-linejoin="round"
+											class="feather feather-user-plus">
+											<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+											<circle cx="8.5" cy="7" r="4"></circle>
+											<line x1="20" y1="8" x2="20" y2="14"></line>
+											<line x1="23" y1="11" x2="17" y2="11"></line>
+										</svg><span class="nav-text" style="font-weight:600;">Job Posting Section</span>
+									</a>
+									<ul aria-expanded="false">
+										<li><a href="#jobpostdiv">Job Posting Report</a></li>
+										<li><a href="#jobtemplatediv">Job Template</a></li>
+									</ul>
+								</li>
+
+							</ul>
+					</li>
+
+
+				</ul>
+				</li>
+
+				<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-user-plus">
+							<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+							<circle cx="8.5" cy="7" r="4"></circle>
+							<line x1="20" y1="8" x2="20" y2="14"></line>
+							<line x1="23" y1="11" x2="17" y2="11"></line>
+						</svg> <span class="nav-text">Candidate Section</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="#candidatelistdiv">Candidate's List</a></li>
+						<li><a href="#addcandidatediv">Add Candidate</a></li>
+						<li><a href="#revertcandidatediv">Candidate Revert</a></li>
+
+					</ul>
+				</li>
+
+				<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-phone-call">
+							<path
+								d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+							</path>
+						</svg> <span class="nav-text">Calling Report Section</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="#callingdiv">Calling Sheet</a></li>
+					</ul>
+				</li>
+
+				<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-folder-plus">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+							</path>
+							<line x1="12" y1="11" x2="12" y2="17"></line>
+							<line x1="9" y1="14" x2="15" y2="14"></line>
+						</svg> <span class="nav-text">Report Section</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="#reportdiv">All Reports</a></li>
+					</ul>
+				</li>
+				</ul>
+				<div class="copyright">
+					<p><strong>White-Force Plus Dashboard</strong> © 2023 All Rights Reserved</p>
+				</div>
+			</div>
+		</div>
+
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<div class="container-fluid">
+
+
+				<!-- landing page starts -->
+				<div class="content" id="content">
+					<!DOCTYPE html>
+					<html>
+
+					<head>
+						<title>Outsourcing Solutions</title>
+						<style>
+							/* CSS for the landing page */
+							body {
+								font-family: Arial, sans-serif;
+								margin: 0;
+								padding: 0;
+							}
+
+							header {
+								background-color: #333;
+								color: #fff;
+								padding: 20px;
+								text-align: center;
+							}
+
+							.hero-section {
+								background-image: url('background.jpg');
+								background-size: cover;
+								background-position: center;
+								height: 500px;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+							}
+
+							.hero-section h1 {
+								font-size: 48px;
+								color: #fff;
+								text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+							}
+
+							.features {
+								padding: 40px 20px;
+								text-align: center;
+							}
+
+							.feature-item {
+								display: inline-block;
+								width: 30%;
+								margin: 20px;
+							}
+
+							.feature-icon {
+								font-size: 36px;
+								color: #333;
+							}
+
+							.feature-title {
+								font-size: 24px;
+								margin: 10px 0;
+							}
+
+							.feature-description {
+								color: #777;
+							}
+
+							footer {
+								background-color: #333;
+								color: #fff;
+								padding: 20px;
+								text-align: center;
+							}
+
+							#dashdiv {
+								margin-top: -106px;
+							}
+
+							.blog-post-header-title {
+								margin-left: 50px;
+								text-shadow: 0 0 3px #7e7d57;
+
+							}
+
+							.names {
+								margin-left: 50px;
+								line-height: 35px;
+								text-shadow: 0 0 3px #7e7d57;
+
+							}
+
+							.description {
+								margin-left: 50px;
+								font-size: 18px;
+								font-weight: 500;
+								color: rgba(0, 0, 0, 0.74);
+								line-height: 26px;
+								padding: 0.1rem;
+								border-radius: 15px;
+								text-indent: -20px;
+								margin-left: 80px;
+							}
+
+							.description b {
+								color: rgba(255, 0, 0, 0.808);
+								font-weight: 600;
+								font-size: 1.17rem;
+								text-indent: -20px;
+							}
+						</style>
+					</head>
+
+
+					<div id="dashdiv" class="dash s">
+
+						<br><br><br><br><br><br>
+						<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+								class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+								data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Home
+								Section</span>
+						</h1>
+						<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">DashBoard</a>
+						</h3>
+						<br>
+						<div class="row">
+							<div class="col-xl-4 col-sm-2">
+								<img src="asset/dash-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p>
+								</h3>
+								<br>
+							</div>
+							<div class="col-xl-8 col-sm-10 ">
+								<img src="asset/dash-1.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block;height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites"><br>
+							</div>
+						</div>
+						<br>
+
+						<br>
+						<h3 class="names">1. Displays employee performance as target vs achievement​.</h3><br>
+						<div class="row">
+							<div class="col-5">
+								<p class="description"><b>1.</b> Recruiters monthly target.</p>
+								<p class="description"><b>2.</b> Countdown of days left to achieve the target.
+								</p>
+								<p class="description"><b>3.</b> Displays total number of clients.</p>
+								<p class="description"><b>4.</b> Pofile section.</p>
+								<p class="description"><b>5.</b> Displays total number of clients.</p>
+								<p class="description"><b>6.</b> Displays total position.</p>
+								<p class="description"><b>7.</b> Shows all positions recruiter.</p>
+
+
+								<br><br>
+							</div>
+							<div class="col-7">
+								<p class="description"><b>8.</b> Shows photo of recruiter and birthday person from
+									White-Force.</p>
+								<p class="description"><b>9.</b> Displays number of open position for current month.</p>
+								<p class="description"><b>10.</b> Displays number of closed position for current month.</p>
+								<p class="description"><b>11.</b> Displays total number of candidate approached in current month.</p>
+								<p class="description"><b>12.</b> Displays offered CTC of total candidates of current
+									month.</p>
+								<p class="description"><b>13.</b> Displays total CTC of offered candidates.</p>
+							</div>
+						</div>
+						<br>
+						<img src="asset/dashboard-1.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+							alt="How to Use google Sites: Step 1 Open Google Sites">
+						</p><br>.
+						<h3 class="names">2. Profile Section - Profile Setting and Logout. </h3><br>
+						<p class="description"><b>1.</b> Change your profile picture.</p>
+						<p class="description"><b>2.</b> Change your password.</p>
+						<p><br><img src="asset/dash-chrome-extraction.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 140px;"
+								alt="How to Use google Sites: Step 1 Open Google Sites"><br>
+
+
+							<img src="asset/dash-profil-2.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to Use google Sites: Step 1 Open Google Sites">
+						</p>
+						<br>
+<br>
+						<h3 class="names">3. Chrome Extention. </h3>
+						<p class="description"><b>1.</b> Add Profile Extention to Chrome.</p>
+						<p><br><img src="asset/chrome-xxxx-hover.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 140px;"
+								alt="How to Use google Sites: Step 1 Open Google Sites"><br>
+
+
+							<img src="asset/chrome-xxx.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to Use google Sites: Step 1 Open Google Sites">
+						</p>
+						<br>
+						<br>
+						<br>
+						<h3 class="names">4. Photo - Displays image of recruiter and birthday person from White-Force.
+						</h3>
+
+
+						<p><br><img src="asset/dashboard-setting-hover.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 380px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p><br><br>
+
+						<h3 class="names">5. Displays allotted target vs Achieved target and Pending Target in quarterly format.
+							​</h3><br>
+
+						<p class="description"><b>Quarter Target - </b> Shows alloted target.</p>
+						<p class="description"><b>Quarter Achieved - </b> Shows target achieved in quarter.</p>
+						<p class="description"><b>Quarter Pending - </b> Shows pending target or remaning target of
+							quarter.</p>
+
+						<p><br><img src="asset/dash-2.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 200px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p><br><br>
+						<h3 class="names">6. Displays actual scenario of positions for selected period. <br>
+
+						</h3><br>
+						<p class="description"> <b>Position Report -</b> Shows status of position in selected period.</p>
+						<p class="description"> Total - Shows total number of positions created in that period.</p>
+						<p class="description"> Open - Shows total number of positions on which hiring
+							is going on.</p>
+						<p class="description"> Close - Shows total number of closed positions.</p>
+						<p class="description"> Hold - Shows total number of positions for which hiring is at hold.</p>
+						<p><br><img src="asset/dash-position-report.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 230px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p>
+
+						<p class="description"> <b>Company Report -</b> Displays the actual scenario of companies allotted for selected period.</p>
+						<p class="description"> Total - Shows total number of allotted companies in selected period.</p>
+						<p class="description"> Hot - Shows companyies who are actively hiring.</p>
+						<p class="description"> Cold - Shows companyies who are not hiring.</p>
+						<p class="description"> Dead - Shows companyies who are not doing business.</p>
+						<p><br><img src="asset/dash-company-report.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 230px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p>
+
+
+
+
+
+						<br><br>
+						<p class="description"> <b>Offared Report -</b> Displays the scenario of offered candidates between selected dates.</p>
+						<p class="description"> Offered - Total number of candidates offered in selected period.
+						</p>
+						<p class="description"> Joined - Shows total number of candidates who accepted
+							the offer.</p>
+						<p class="description"> Not-Joined - Shows total number of candidates who
+							rejected the offer.
+						</p>
+						<p><br><img src="asset/dash-offered-report.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 230px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p>
+
+						<p class="description"> <b>Interview Report -</b> Displays the scenario of interviews scheduled in selected period.</p>
+						<p class="description"> Total - Shows total number of interviews scheduled in that period.</p>
+						<p class="description"> Selected - Shows total number of candidates who are
+							selected in interview.</p>
+						<p class="description"> Rejected - Shows total number of candidates who are
+							rejected in interview.</p>
+						<p class="description"> Not-Attended - Shows all candidates who have not
+							attended the interview.</p>
+						<p><br><img src="asset/dash-interview-report.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 230px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p>
+
+						<h3 class="names">7. Upcoming  Interviews - Shows list of upcoming scheduled interview.
+							​</h3>
+
+						<p><br><img src="asset/dash-upcoming-interview.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 350px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+
+						</p><br><br>
+
+						<h3 class="names">8. Offered Candidates - Shows list of all the candidates who are offered jobs from company.
+
+						</h3>
+
+						<p><br><img src="asset/dash-offred-candidate.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 350px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p><br><br>
+					</div>
+				</div>
+				<hr>
+
+				<div id="teamdiv" class="team s">
+					<BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Manage Team Section</span>
+					</h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">
+							My Teams</a></h3>
+
+					<!-- <h3><br><img src="asset/team-hover.png" width="150" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 350px;"
+							alt="How to Use google Sites: Step 2 Open the Support Site"></h3>
+					<br><br> -->
+
+					<p>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<img src="asset/team-hover.png" width="150" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 220px;"
+								alt="How to Use google Sites: Step 2 Open the Support Site"></h3>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<img src="asset/team-1.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+						</div>
+					</div>
+					<!-- <img src="asset/team-1.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 750px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br> -->
+
+					</p>
+					<h3 class="names">1. My Team - This section will display team hierarchy wise. <a rel="noopener"
+							target="_blank" href="#"></a>
+					</h3><br>
+					<img src="asset/Team-full-hyrarchi.png" width="650" loading="lazy"
+						style="margin-left: auto; margin-right: auto; display: block; width: 400px;height: 600px;"
+						alt="How to make a website for free on google: step 1 open google sites">
+					<br>
+					<hr>
+				</div>
+				<div id="clientdiv" class="client s"><BR></BR><BR></BR><BR>
+
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Client Section</span>
+					</h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">Client's List</a> </h3>
+					<p>
+					</p>
+					<h3 class="names">1. Displays all clients with details​. <br>
+					</h3><br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<img src="asset/clint-list-no1-hover.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+								alt="How to Use google Sites: Step 3 add layouts"></p>
+							</h3>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<img src="asset/client-1.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+						</div>
+					</div><br>
+					<p class="description"><b>1. </b> Client list - Shows ID of recruiters.</p>
+					<p class="description"><b>2.</b>Total number of clients.</p>
+					<p><img src="asset/client-hr-list-all.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 320px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+
+					</p><br>
+
+					<h3 class="names">2. Displays all clients with details​.
+						​</h3><br>
+					<p class="description"><b>1.</b> Shows logo of client and client name.</p>
+					<p class="description"><b>2.</b> Total number of HR's.</p>
+					<p class="description"><b>3.</b> Shows total numbers of position of that client.</p>
+					<p class="description"><b>4.</b> HR list - Shows list of HR's of perticular client.</p>
+					<p class="description"><b>5.</b> Edit - Can edit the client.</p>
+
+
+
+
+					<p><br><img src="asset/client-hr-list-hover (2).png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 320px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br>
+
+					</p>
+
+
+
+
+				</div>
+				<div id="addclientdiv" class="client s"><BR><BR><BR><BR><BR>
+					<h3 class="names">Step 2: <a rel="noopener" target="_blank" href="#">Add New Client</a>
+					</h3>
+
+
+					<h3 class="names">1. Add Client- Adding new client to the system.​ <br></h3>
+
+
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/clint-add-no2-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/client-add-client-2.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+						</div>
+					</div><br>
+
+
+
+					<p class="description"><b>1.</b> Company name - Enter name of the company.</p>
+					<p class="description"><b>2.</b> Email - Enter official Email id of client.</p>
+					<p class="description"><b>3.</b> Company Percentage - Enter White-Force percentage in the
+						business.
+					</p>
+
+
+					<p class="description"><b>4.</b> Company type - Select the type of company.</p>
+
+					<p class="description"><b>5.</b> Company Website - Enter official website of the client.</p>
+					<p class="description"><b>6.</b> Company Image - Enter picture of business logo of the
+						client.</p>
+
+					<p><br><img src="asset/client-add-client-22.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 320px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br>
+
+					</p>
+					<p class="description"><b>7.</b> Aggrement - Upload soft copy of aggrement.</p>
+					<p class="description"><b>8.</b> About Company - Enter client company description.</p>
+					<p class="description"><b>9.</b> Select Location.</p>
+					<p><br><img src="asset/client-add-client-down.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 370px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+
+				</div>
+				<hr>
+				<div id="hrdiv" class="client s"><BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">HR Section</span></h1>
+					<h3 class="names">Step 3: <a rel="noopener" target="_blank" href="#">Client's HR List</a>
+					</h3>
+					<!-- <h3> 3. Client's HR. </h3> -->
+
+
+					<h3 class="names">1. Client HR list - Shows list of all client HR by Name, Email, Date of
+						birth you can add or edit HR's details.​ <br>
+
+					</h3><br>
+
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/clint-hr-no-3-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/client-hr-list.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block;height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="">
+							</p>
+						</div>
+					</div><br>
+
+
+					<br>
+
+					<br>
+
+				</div>
+				<div id="addhrdiv" class="position s"><BR></BR><BR></BR><BR>
+					<h3 class="names">Step 4: <a rel="noopener" target="_blank" href="#">Add New HR</a>
+					</h3>
+					<h3 class="names">1. Add HR - Adds new HR personnel to the client company​
+
+					</h3><br><br>
+					<!-- <h3> 3. Add New HR. </h3> -->
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/client-hr-no4-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/client-add-new-hr-44.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+						</div>
+					</div><br>
+					<p class="description"><b>1.</b> Client Name - Select client fom White-Force database.</p>
+					<p class="description"><b>2.</b> Name - Enter name of personel.</p>
+					<p class="description"><b>3.</b> Email - Enter official Email ID of HR personel.</p>
+					<p class="description"><b>4.</b> DOB - Enter HR's DOB.</p>
+					<p class="description"><b>5.</b> Mobile - Enter official number of HR personel.</p>
+					<p class="description"><b>6.</b> Location - Enter the location of HR personel.</p>
+					<p class="description"><b>7.</b> Desigination - Enter the designation of HR personel.</p>
+
+					<p><br><img src="asset/client-add-new-hr-4.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 350px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br><br>
+				</div>
+				<hr>
+				<div id="positiondiv" class="position s"><BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Position Section</span>
+					</h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">Position list</a></h3>
+					<h3 class="names"><br>
+					</h3>
+
+
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/position-list-hover-1.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/position-list-11.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+						</div>
+						<p class="description"><b>1.</b> Hiring position of the client name of the client.</p>
+						<p class="description"><b>2.</b> Show JD of this Position on clicking Details button,
+							Enter in pipeline of this position on clicking <br> Pipeline button.</p>
+						<p class="description"><b>3.</b> Potals used for hiring in PAN India.</p>
+						<p class="description"><b>4.</b> Portals used for US/IT recruitment.</p>
+
+						<p><br><img src="asset/position-list-1.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 350px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p><br><br>
+					</div>
+					<br><br>
+					<h3 class="names">2. Focuses on adding ,managing ,editing and sharing the current available client
+						positions.​ <br>
+					</h3><br>
+					<div class="row">
+						<div class="col-6">
+							<p class="description"><b>1.</b> View Details - View details of this positions.</p>
+							<p class="description"><b>2.</b> Hold - You can put position on hold.</p>
+							<p class="description"><b>3.</b> Close - You can close the position.</p>
+							<p class="description"><b>4.</b> Edit - You can edit the position.</p>
+							<p class="description"><b>5.</b> Delete - You can delete the position.</p>
+							<p class="description"><b>6.</b> Applied Candidate - Shows all candidate who applied for the
+								position.</p>
+
+						</div>
+						<div class="col-6">
+
+							<p class="description"><b>7.</b> Related Candidate - Shows matching candidate according to
+								the position.</p>
+							<p class="description"><b>8.</b> Job Postion report - Shows job posting reports off
+								allportals.</p>
+							<p class="description"><b>9.</b> Position - Shows all the positions.</p>
+							<p class="description"><b>10.</b> Shared With Me - Positions shared with me by others.</p>
+							<p class="description"><b>11.</b> Shared By Me - Positions I shared with others.</p>
+						</div>
+					</div>
+					<p><br><img src="asset/position-list-define.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+
+
+					<br>
+
+
+				</div>
+				<div id="positionlistdiv" class="position s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 2: <a rel="noopener" target="_blank" href="#">Add New Position </a></h3>
+					<h3 class="names">1. Creat Position </h3>
+					<h3 class="names">Step 1 - Basic Information</h3>
+					<br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/pasition-add-hover-2.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/position-add-new-22.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+						</div>
+						<p class="description">
+							<b>1.</b> Select Client - Select Client from Database.
+						</p>
+						<p class="description"><b>2.</b> Management Fees - Shows the hiring percentage by
+							White-Force.</p>
+						<p class="description"><b>3.</b> Position Name - Enter Name of the Position.</p>
+
+						<p class="description"><b>4.</b> Location - Select Location Details.</p>
+						<p class="description"><b>5.</b> Postal Code - Enter Postal Code.</p>
+						<p class="description"><b>6.</b> Choose File - Upload JD of the Position.</p>
+
+						<p><br><img src="asset/position-add-new-2.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p>
+						<h3 class="names"><br><br> Step 2 - Enter General Information</h3><br>
+						<p class="description"><b>1.</b> Close by date - Enter the closing date for the position.</p>
+						<p class="description"><b>2.</b> Number of openings - shows number of opening for the position.
+						</p>
+						<p class="description"><b>3.</b> IsRemote (WFH) - Select Yes or No.</p>
+
+						<p><br><img src="asset/position-add-step-2.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p>
+
+						<h3 class="names"><br><br> Step 3 - Enter Essential Information</h3><br>
+						<p class="description"><b>1.</b> Qulification - Select qulification for the position.</p>
+						<p class="description"><b>2.</b> Education - Enter Education specification.
+						</p>
+						<p class="description"><b>3.</b> Enter Skills - Enter skills required for the position.</p>
+						<p class="description"><b>4.</b> Job Description - Paste the job description of the position.
+						</p>
+						<p><br><img src="asset/position-add-step-3.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p>
+
+
+
+						<h3 class="names"><br><br> Step 4 - Enter Salary Information</h3><br>
+						<p class="description"><b>1.</b> Type - Select Salary Type. </p>
+						<p class="description"><b>2.</b> Salary INR - Select Min-Salary & Max-Salary.
+						</p>
+						<p class="description"><b>3.</b> Job Type - Select Job Type.</p>
+						<p class="description"><b>4.</b> Experience - Select Experience.</p>
+						<p><br><img src="asset/position-add-step-4.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p>
+
+
+
+						<h3 class="names"><br><br> Step 5 - Enter Experience Information</h3><br>
+						<p class="description"><b>1.</b> Select Industry - Select type of Industry.</p>
+						<p class="description"><b>2.</b> Job For - Select Gender.
+						</p>
+						<p class="description"><b>3.</b> Job Location - Select National or Inter-National.</p>
+
+						<p><br><img src="asset/position-add-step-5.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p>
+
+
+					</div>
+					<br><br>
+
+
+
+				</div>
+
+				<div id="positionholddiv" class="position s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 3: <a rel="noopener" target="_blank" href="#">Hold Position</a></h3>
+					<h3 class="names">1. Shows list of hold position.</h3>
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/position-hold-hover-3.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/position-add-new-2.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+					</div>
+
+				</div>
+				<br>
+				<div id="positionclosediv" class="positionclose s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 4: <a rel="noopener" target="_blank" href="#">Closed Position</a></h3>
+					<h3 class="names">1. Shows list of closed positions.</h3>
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/position-closed-hover-4.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/position-add-new-2.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+					</div>
+
+				</div>
+				<hr>
+
+				<div id="jobpostdiv" class="jobpost s"><BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Job
+							Posting Section</span></h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">Job Posting Report</a></h3>
+
+					<!-- <p class="description"><b>➤</b>  Job Posting Reports of all Portals</p> -->
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/position-job-postingreport-hover-5.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/position-job-posting-report-55.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+
+					</div><br>
+					<p class="description"><b>1. </b> All posted jobs between the two dates by members.</p>
+					<p class="description"><b>2. </b> Job Posting Reports of all Portals.</p><br>
+					<p><img src="asset/position-job-posting-report-5.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br>
+					</p><br>
+
+
+				</div>
+				<br>
+				<div id="jobtemplatediv" class="position s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 2: <a rel="noopener" target="_blank" href="#">Job Template</a></h3>
+					<h3 class="names">1. In this page you can creat Job Template.</h3>
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/position-job-template-hover-6.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<p><img src="asset/position-job-template1.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+						</div>
+					</div><br>
+					<p class="description"><b>1.</b> Search Templates by JD.</p>
+					<p class="description"><b>2.</b> Create Templates by JD.</p>
+					<p class="description"><b>3.</b> Shows list of all discription of JD template.</p><br>
+					<p><img src="asset/position-job-template.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br>
+					</p><br>
+				</div>
+				<hr>
+				<div id="candidatelistdiv" class="candidatelist s"><BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Candidate Section</span>
+					</h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">Candidate's List</a>
+					</h3>
+					<h3 class="names">1. This is the list of Sourced Candidate.
+					</h3><br><br>
+
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/candidate-section-hover-1.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/candidate.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p><br>
+							<!-- change -->
+						</div>
+						<p class="description"><b>1.</b> Search - Search candidate by Name, Designation, Location or
+							Mobile number.</p>
+
+						<p class="description"><b>2.</b> Show list of all candidate of all Recruiters.</p>
+						<p><br><img src="asset/candidate-1.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+								alt="How to make a website for free on google: step 1 open google sites"><br>
+						</p><br>
+
+					</div>
+					<br>
+
+
+				</div>
+				<div id="addcandidatediv" class="addcandidate s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 2: <a rel="noopener" target="_blank" href="#">Add Candidate</a>
+					</h3>
+					<h3 class="names">1. Here you can add candidate details.
+					</h3><br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/candidate-section-add-2.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/candidate-1-downn.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+					</div>
+					<br>
+					<p class="description"><b>Basic Details -</b></p>
+					<p class="description"><b>1.</b> Choose File - Upload resume of the candidate in a PDF format only.
+					</p>
+					<p class="description"><b>2.</b> Enter Full name of the candidate from CV.</p>
+					<p class="description"><b>3.</b> Select nationl or international job.</p>
+					<p class="description"><b>4.</b> Contact - Enter the contact number of the candidate.</p>
+					<p class="description"><b>5.</b> Enter email id of the candidate.</p>
+					<p class="description"><b>6.</b> Source - Select the source (portal) from which the candidate is
+						selected.</p>
+					<p class="description"><b>7.</b> Enter Notice - period in days.</p>
+					<p class="description"><b>8.</b> Select preferred location of the candidate.</p>
+					<p class="description"><b>9.</b> Enter Currency type of the candidate.</p>
+					<p class="description"><b>10.</b> Industry - Select the type of industry of the candidate.</p>
+					<p class="description"><b>11.</b> Enter amount of expected salary in numbers.</p>
+					<p class="description"><b>12.</b> Experience - Select the experience of the candidate.</p><br><br>
+					<p><img src="asset/candidate-1-down.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; width: 850px;height: 400px;"
+							alt="How to make a website for free on google: step 1 open google sites"><br>
+					</p><br>
+
+					<p class="description"><b>Education Details -</b></p>
+					<p class="description"><b>1.</b> Select the type of Education.
+					</p>
+					<p class="description"><b>2.</b> Select candidate education year.</p>
+					<p class="description"><b>3.</b> Enter education name of the candidate.</p><br>
+
+					<p><img src="asset/candidate-1-down2.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; height: 250px;width: 850px; "
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+					<p class="description"><b>Personal Details -</b></p>
+					<p class="description"><b>1.</b> Select candidate gender.
+					</p>
+					<p class="description"><b>2.</b> Select candidate marital status.</p>
+					<p class="description"><b>3.</b> Enter Aadhar card & PAN Card information.</p>
+					<p class="description"><b>4.</b> Select relocation of candidate.</p>
+					<p class="description"><b>5.</b> Select candidate language.</p>
+					<p class="description"><b>6.</b> Select candidate communication.</p>
+					<p class="description"><b>7.</b> Select candidate Date of birth.</p>
+					<p class="description"><b>8.</b> Enter skills of the candidate.</p><br>
+					<p><img src="asset/candidate-1-down3.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; height: 420px;width: 820px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+
+					<p class="description"><b>Location Details -</b></p>
+					<p class="description"><b>1.</b> Select Country State or City.</p>
+					<p class="description"><b>2.</b> Enter address or postal code.</p><br>
+					<p><img src="asset/candidate-1-down4.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; height: 320px;width: 820px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+
+				</div>
+
+				<div id="revertcandidatediv" class="revert s"><BR></BR><BR></BR><BR>
+
+					<h3 class="names">Step 3: <a rel="noopener" target="_blank" href="#">Candidate Revert</a>
+					</h3>
+					<h3 class="names">1. Shows total candidate response.
+					</h3><br>
+					<br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/candidate-revart-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/candidate-revert1.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+						<p class="description"><br><b>1.</b> Search candidates by date experience & current &
+							expected CTC.</p>
+
+						<p><img src="asset/candidate-revert.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 820px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p><br>
+
+					</div>
+					<br>
+
+					<hr>
+				</div>
+				<div id="callingdiv" class="calling s"><BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Calling Report
+							Section</span></h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">Calling Sheet</a></h3>
+					<h3 class="names">1. This is the list of calling sheets.
+					</h3><br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/calling-report-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width:  220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/calling-sheet-11.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p><br>
+							<!-- change -->
+						</div>
+						<p class="description"><b>1.</b> Download Example sheet in Excl Format.</p>
+						<p class="description"><b>2.</b> Choose File - Select Location of excl sheet.</p>
+						<p class="description"><b>3.</b> Import - Then Import sheet on the system.</p>
+						<p><br><img src="asset/calling-sheet-1.png" width="650" loading="lazy"
+								style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 820px;"
+								alt="How to make a website for free on google: step 1 open google sites">
+						</p><br>
+					</div>
+					<br>
+
+
+					<br>
+				</div>
+				<hr>
+				<div id="reportdiv" class="report s">
+					<BR></BR><BR></BR><BR>
+					<h1 class="blog-post-header-title"><span id="hs_cos_wrapper_name"
+							class="hs_cos_wrapper hs_cos_wrapper_meta_field hs_cos_wrapper_type_text" style=""
+							data-hs-cos-general-type="meta_field" data-hs-cos-type="text">Report Section</span></h1>
+					<h3 class="names">Step 1: <a rel="noopener" target="_blank" href="#">All Reports</a> </h3>
+					<h3 class="names">1. All Reports
+					</h3><br><br>
+					<div class="row">
+						<div class="col-xl-4 col-sm-2">
+							<p><img src="asset/report-section-hover.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; width: 220px;"
+									alt="How to Use google Sites: Step 3 add layouts"></p><br>
+							<br>
+						</div>
+						<div class="col-xl-8 col-sm-10">
+							<!-- change -->
+							<p><img src="asset/All-report-section-11.png" width="650" loading="lazy"
+									style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 720px; position: relative;right: 70px;"
+									alt="How to make a website for free on google: step 1 open google sites">
+							</p>
+							<!-- change -->
+						</div>
+					</div>
+					<br>
+
+					<p class="description"><b>1. Monthly Target Report -</b> Displays monthly performence of
+						recruiters in the form of Candidate approched, Joined, Backout & Quterly Joining.</p>
+					<p class="description"><b>2. Month Wise Report -</b> Shows month wise performence of the
+						recruiter in terms of approch and achivement.</p>
+					<p class="description"><b>3. Daily Lineup - </b>Shows daily line up reports between the two
+						dates.</p>
+					<p class="description"><b>4. Daily Calling Sheet Report -</b> Shows calling performence
+						between the two dates.</p>
+
+
+					<p class="description"><b>5. Interview Report -</b> Shows Interviews.</p>
+
+					<p class="description"><b>6. Pipeline Stage Report -</b> Shows pipeline stage between the
+						two dates.</p>
+
+					<p class="description"><b>7. HR Birthday -</b> Shows list of all HR birthday.</p>
+					<p class="description"><b>8. Quater Wise Report -</b> Shows Quater wise performence of
+						recruiter in terms of target offered joined and remaning.</p>
+					<p class="description"><b>9. Leader Board -</b> Shows Leader wise performence of team.</p>
+
+
+					<p><br><img src="asset/All-report-section-1.png" width="650" loading="lazy"
+							style="margin-left: auto; margin-right: auto; display: block; height: 380px;width: 820px;"
+							alt="How to make a website for free on google: step 1 open google sites">
+					</p><br>
+
+				</div>
+
+				<br><br><br>
+
+			</div>
+		</div>
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+		<!-- <div class="footer">
+			<div class="copyright">
+				<p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Gaurav Singh</a>
+					2023</p>
+			</div>
+		</div> -->
+		<!--**********************************
+            Footer end
+        ***********************************-->
+
+
+
+
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<!-- Required vendors -->
+	<script src="vendor/global/global.min.js"></script>
+	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="vendor/moment/moment.min.js"></script>
+
+	<script src="vendor/fullcalendar/js/main.min.js"></script>
+	<script src="js/plugins-init/fullcalendar-init.js"></script>
+
+	<script src="js/custom.js"></script>
+	<script src="js/deznav-init.js"></script>
+	<script src="js/demo.js"></script>
+	<script src="js/styleSwitcher.js"></script>
+
+
+
+</body>
+
+<!-- Mirrored from zenix.dexignzone.com/xhtml/app-calender.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Feb 2023 07:12:24 GMT -->
+
+</html>

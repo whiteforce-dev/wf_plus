@@ -1,0 +1,32 @@
+    673▕      * @return void
+    674▕      */
+    675▕     protected function listenForSignals()
+    676▕     {
+  ➜ 677▕         pcntl_async_signals(true);
+    678▕ 
+    679▕         pcntl_signal(SIGQUIT, fn () => $this->shouldQuit = true);
+    680▕         pcntl_signal(SIGTERM, fn () => $this->shouldQuit = true);
+    681▕         pcntl_signal(SIGUSR2, fn () => $this->paused = true);
+
+      [2m+16 vendor frames [22m
+  17  /home/admin/web/white-force.com/public_html/plus/src/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Error 
+
+  Call to undefined function Illuminate\Queue\pcntl_async_signals()
+
+  at /home/admin/web/white-force.com/public_html/plus/src/vendor/laravel/framework/src/Illuminate/Queue/Worker.php:677
+    673▕      * @return void
+    674▕      */
+    675▕     protected function listenForSignals()
+    676▕     {
+  ➜ 677▕         pcntl_async_signals(true);
+    678▕ 
+    679▕         pcntl_signal(SIGQUIT, fn () => $this->shouldQuit = true);
+    680▕         pcntl_signal(SIGTERM, fn () => $this->shouldQuit = true);
+    681▕         pcntl_signal(SIGUSR2, fn () => $this->paused = true);
+
+      [2m+16 vendor frames [22m
+  17  /home/admin/web/white-force.com/public_html/plus/src/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))

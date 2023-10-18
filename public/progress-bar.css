@@ -1,0 +1,61 @@
+
+.wrapper-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.progress-bar {
+    background: #000;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; 
+    position: relative;
+}
+.progress-bar:before {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: #444;
+    z-index: 0;
+}
+/*===== The CSS =====*/
+.progress{
+    width: 50px;
+    height: 58px;
+    z-index: 1;
+    background: none;
+}
+.progress .track, .progress .fill{
+    fill: rgba(0, 0, 0, 0);
+    stroke-width: 3;
+    transform: rotate(90deg)translate(0px, -80px);
+}
+.progress .track{
+    stroke: #c4c4c4;
+}
+.progress .fill {
+    stroke: #363636;
+    stroke-dasharray: 219.99078369140625;
+    stroke-dashoffset: -219.99078369140625;
+    transition: stroke-dashoffset 1s;
+}
+.progress .value {
+    fill: #000000;
+    text-anchor: middle;
+    font-size: 20px;
+}
+.progress .text {
+    font-size: 12px;
+    fill: #fff;
+    text-anchor: middle;
+}
+
+.progress .track, .progress .fill {
+    stroke-width: 4px;
+}
