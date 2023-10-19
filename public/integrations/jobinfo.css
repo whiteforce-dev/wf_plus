@@ -1,0 +1,198 @@
+.apply{
+    /* width: 100%; */
+    /* border: 2px solid black; */
+}
+.custom-shape-divider-bottom-1687513252 {
+    position: absolute;
+    bottom: 200px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+.back-image{
+    /* background: url(./home-image/bg.jpg); */
+    /* background-blend-mode:darken; */
+margin-top: -10px;
+    background-size: cover;
+    /* opacity: 0.9; */
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgba(3, 38, 32, 0.7) !important; */
+}
+.bg-emerald-900\/90 {
+    height: 73vh;
+    background-color: rgba(87, 140, 231, 0.5) !important;
+}
+.inset-0 {
+    inset: 0px !important;
+}
+.absolute {
+    position: absolute !important;
+    top: 0;
+}
+.custom-shape-divider-bottom-1687513252 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 120px;
+}
+
+.custom-shape-divider-bottom-1687513252 .shape-fill {
+    fill: #ffffff;
+}
+
+.form-heading{
+    width: 40%;
+    text-align: center;
+    color: white;
+    /* border: 2px solid white; */
+    position: relative;
+    z-index: 1;
+}
+.form-heading h1{
+font-size: 2.3rem;
+letter-spacing: 0.025em !important;
+}
+
+.form{
+    width: 100%;
+    /* margin-bottom: 50px; */
+}
+.sub-form{
+    width: 90%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin: 0 auto;
+}
+.information{
+    position: sticky;
+    top: 20px;
+    /* bottom: 0 !important; */
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 45px auto;
+    /* border-right: 2px solid rgb(200, 215, 229); */
+    /* border: 2px solid black; */
+}
+.job-info{
+    /* border: 2px solid blue; */
+    border-bottom: 2px solid rgb(200, 215, 229);
+    width: 100%;   
+}
+.job-info h1{
+    /* border: 2px solid black; */
+margin-left: 12px;
+padding-left: 20px;
+color: #161c2d;
+    font-size: 1.4rem;
+}
+.employee{
+    width: 100%;
+}
+.employee ul li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    /* border: 2px solid black; */
+    margin-right: 20px;
+    margin-bottom:15px;
+    border-bottom: 2px solid rgb(200, 215, 229);
+    padding-bottom: 12px;
+}
+.employee ul li i{
+    font-size: 1.2rem;
+    margin-top: 15px;
+    /* color: #3f3f3f; */
+    color: #141414;
+    opacity: 0.8;
+}
+.employee ul li div{
+margin-left: 20px;
+}
+.employee ul li div p{
+    margin-bottom: 5px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #161c2d;
+    font-weight: 500;
+    font-size: 1.1rem;
+    }
+    .employee ul li div span{
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: #388bff;
+        font-weight: 500;
+        font-size: 1.05rem;
+        }
+.description{
+    width: 70%;
+    /* border: 2px solid black; */
+    margin: 40px auto;
+}
+.long-para{
+    width: 90%;
+    /* border: 2px solid rgb(198, 26, 26); */
+    margin: 0 auto;
+    margin-bottom: 50px !important;
+}
+.long-para h1{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #161c2d;
+    font-size: 1.4rem;
+    margin-bottom: 20px !important;
+}
+.long-para p{
+    /* margin: 0px 0px; */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: rgb(102, 108, 116);
+    font-weight: 500;
+    line-height: 1.625;
+    margin-top: 0.7rem !important;
+    font-size: 1.1rem;
+}
+.fa-circle-right, .fa-right-long{
+    background-color: white;
+    color: #388bff;
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+.para-line{
+    margin: -3px auto !important;
+}
+.apply-btn{
+    width: 85%;
+    /* border: 2px solid black; */
+    margin: 20px auto;
+    /* margin-bottom: 0px !important; */
+    /* margin-right: 60px !important; */
+}
+.apply-btn button{
+    width: 150px;
+    height: 45px;
+   background-color: #1167e1;
+   border: none;
+   color: white;
+   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-weight: 500;
+   font-size: 1.1rem;
+   margin-right: 20px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+   cursor: pointer;
+   transition: all 400ms ease;
+}
+.apply-btn button:hover{
+transform: scale(0.95);
+}
+.btn-one{
+    background-color: rgb(0, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
+}

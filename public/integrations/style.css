@@ -1,0 +1,253 @@
+/* **************************************** UTILITIES ************************************************** */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap");
+:root {
+  --theme-color: #14120fdf;
+  --theme-primary-color:#0087cf;
+  --theme-active-color: #161514;
+  --navHeight: 75px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.maxWidth {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+img {
+  height: 100%;
+  width: 150px;
+}
+input,
+button,
+input:is(:focus, :active, :disabled),
+button:is(:focus, :active, :disabled) {
+  outline: none;
+  border: none;
+}
+.d-fjac {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.d-fac {
+  display: flex;
+  align-items: center;
+}
+.d-fjc {
+  display: flex;
+  justify-content: center;
+}
+[class="btn1"],
+button,
+.btn1 {
+  padding: 3px 12px;
+  border-radius: 5px;
+  background-color: var(--theme-color);
+  color: white;
+  margin: 0 7px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+[class="btn1"]:hover,
+button:hover,
+.btn1:hover {
+  background-color: var(--theme-active-color) !important;
+  box-shadow: 3px 5px 8px -5px #dcdcdc;
+}
+.h-100v {
+  min-height: calc(100vh - var(--navHeight)) !important;
+}
+.h-80v {
+  min-height: calc(90vh - var(--navHeight)) !important;
+}
+[class*="overlay"] {
+  position: absolute;
+  inset: 0;
+}
+.d-gc {
+  display: grid;
+  place-content: center;
+}
+/* ********************************************* CSS ************************************************** */
+.mainNav {
+  position: sticky;
+  top: 0;
+  height: var(--navHeight);
+  z-index: 55;
+}
+.mainNav > div {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.mainNav .logo {
+  height: 70%;
+}
+.mainNav .menus .menu-item {
+  font-family: "Poppins", sans-serif;
+  margin: 0 10px;
+  padding: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.mainNav .menus .menu-item:hover {
+  color: var(--theme-color);
+}
+.mainContainer {
+  max-height: 1024px;
+  position: relative;
+  /* position: absolute; */
+  /* top: 0; */
+  background: url(./assets/jobpage.png);
+  background-position: center;
+  background-size: cover;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+.mainContainer::after {
+  --height: 80px;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: var(--height);
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 1));
+}
+.main-overlay {
+  background: linear-gradient(to right, #ffeddad2 40%, transparent);
+}
+.mainContainer > .container {
+  position: relative;
+  z-index: 5;
+}
+.mainContainer .tagline {
+  position: relative;
+  padding: 0 25px;
+}
+.mainContainer .tagline h3,
+.mainContainer .tagline p {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+.mainContainer .tagline h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.mainContainer .tagline p {
+  font-size: 1.3rem;
+  color: #464646;
+  margin-top: 10px;
+  margin-bottom: -12px;
+}
+.mainContainer .search {
+display: flex;
+/* border: 2px solid black; */
+
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr 140px; */
+  margin-top: 50px;
+}
+.input-one{
+  width: 27%;
+}
+.input-two{
+width: 40%;
+}
+.input-three{
+  width: 18%;
+}
+.mainContainer .search label {
+  width: max-content;
+  padding: 3px 15px;
+  background-color: var(--theme-primary-color);
+  color: white;
+  border-radius: 7px;
+  margin-left: 10px;
+  margin-bottom: 15px;
+}
+.mainContainer .search .input {
+  position: relative;
+}
+.mainContainer .search .input i {
+  color: #9f9f9f;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+}
+.mainContainer .search input {
+  width: 100%;
+  /* padding: 15px 10px; */
+  height: 60px;
+  font-size: 18px;
+  padding-left: 45px;
+}
+.mainContainer .search .inputs:not(:last-child) input {
+  border-right: 1px solid #999;
+}
+.mainContainer .search .inputs:first-child input {
+  border-radius: 5px 0 0 5px;
+}
+.mainContainer .search .inputs:last-child .input {
+  background-color: white;
+  border-radius: 0 5px 5px 0;
+  height: 60px;
+  padding: 7px 7px;
+}
+.mainContainer .search .inputs:last-child button {
+  background-color: var(--theme-primary-color);
+  color: white;
+  border-radius: 3px;
+  font-weight: 400;
+  width: 100%;
+  height: 100%;
+}
+section.popular {
+  padding: 30px 50px;
+}
+section.popular h2 {
+  text-align: center;
+  margin: 20px auto;
+  font-size: 2.5rem;
+}
+section.popular .categories {
+section.popular .categories {
+section.popular .categories {
+  display: grid;
+  margin: 10vh 0;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1fr;
+}
+section.popular .categories .item {
+  display: grid;
+  place-content: center;
+  width: max-content;
+  padding: 3px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #cdcdcd00;
+}
+section.popular .categories .item i,
+section.popular .categories .item .ion-icon {
+  margin: 0 auto;
+  font-size: 2rem;
+  color: #006eff;
+  margin-bottom: 15px !important;
+  font-weight: 500;
+}
+section.popular .categories .item:hover {
+  border: 1px solid #cdcdcd;
+}
+section.popular .categories .item p {
+  margin: 0;
+}

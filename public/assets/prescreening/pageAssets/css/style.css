@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+.error-container {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.error-img img {
+    width: 400px;
+}
+
+.thanks-container {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: url(../img/thanks-page.png) no-repeat;
+    background-size: cover;
+}
+
+
+.thanks-img img {
+    width: 600px;
+}
+
+
+.thanks-text h1 {
+    font-weight: 700;
+    font-size: 56px;
+}
+
+.thanks-text h6 {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+
+/* CSS */
+.button-74 {
+    background-color: #89E2FF;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-74:hover {
+    background-color: #BCD2E5;
+}
+
+.button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+    .button-74 {
+        min-width: 120px;
+        padding: 0 25px;
+    }
+}
+
+@media screen and (min-width: 312px) and (max-width: 512px)  {
+
+    .error-img {
+        text-align: center;
+    }
+    
+    .error-img img {
+        width: 280px;
+    }
+
+    .error-text {
+        min-width: 120px;
+        padding: 0 25px;
+        text-align: center !important;
+    }
+
+    .thanks-img img {
+        width: 380px;
+    }
+
+    .thanks-text {
+        min-width: 120px;
+        padding: 0 25px;
+        text-align: center !important;
+    }
+}
+

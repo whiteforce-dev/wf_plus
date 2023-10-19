@@ -1,0 +1,380 @@
+@media only screen and (min-width: 700px) and (max-width: 1200px) {
+.container{
+            width: 301px;
+    }
+
+    .header-right {
+        height: 100%;
+        width: 70% !important;
+    }
+
+    .first-section {
+        margin-top: -65px !important;
+    }
+
+
+    .tc-1 {
+        font-size: 16px;
+    }
+
+    .tc-2 {
+        font-size: 16px;
+    }
+
+    /* .container-fluid {
+        / display: flex; 
+    } */
+
+
+    .header-right .nav-item {
+        width: 220px;
+    }
+
+    .navbar-expand .navbar-nav {
+        justify-content: start !important;
+    }
+
+    .navbar-nav li:not(.nav-item) {
+        padding: 0 !important;
+    }
+
+    .navbar-nav li.notification_dropdown span {
+        font-size: 12px !important;
+    }
+
+    .card-body {
+        padding: .375rem;
+    }
+
+    [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .header .navbar {
+        padding-left: 28px !important;
+    }
+
+    .card-title {
+        font-size: 15px;
+    }
+
+    .font-weight-bold {
+        font-size: 16px;
+    }
+
+    /* .cimg {
+        width: 10%;
+        height: 80%;
+        object-fit: cover;
+    } */
+
+    .col-sm-3 .card .pic {
+        max-height: 325px;
+    }
+
+    .col-sm-3 .card .p-2 {
+        max-height: 347px;
+    }
+
+    .col-sm-4 {
+        flex: 0 0 auto;
+        width: 33.33333%;
+        height: 120px;
+
+    }
+
+    .card-title {
+        font-size: 13px !important;
+    }
+
+    .icon {
+        width: 1.8rem !important;
+        height: 1.8rem !important;
+    }
+
+    .fas {
+        font-size: 1rem !important;
+    }
+
+    .text-muted {
+        display: flex;
+    }
+
+    .mr-2 {
+        font-size: 0.8rem !important;
+    }
+
+    .text-nowrap {
+        font-size: 0.8rem !important;
+    }
+
+    .text-white h4 {
+        margin-top: 30px !important;
+    }
+
+    .text-white {
+        font-size: 0.9rem;
+        margin: 10px 0 !important;
+    }
+
+    .text-white span {
+        margin: auto !important;
+        font-size: 1rem !important;
+        padding: 0px 12px !important;
+    }
+
+    .col {
+        flex: 1 0 0%;
+        width: 40% !important;
+        height: 100px !important;
+        padding: 0 0 !important;
+    }
+
+    .col-lg-6 {
+        width: 44% !important;
+        height: 100px !important;
+        /* border: 2px solid black; */
+    }
+
+    .col-md-12 {
+        flex: 0 0 auto;
+        width: 47% !important;
+        margin: 0 auto !important;
+    }
+
+    .col {
+        padding-left: 20px !important;
+        /* border: 2px  solid green; */
+        height: 60px !important;
+    }
+
+    .bg-primary {
+        height: 80px !important;
+        /* border: 2px solid rgb(209, 19, 19); */
+        /* margin-top: -20px; */
+    }
+
+    .col-sm-3 {
+        height: 84% !important;
+    }
+
+    .cimg {
+        border-radius: 4px;
+        height: 86% !important;
+    }
+
+    .boss-img {
+        height: 297px !important;
+    }
+
+    .flaticon-381-user-4 {
+        font-size: 24px !important;
+    }
+
+    .flaticon-381-star {
+        font-size: 24px !important;
+    }
+
+    .flaticon-381-success-2 {
+        font-size: 24px !important;
+    }
+
+    .col-12 h4 {
+        font-size: 0.89rem;
+    }
+
+    .mmonth {
+        width: 100% !important;
+        margin-right: 0 !important;
+        text-align: center !important;
+    }
+
+    .col-6 {
+        font-size: 0.8rem;
+        width: 50% !important;
+        padding: 0 0 !important;
+        /* border: 2px solid blue; */
+    }
+
+    .col-6 strong {
+        margin: 0 0 !important;
+        width: 100% !important;
+        font-size: 0.8rem !important;
+    }
+
+    .col-6 h4 {
+        margin: 0 0 !important;
+        width: 100% !important;
+        font-size: 0.8rem !important;
+    }
+
+    .col-sm-12 h4 {
+        font-size: 1.1rem !important;
+    }
+
+    .border-right h4 {
+        font-size: 0.9rem !important;
+    }
+
+    .col-sm-3 h4 {
+        font-size: 0.9rem !important;
+    }
+
+    .border-right span {
+        font-size: 0.9rem !important;
+    }
+
+    .col-sm-3 span {
+        font-size: 0.9rem !important;
+    }
+
+    .search-area .form-control {
+        font-size: 0.8rem !important;
+        padding: 0px 5px !important;
+    }
+
+    .text-primary {
+        width: 137%;
+    }
+
+    .font-w600 {
+        font-size: 1.05rem;
+        width: 163%;
+    }
+
+    .project-info {
+        padding: 0px 0px !important;
+    }
+
+    .form-control {
+        font-size: 0.8rem !important;
+        height: 30px !important;
+    }
+
+    .laravel-height {
+        height: 390px !important;
+    }
+
+    .left-laravel {
+        width: 55%;
+    }
+
+    .position-com {
+        width: 100% !important;
+    }
+
+    .upcoming-off {
+        width: 50% !important;
+    }
+
+    .right-laravel {
+        width: 45%;
+        margin-top: 19px;
+    }
+
+    .text-dark {
+        /* width: 70%; */
+    }
+
+    .res-flex {
+        display: flex;
+        flex-direction: column;
+        height: 200vh;
+    }
+
+    .upcoming-candidate {
+        display: flex;
+        justify-content: space-evenly;
+        /* border: 2px solid black; */
+        align-items: center;
+    }
+
+    .upcoming-off {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+    .can-right {
+        width: 45%;
+        margin: 0 auto;
+    }
+
+    .off-right {
+        display: none;
+    }
+
+    .col-4 {
+        height: 115px;
+        /* width: 33.333%;  */
+        margin-top: 30px;
+    }
+
+    .offered-can {
+        margin-top: -10px !important;
+    }
+
+    .off-report {
+        width: 100%;
+    }
+
+    .joined-off {
+        height: 62px;
+    }
+
+    .border-long {
+        height: 38px;
+    }
+
+
+}
+
+    .first-section {
+        margin-top: -25px;
+    }
+
+
+
+    .header-right {
+        height: 100%;
+        width: 67%;
+        display: flex;
+        justify-content: end;
+        /* border: 2px solid black !important; */
+    }
+
+
+    .notification_dropdown {
+        margin-right: 20px;
+    }
+
+    .card {
+        padding: 10px 2px;
+        /* height: 85px; */
+        margin-bottom: 20px !important;
+    }
+
+    .col span {
+        /* font-size: 2rem; */
+    }
+
+    .clients-call {
+        margin-bottom: 16px;
+    }
+
+    .imageBox {
+        width: 100%;
+        height: 320px;
+    }
+
+    .res-flex {
+        margin-top: 40px;
+    }
+
+    .offered-can {
+        margin-top: 30px
+    }
+
+
+
+    @media only screen and (min-width:1201px) {
+        .cimg {
+            border-radius: 4px;
+            height: 92% !important;
+        }
+    }

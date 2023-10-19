@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="179px" viewBox="0 0 1440 179" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle 2</title>
+    <defs>
+        <path d="M0,25.8451246 C581,-74.1548754 1063.61909,157.578443 1440,25.8451246 L1440,25.8451246 L1440,178.845125 L0,178.845125 Z" id="path-1"></path>
+    </defs>
+    <g id="March-2021" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Rectangle-2" fill="#FFFFFF" xlink:href="#path-1"></use>
+    </g>
+</svg>
