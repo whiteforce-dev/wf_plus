@@ -13,6 +13,7 @@ use App\Jobs\carrierblissJob;
 use App\Jobs\clickIndiaJob;
 use App\Jobs\cvLibrary_Job;
 use App\Jobs\drJob_job;
+use App\Jobs\eluta_Job;
 use App\Jobs\facebookJob;
 use App\Jobs\google_Job;
 use App\Jobs\indeedJob;
@@ -30,7 +31,10 @@ use App\Jobs\naukriJob;
 use App\Jobs\postJobFree_Job;
 use App\Jobs\reedJob;
 use App\Jobs\jobgrinJob;
+use App\Jobs\jobisite_Job;
 use App\Jobs\jobrapidoJob;
+use App\Jobs\jobswype_Job;
+use App\Jobs\juju_Job;
 // use App\Jobs\postJobFree;
 use App\Jobs\shineJob;
 use App\Jobs\talentJob;
@@ -41,6 +45,7 @@ use App\Jobs\timesjob;
 use App\Jobs\timesjob_Job;
 use App\Jobs\whatsJob;
 use App\Jobs\whatsUSA_job;
+use App\Jobs\workcircle_Job;
 use App\Jobs\ziprecruiter_USA_Job;
 use App\Models\Candidate;
 use App\Models\CandidateResponse;
@@ -240,7 +245,6 @@ class PositionController extends Controller
 
     public function store(Request $request)
     {
-    //    return $request;
         $selectedPortals = $request->jobPortals;
 
         $Position = new Position();
@@ -710,6 +714,19 @@ class PositionController extends Controller
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 jobrapidoJob::dispatch($job_id)->delay($dispach_time);
             }
+            if (in_array('jobisite', $selectedPortals)) {    //done//
+
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'jobisite';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+                //Job Dispatch
+              
+                jobisite_Job::dispatch($job_id)->delay($dispach_time);
+                
+            }
             if (in_array('talent', $selectedPortals)) {
                 $job_posted_tos = new JobPostedTo();
                 $job_posted_tos->job_id = $job_id;
@@ -829,6 +846,46 @@ class PositionController extends Controller
                 $job_posted_tos->save();
                 // return (new NewJobPostingController())->sendToReed($reedInfo);
                 reedJob::dispatch($reedInfo)->delay($dispach_time);
+            }
+            if (in_array('eluta', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'eluta';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+
+                eluta_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('jobswype', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'jobswype';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+
+                jobswype_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('workcircle', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'workcircle';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+
+                workcircle_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('juju', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'juju';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+
+                juju_Job::dispatch($job_id)->delay($dispach_time);
             }
         }
         Cache::forget('position_list_cache_'.Auth::user()->id);
@@ -959,7 +1016,7 @@ class PositionController extends Controller
                     ];
 
                     //Job Dispatch
-                    return (new CommonController())->sendToLinkedin($linkedinArr['job_id']);
+                    // return (new CommonController())->sendToLinkedin($linkedinArr['job_id']);
                     linkedinJob::dispatch($linkedinArr)->delay($dispach_time);
                 }
                 if (in_array('shine', $selectedPortals)) {
@@ -971,7 +1028,7 @@ class PositionController extends Controller
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
 
-                    $shine = new Shine();
+                    $shine =  Shine::find($job_id);
                     $shine->job_id = $job_id;
                     $shine->city_grouping_id = request('shine_cities_groups_id');
                     $shine->city_id = json_encode(request('shine_cities_id'));
@@ -997,7 +1054,7 @@ class PositionController extends Controller
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
 
-                    $job_to_click_india = new JobsToClickIndia();
+                    $job_to_click_india =  JobsToClickIndia::find($job_id);
                     $job_to_click_india->job_id = $job_id;
                     $job_to_click_india->job_category_id = request('click_india_job_category');
                     $job_to_click_india->city_id = request('click_india_city_id');
@@ -1022,7 +1079,7 @@ class PositionController extends Controller
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
 
-                    $monster = new MonsterPostedJob();
+                    $monster =  MonsterPostedJob::find($job_id);
                     $monster->job_id = $job_id;
                     $monster->industry_id = request('monster_industry_id');
                     $monster->category_function_id = request('category_function_id');
@@ -1095,7 +1152,7 @@ class PositionController extends Controller
 
                     $job_posted_tos->save();
 
-                    $job_to_noukri = new  jobstonoukri();
+                    $job_to_noukri =  jobstonoukri::find($job_id);
                     $job_to_noukri->jobs_id = $job_id;
                     $job_to_noukri->UG_Qualifications = request('UG_Qualifications');
                     $job_to_noukri->UG_Specializations = request('UG_Specializations');
@@ -1148,7 +1205,7 @@ class PositionController extends Controller
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
 
-                    $Jobs_to_timesjobs = new Jobs_to_timesjobs();
+                    $Jobs_to_timesjobs =  Jobs_to_timesjobs::find($job_id);
                     $Jobs_to_timesjobs->job_id = $job_id;
                     $Jobs_to_timesjobs->times_min_year_exp = request('times_minYearExp');
                     $Jobs_to_timesjobs->times_max_year_exp = request('times_maxYearExp');
@@ -1311,6 +1368,19 @@ class PositionController extends Controller
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     theIndiaJob::dispatch($job_id)->delay($dispach_time);
                 }
+                if (in_array('jobisite', $selectedPortals)) {    //done//
+
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'jobisite';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                    //Job Dispatch
+                  
+                    jobisite_Job::dispatch($job_id)->delay($dispach_time);
+                    
+                }
                 if (in_array('jobrapido', $selectedPortals)) {
                     $job_posted_tos = new JobPostedTo();
                     $job_posted_tos->job_id = $job_id;
@@ -1427,6 +1497,46 @@ class PositionController extends Controller
                     $job_posted_tos->save();
                     // return (new NewJobPostingController())->sendToReed($reedInfo);
                     reedJob::dispatch($reedInfo)->delay($dispach_time);
+                }
+                if (in_array('eluta', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'eluta';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+
+                    eluta_Job::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('jobswype', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'jobswype';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+    
+                    jobswype_Job::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('workcircle', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'workcircle';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+    
+                    workcircle_Job::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('juju', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'juju';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+    
+                    juju_Job::dispatch($job_id)->delay($dispach_time);
                 }
             }
         }

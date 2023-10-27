@@ -214,7 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('add-candidate-to-multiple-pipeline', [CandidateController::class, 'addToMultiplePipeline']);
     Route::post('get-candidate-history', [CandidateController::class, 'getHistory']);
     // Candidate response section //
-    Route::get('all_responses/{job_id}/{portal}', [CandidateResponseController::class, 'allResponses']);
+    Route::get('all_responses/{job_id}/{portal}/{data}', [CandidateResponseController::class, 'allResponses'])->name('all_responses');
     // Route::get('revert-candidate-add',[CandidateResponseController::class, 'getPositionList']);
 
     Route::get('global_serch', function () {
@@ -379,6 +379,10 @@ Route::get('delete_sync_request/{id}', [AnalyseController::class, 'delete_sync_r
 Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments']);
 Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
 Route::get('checkemail', [AnalyseController::class, 'checkemail']);
+
+//Multiple resume matching
+Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
+Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
 
 //Check
 Route::get('test', [CandidateController::class, 'test']);

@@ -53,6 +53,7 @@
 
                     <li class="liwithmargin"><a href="{{ url('analyse') }}">Job Analyse</a></li>
                     @if(Auth::user()->role == 'admin')
+                    <li class="liwithmargin"><a href="{{ url('multiple_resume_matching') }}">Multiple Resume Matching</a></li>
                     <li class="liwithmargin"><a href="{{ url('sync_email_attachments') }}">Sync Email Attachments</a></li>
                     @endif
 
@@ -156,7 +157,7 @@
                     <li class="liwithmargin"><a href="{{ route('candidate.index') }}">Candidate's List</a></li>
                     <li class="liwithmargin"><a href="{{ route('candidate.create') }}">Add Candidate</span></a>
                     </li>
-                    <li class="liwithmargin"><a href="{{ url('all_responses/0/all') }}">Candidate's Revert</a></li>
+                    <li class="liwithmargin"><a href="{{ url('all_responses/0/all/response') }}">Candidate's Revert</a></li>
 
                 </ul>
             </li>

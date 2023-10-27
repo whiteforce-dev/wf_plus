@@ -20,14 +20,6 @@ use Carbon\Carbon;
 
 class NewJobPostingController extends Controller
 {
-    public function jobisite()
-    {
-        return view('newjobportal.jobisite_form');
-    }
-    public function sendToJobisite(Request $request)
-    {
-        return $request;
-    }
 
     public function greenhouse()
     {
@@ -286,49 +278,72 @@ class NewJobPostingController extends Controller
 
     }
 
-    public function eluta()
-    {
-        return view('newjobportal.eluta_form');
-    }
-
-    public function sendToEluta(Request $request)
+    public function sendToEluta($job_id)
     {
 
-        $xml = '<?xml version="1.0" encoding="UTF-8" ?>';
-        $xml .= '<elutaxml xmlns="http://www.eluta.ca/elutaxml" version="1.0">';
-        $xml .= '<employer>';
-        $xml .= '<name>Manitoba Civil Service Commission</name>';
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtoeluta';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'salaryType' => $job->salary_type,
+                'payType' => $job->pay_type,
+                'education'=>$job->edu_qualification,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'industry' => $job->industry,
+                'postalCode' => $job->postal_code,
+                'jobType'=> $job->job_type,
+                'experience'=> $job->min_year_exp,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
 
-        $xml .= '<job>';
-        $xml .= '<title>Senior Financial Analyst</title>';
-        $xml .= '<jobref>unique competition number</jobref>';
-        $xml .= '<joburl>http://www.gov.mb.ca/csc/jobs/mgmt_legal/17151.html</joburl>';
-        $xml .= '<description>';
-        $xml .= 'Job description, qualifications and requirements. Job-seekers may find your
-                position on Eluta based largely on the contents this field, so be sure to include
-                a full job description, including any qualifications required. Short or incomplete
-                descriptions mean that fewer people may find your positions. Do not, however,
-                include company description or other application information in this field.';
-        $xml .= '</description>';
+            if ($res == 1) {
 
-        $xml .= '<occupationcategory>Finance</occupationcategory>';
-        $xml .= '<jobaddress>7 St. Thomas Street</jobaddress>';
-        $xml .= '<jobcity>Selkirk</jobcity>';
-        $xml .= '<jobprovince>Manitoba</jobprovince>';
-        $xml .= '<jobpostalcode>R2A 1G5</jobpostalcode>';
-        $xml .= '<jobtype>Full Time</jobtype>';
-        $xml .= '<salarymin>50120</salarymin>';
-        $xml .= '<salarymax>60522</salarymax>';
-        $xml .= '<salarytype>yearly</salarytype>';
-        $xml .= '<postdate>January 31, 2007</postdate>';
-        $xml .= '<expirydate>February 16, 2007</expirydate>';
-        $xml .= '<division>Manitoba Family Services</division>';
-        $xml .= '</job>';
-        $xml .= '</employer>';
-        $xml .= '</elutaxml>';
-        $response = Response::make($xml, 200);
-        $response->header('Content-Type', 'text/xml');
-        return $response;
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'eluta';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Eluta Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'eluta';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
 
     }
 
@@ -520,139 +535,6 @@ class NewJobPostingController extends Controller
 
     }
 
-    public function jobswype(){
-        return view('newjobportal.jobswype_form');
-    }
-
-    public function sendToJobswype(Request $request){
-        $xml = '<?xml version="1.0" encoding="utf-8"?>';
-        $xml .= '<jobs>';
-
-        // First job entry
-        $xml .= '<job>';
-        $xml .= '<jobtitle>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</jobtitle>';
-        $xml .= '<joblink>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</joblink>';
-        $xml .= '<joblocations>';
-        $xml .= '<location>';
-        $xml .= '<country>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</country>';
-        $xml .= '<state>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</state>';
-        $xml .= '<county>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</county>';
-        $xml .= '<city>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</city>';
-        $xml .= '<postalcode>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</postalcode>';
-        $xml .= '</location>';
-        $xml .= '</joblocations>';
-        $xml .= '<jobmode>';
-        $xml .= '<contracttype/>';
-        $xml .= '<worktime/>';
-        $xml .= '</jobmode>';
-        $xml .= '<jobcategory_Level1/>';
-        $xml .= '<jobcategory_Level2/>';
-        $xml .= '<dates>';
-        $xml .= '<postingdate/>';
-        $xml .= '<updatedate/>';
-        $xml .= '<startdate/>';
-        $xml .= '<expirationdate/>';
-        $xml .= '</dates>';
-        $xml .= '<companyreference>';
-        $xml .= '<companyname>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</companyname>';
-        $xml .= '<companyurl>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</companyurl>';
-        $xml .= '</companyreference>';
-        $xml .= '<salary>';
-        $xml .= '<from/>';
-        $xml .= '<to/>';
-        $xml .= '<currency/>';
-        $xml .= '<period/>';
-        $xml .= '</salary>';
-        $xml .= '<displaycountry/>';
-        $xml .= '<keywords>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</keywords>';
-        $xml .= '</job>';
-
-        // Second job entry
-        $xml .= '<job>';
-        $xml .= '<jobtitle>';
-        $xml .= '<![CDATA[ Chef - Professional Cookery Assessor ]]>';
-        $xml .= '</jobtitle>';
-        $xml .= '<joblink>';
-        $xml .= '<![CDATA[ https://www.domain.com/path/professionalCookeryAccessor.pdf ]]>';
-        $xml .= '</joblink>';
-        $xml .= '<joblocations>';
-        $xml .= '<location>';
-        $xml .= '<country>';
-        $xml .= '<![CDATA[ United Kingdom ]]>';
-        $xml .= '</country>';
-        $xml .= '<state>';
-        $xml .= '<![CDATA[ Wales ]]>';
-        $xml .= '</state>';
-        $xml .= '<county>';
-        $xml .= '<![CDATA[ Cardiff ]]>';
-        $xml .= '</county>';
-        $xml .= '<city>';
-        $xml .= '<![CDATA[ Cardiff ]]>';
-        $xml .= '</city>';
-        $xml .= '<postalcode>';
-        $xml .= '<![CDATA[ CF10 1AU ]]>';
-        $xml .= '</postalcode>';
-        $xml .= '</location>';
-        $xml .= '</joblocations>';
-        $xml .= '<jobmode>';
-        $xml .= '<contracttype/>';
-        $xml .= '<worktime/>';
-        $xml .= '</jobmode>';
-        $xml .= '<jobcategory_Level1/>';
-        $xml .= '<jobcategory_Level2/>';
-        $xml .= '<dates>';
-        $xml .= '<postingdate/>';
-        $xml .= '<updatedate/>';
-        $xml .= '<startdate/>';
-        $xml .= '<expirationdate/>';
-        $xml .= '</dates>';
-        $xml .= '<companyreference>';
-        $xml .= '<companyname>';
-        $xml .= '<![CDATA[ My Real Company ]]>';
-        $xml .= '</companyname>';
-        $xml .= '<companyurl>';
-        $xml .= '<![CDATA[ https://myrealcompany.com ]]>';
-        $xml .= '</companyurl>';
-        $xml .= '</companyreference>';
-        $xml .= '<salary>';
-        $xml .= '<from>30000</from>';
-        $xml .= '<to>35000</to>';
-        $xml .= '<currency>GBP</currency>';
-        $xml .= '<period>Yearly</period>';
-        $xml .= '</salary>';
-        $xml .= '<displaycountry>GB</displaycountry>';
-        $xml .= '<keywords>';
-        $xml .= '<![CDATA[ ]]>';
-        $xml .= '</keywords>';
-        $xml .= '</job>';
-
-        $xml .= '</jobs>';
-
-        $response = response($xml, 200);
-        $response->header('Content-Type', 'text/xml');
-        return $response;
-
-    }
 
     public function clickIndia(){
         return view('newjobportal.clickIndia_form');
@@ -1322,7 +1204,7 @@ class NewJobPostingController extends Controller
             if ($res == 1) {
                 curl_close($curl);
                 $response = new Portalresponse();
-                $response->portal = 'The india Job';
+                $response->portal = 'indiajob';
                 $response->is_success = 1;
                 $response->response = 'Job Posted Successfully in The india Job Jobs';
                 $response->job_id = $job->id;
@@ -1333,7 +1215,7 @@ class NewJobPostingController extends Controller
         } catch (\Exception $e) {
             // return $e->getMessage();
             $response = new Portalresponse();
-            $response->portal = 'The india Job';
+            $response->portal = 'indiajob';
             $response->is_success = 0;
             $response->response = $e->getMessage();
             $response->job_id = $job->id;
@@ -1383,7 +1265,7 @@ class NewJobPostingController extends Controller
             if ($res == 1) {
                 curl_close($curl);
                 $response = new Portalresponse();
-                $response->portal = 'Jobrapido';
+                $response->portal = 'jobrapido';
                 $response->is_success = 1;
                 $response->response = 'Job Posted Successfully in Jobrapido Jobs';
                 $response->job_id = $job->id;
@@ -1394,7 +1276,7 @@ class NewJobPostingController extends Controller
         } catch (\Exception $e) {
             // return $e->getMessage();
             $response = new Portalresponse();
-            $response->portal = 'Jobrapido';
+            $response->portal = 'jobrapido';
             $response->is_success = 0;
             $response->response = $e->getMessage();
             $response->job_id = $job->id;
@@ -1402,5 +1284,254 @@ class NewJobPostingController extends Controller
             return 0;
         }
 
+    }
+
+    public function sendToJobisite($job_id){
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtojobisite';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'jobisite';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Jobisite Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'jobisite';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+    }
+
+    public function sendToJobswype($job_id){
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtojobswype';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'jobswype';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Jobswype Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'jobswype';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+
+    }
+
+    public function sendToWorkCircle($job_id){
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtoworkcircle';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'workcircle';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Workcircle Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'workcircle';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+    }
+
+    public function sendToJuju($job_id){
+
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtojuju';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'juju';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Juju Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'juju';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
     }
 }

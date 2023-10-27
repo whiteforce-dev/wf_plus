@@ -27,8 +27,12 @@
                 </div>
 
                 <ul>
-
-                    <li ><a href="{{ url('all_responses', [$position->id, 'all']) }}" target="_blank" style="color:#e66025">Applied Candidate</a></li>
+                    @php
+                    $appliedCount = \App\Models\CandidateResponse::where('job_id', $position->id)->count();
+                    @endphp
+                    <li ><a href="{{ url('all_responses', ['job_id' => $position->id, 'portal' => 'all', 'data' => 'response']) }}
+                        " target="_blank" style="color:#e66025">Applied Candidate</a>
+                    <span class="badge badge-danger badge-pill">{{ $appliedCount ?? 0 }}</span></li>
                     @if(Auth::user()->id == $position->created_by)
                     <li onclick="openManagerlist({{ $position->id }});">Share Position</li>
                     @endif
@@ -144,24 +148,16 @@
                             <div class="row" style="margin-top: 15px;">
                                 <div class="col-sm-3">
                                     <h4 class="ps">
-                                        @php
-
-                                            $status = $position->portalResponse->where('portal', 'jora')->first();
-                                        @endphp
                                         @include('pages.position.elements.portalStatus', [
-                                            'status' => $status->is_success ?? 0,
+                                            'status' => 1 ?? 0,
                                         ])
                                         White Force
                                     </h4>
                                 </div>
                                 <div class="col-sm-3">
                                     <h4 class="ps">
-                                        @php
-
-                                            $status = $position->portalResponse->where('portal', 'jora')->first();
-                                        @endphp
                                         @include('pages.position.elements.portalStatus', [
-                                            'status' => $status->is_success ?? 0,
+                                            'status' => 1?? 0,
                                         ])
                                         Happiest
                                     </h4>
@@ -433,7 +429,7 @@
                                 <div class="col-sm-3">
                                     <h4 class="ps">
                                         @php
-                                            $status = $position->portalResponse->where('portal', ' The india Job')->first();
+                                            $status = $position->portalResponse->where('portal', 'indiajob')->first();
                                         @endphp
                                         @include('pages.position.elements.portalStatus', [
                                             'status' => $status->is_success ?? 0,
@@ -444,12 +440,23 @@
                                 <div class="col-sm-3">
                                     <h4 class="ps">
                                         @php
-                                            $status = $position->portalResponse->where('portal', ' Jobrapido')->first();
+                                            $status = $position->portalResponse->where('portal', ' jobrapido')->first();
                                         @endphp
                                         @include('pages.position.elements.portalStatus', [
                                             'status' => $status->is_success ?? 0,
                                         ])
                                         Job Rapido
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="ps">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', ' jobisite')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Jobisite
                                     </h4>
                                 </div>
                                 <div class="col-sm-12"
@@ -570,6 +577,50 @@
                                             'status' => $status->is_success ?? 0,
                                         ])
                                        Reed
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="blur">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'eluta')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                       Eluta
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="blur">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'workcircle')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Workcircle
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="blur">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'jobswype')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Jobswype
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="blur">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'juju')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Juju Jobs
                                     </h4>
                                 </div>
                             </div>

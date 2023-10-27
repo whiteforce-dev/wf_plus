@@ -17,6 +17,7 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $request_id;
+    public $timeout = 300; 
 
     /**
      * Create a new job instance.
@@ -55,9 +56,21 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
     
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_TIMEOUT , 600);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             $response = curl_exec($curl);
+            if ($response === false) {
+                if (curl_errno($curl) == 300) {
+                    $sync_request->status = 5;
+                    $sync_request->save();
+                    return 0;
+                } else {
+                    $sync_request->status = 3;
+                    $sync_request->save();
+                    return 0;
+                }
+            }
             $response_data = json_decode($response);
             if(!empty($response_data) && !empty($response_data->data)){
                 $save_candidate_ids = $this->saveData($response_data->data, $sync_request->user_id, $sync_request->software_category);

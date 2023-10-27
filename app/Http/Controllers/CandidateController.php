@@ -245,14 +245,14 @@ class CandidateController extends Controller
             Storage::disk('public_uploads')->put('candidate_resume/' . $filepath, file_get_contents($request->file('resume')));
             $base_path = str_replace('src', '', base_path());
             $temppdfpath = $base_path . "/candidate_resume/" . $filepath;
-            $convertedpdfpath = convertPdfVersion($temppdfpath);
-            if (!empty($convertedpdfpath)) {
-                Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($convertedpdfpath), 'public');
-                unlink($convertedpdfpath);
+            // $convertedpdfpath = convertPdfVersion($temppdfpath);
+            if (!empty($temppdfpath)) {
+                Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
+                unlink($temppdfpath);
             } else {
                 Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
             }
-            unlink($temppdfpath);
+
             $candidate->resume_file = $filepath;
         }
         //-----------------------------------------//

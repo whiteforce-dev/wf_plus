@@ -447,7 +447,7 @@
                     <div class="col-xl-10 offset-1">
                         <div class="row card mx-0">
                             <div class="col-sm-12 p-md-2">
-                                <form action="" method="get" id="searchForm">
+                                <form action="javascript:void(0)" method="get" id="searchForm">
                                     <div class="flex mt-2">
                                         <div class="col font-w600 text-dark mx-2">
                                             From Date<small>(Response Date)</small>
@@ -496,7 +496,7 @@
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <div class="col-3 font-w600 text-black mt-3">
-                                            <button type="submit" class="btn btn-primary col-12 offset btn-block" >Search</button>
+                                            <button type="button" class="btn btn-primary col-12 offset btn-block" id="search" >Search</button>
                                         </div>
                                     </div>
                                 </form>
@@ -508,7 +508,7 @@
                             @include('master.404')
                         </div>
                     @endif
-                    <div class="col-lg-10 offset-1">
+                    <div class="col-lg-10 offset-1" id="applied_candidate">
                         @foreach ($candidates as $candidate)
                         <div class="card">
                             <div class="d-flex justify-content-between card-header">
@@ -521,10 +521,10 @@
 
                                     <div class="positionHeading mx-2">
                                         <h5>{{ ucwords($candidate?->user_name) }}
-                                            <small style="color: #3e2828;
+                                            <!-- <small style="color: #3e2828;
                                         font-size: 11px;
                                         margin-left: 4px;">
-                                                ({{ ucwords($candidate?->publish_to) }})</small>
+                                                ({{ ucwords($candidate?->publish_to) }})</small> -->
                                                 </h5>
 
 
@@ -559,13 +559,15 @@
                                 <div>
 
                                     <div class="dropdown">
-                                        <!-- <div class="d-flex align-items-center" style="justify-content: flex-end;">
-                                            <label class="checkbox-control">
-                                                <input type="checkbox" class="checkbox candidateForSearch"
-                                                    value="{{ $candidate?->id }}" name="chk" onchange="selectedCandidate(this)">
-                                                    <span class="">Card Label</span>
-                                            </label>
-                                        </div> -->
+                                        <div class="d-flex align-items-center" style="justify-content: flex-end;">
+                                            <span class="badge badge-info" style="width: 146px;
+                                            height: 31px;
+                                            border-radius: 5px;
+                                            text-align: center;
+                                            padding: 4px;
+                                            color: #f5efef;
+                                            padding-top: 5px;"> ({{ ucwords($candidate?->publish_to) }})</span>
+                                        </div>
                                         <a href="javascript:void(0)"><span class="btn px-3 py-1 btn-secondary btn-xs mt-4"
                                             data-toggle="modal"
                                             data-target="#myModal2{{ $candidate->id }}">View</span></a>&nbsp;
@@ -712,7 +714,7 @@
                                                     <li class="nav-item" role="presentation"><a
                                                             href="#history-tab{{ $candidate->id }}" data-bs-toggle="tab"
                                                             class="nav-link custom-nav-modal" aria-selected="false"
-                                                            role="tab">History</a>
+                                                            role="tab" onclick="showHistory({{ $candidate->candidate->id }})">History</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content custom-tab-content">
@@ -934,9 +936,9 @@
                                                             <p>No resume available</p>
                                                         @endif
                                                     </div>
-                                                    <div id="history-tab{{ $candidate->id }}" class="tab-pane fade"
-                                                        role="tabpanel">
-                                                        setting
+                                                    <div id="history-tab{{ $candidate->id }}" class="tab-pane fade history"
+                                                        role="tabpanel" >
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -992,77 +994,6 @@
         </div>
     </div>
     <script>
-        // let count = 1;
-        // var arrayOfIds = new Array();
-
-        // function selectedCandidate(e) {
-        //     console.log(e);
-        //     if (e.checked == true) {
-        //         arrayOfIds.push(e.value);
-        //         document.querySelector('#sendMail').classList.remove('collapse');
-        //         console.log(arrayOfIds);
-        //     } else {
-        //         arrayOfIds = arrayOfIds.filter(item => item !== e.value);
-        //         console.log(arrayOfIds);
-        //     }
-        // }
-
-        // function selects() {
-        //     var ele = document.getElementsByName('chk');
-        //     var btn = document.querySelector('#select_all');
-        //     var card = document.getElementsByClassName('candidate_card');
-        //     if (count == 1) {
-        //         document.querySelector('#select_all').innerHTML = "Deselect All";
-        //         document.querySelector('#sendMail').classList.remove('collapse');
-        //         btn.classList.remove('btn-success');
-        //         btn.classList.add('btn-primary');
-
-        //         for (var i = 0; i < ele.length; i++) {
-        //             if (ele[i].type == 'checkbox')
-        //                 ele[i].checked = true;
-        //             card[i].style.border = "1px solid #EB8153";
-        //             arrayOfIds.push(ele[i].value);
-        //         }
-        //         count = 0;
-        //         console.log(arrayOfIds);
-        //     } else if (count == 0) {
-        //         document.querySelector('#select_all').innerHTML = "Select All";
-        //         btn.classList.remove('btn-primary');
-        //         document.querySelector('#sendMail').classList.add('collapse');
-        //         btn.classList.add('btn-success');
-        //         for (var i = 0; i < ele.length; i++) {
-        //             if (ele[i].type == 'checkbox')
-        //                 ele[i].checked = false;
-        //             card[i].style.border = "none";
-        //         }
-        //         arrayOfIds = [];
-        //         count = 1;
-        //         console.log(arrayOfIds);
-        //     }
-        // }
-
-        // function sendMail() {
-        //     let uniqueArray = [...new Set(arrayOfIds)];
-        //     let form = document.querySelector('#emailForm');
-        //     $.ajax({
-        //         url: "send_mail_to_candidate",
-        //         type: "GET",
-        //         data: {
-        //             ids: uniqueArray,
-        //             subject: form[0].value,
-        //             title: form[1].value,
-        //             description: form[2].value
-        //         },
-        //         success: function(response) {
-        //             console.log(response);
-        //         },
-        //         error: function(error) {
-        //             console.log(error);
-        //         }
-        //     })
-        //     form.reset();
-        //     document.querySelector('#close').click();
-        // }
 
         function showPositionList(candidateId) {
         $.ajax({
@@ -1137,12 +1068,61 @@
 
     // searching function form action
     var form = document.getElementById('searchForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        var currentURL = window.location.href;
-        form.action = currentURL;
-    form.submit();
-    });
+    var btn = document.querySelector('#search');
+    btn.addEventListener('click', function(event) {
+            event.preventDefault();
+            var currentURL = window.location.href;
+            //form.action = currentURL;
+            <!-- console.log(currentURL); -->
+            var data = {}; 
+            for (var i = 0; i < form.length; i++) {
+                if (form[i].type !== 'submit') {
+                    data[form[i].name] = form[i].value;
+                }
+            }
+            var baseUrl = currentURL.split('/').slice(0, -1).join('/');
+            var newURL = baseUrl + '/' + Object.keys(data).map(key => key + '=' + encodeURIComponent(data[key])).join('&');
+            console.log(newURL);
+          $.ajax({
+            url:newURL,
+            type:"GET",
+            success:function(response){
+                console.log(response);
+                $('#applied_candidate').empty();
+                $("#applied_candidate").html(response);
+            },
+            error:function(error){
+                console.log(error);
+            }
+           });
+        });
+
+        function showHistory(id){
+            $.ajax({
+                url:"{{ url('get-candidate-history')  }}",
+                type:"POST",
+                data:{
+                    _token :"{{ csrf_token() }}",
+                    candidateId:id
+                },
+                success:function(response){
+                    console.log(response);
+                    if (response) {
+                        $('.history').html("");
+                        $('.history').html(response);
+                    } else {
+                        $('.grid').html(`<div align="center">
+                        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_NlLnID.json"
+                            background="transparent" speed="1" style="width: 300px; height: 300px;"
+                            autoplay></lottie-player>
+                        </div>`);
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
+        }
 
     </script>
 @endsection
