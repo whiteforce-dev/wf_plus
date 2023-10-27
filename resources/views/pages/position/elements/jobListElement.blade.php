@@ -459,6 +459,28 @@
                                         Jobisite
                                     </h4>
                                 </div>
+                                <div class="col-sm-3">
+                                    <h4 class="ps">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', ' econ')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Econjobs
+                                    </h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="ps">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'cari')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Carijobs
+                                    </h4>
+                                </div>
                                 <div class="col-sm-12"
                                     style="border-bottom: 1px dashed #00377130; margin: 12px 0px; margin-left:-24px;">
                                 </div>

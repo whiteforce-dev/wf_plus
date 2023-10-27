@@ -1240,7 +1240,29 @@
                                 class="checkbox-input jobportal" id="econjobs" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="{{ url('logo/econjobs.jpg') }}" width="300px"alt="">
+                                    <img src="{{ url('logo/econ.png') }}" width="300px"alt="">
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" value="carijobs" name="jobPortals[]"
+                                class="checkbox-input jobportal" id="carijobs" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{{ url('logo/cari.png') }}" width="300px"alt="">
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" value="bebee" name="jobPortals[]"
+                                class="checkbox-input jobportal" id="bebee" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{{ url('logo/bebee.jpg') }}" width="300px"alt="">
                                 </span>
                             </span>
                         </label>

@@ -1534,4 +1534,196 @@ class NewJobPostingController extends Controller
             return 0;
         }
     }
+
+      public function sendToEconJob($job_id){
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtoeconjobs';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'econ';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Econ Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'econ';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+    }
+
+    public function sendToCariJob($job_id){
+
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtocarijobs';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'education' => $job->edu_qualification,
+                'industry' => $job->industry,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'cari';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Cari Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'cari';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+    }
+
+    public function sendToBebeeJob($job_id){
+
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtobebeejobs';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'jobType'=> $job->job_type,
+                'salaryType'=> $job->salary_type,
+                'closeDate'=>$job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'education' => $job->edu_qualification,
+                'industry' => $job->industry,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
+            // return $data;
+           
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
+
+            if ($res == 1) {
+                curl_close($curl);
+                $response = new Portalresponse();
+                $response->portal = 'bebee';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Bebee Jobs';
+                $response->job_id = $job->id;
+                $response->save();
+                return 1;
+                
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'bebee';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+    }
 }
