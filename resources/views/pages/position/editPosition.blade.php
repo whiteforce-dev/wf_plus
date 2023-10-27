@@ -1425,6 +1425,17 @@
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
+                                <input type="checkbox" value="econjobs" name="jobPortals[]"
+                                    class="checkbox-input jobportal" id="econjobs" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/econjobs.jpg') }}" width="300px"alt="">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
                                 <input type="checkbox" name="jobPortals[]" class="checkbox-input" value="happiest"
                                     checked>
                                 <span class="checkbox-tile">
