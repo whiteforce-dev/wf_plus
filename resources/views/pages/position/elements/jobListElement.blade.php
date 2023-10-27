@@ -481,6 +481,17 @@
                                         Carijobs
                                     </h4>
                                 </div>
+                                <div class="col-sm-3">
+                                    <h4 class="ps">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'bebee')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Bebeejobs
+                                    </h4>
+                                </div>
                                 <div class="col-sm-12"
                                     style="border-bottom: 1px dashed #00377130; margin: 12px 0px; margin-left:-24px;">
                                 </div>
