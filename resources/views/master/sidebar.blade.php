@@ -30,7 +30,7 @@
             <p class="email"><span style="color:#00ada3;font-weight:600;">{{ ucwords(Auth::user()->email) }}</span>
             </p>
         </div>
-        <ul class="metismenu" id="menu">
+        <ul class="metismenu" id="menu" style="margin-top:-22px;">
             <li class="nav-label">Dashboard</li>
             <li><a class="has-arrow ai-icon " href="javascript:void()" aria-expanded="false">
                     <i data-feather="home"></i>
