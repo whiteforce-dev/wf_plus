@@ -32,8 +32,8 @@ Route::post('facebook/{job_id}',[CommonController::class, 'sendToFacebookGroup']
 Route::post('jobsora/{job_id}',[NewJobPostingController::class, 'sendToJobsora']);
 Route::post('Learn4Good/{job_id}',[NewJobPostingController::class, 'sendToLearn4Good']);Route::post('jobgrin/{job_id}',[NewJobPostingController::class, 'sendtojobgrin']);
 Route::post('careerbliss/{job_id}',[NewJobPostingController::class, 'sendToCareerBliss']);Route::post('theindiajob/{job_id}',[NewJobPostingController::class, 'sendToTheIndiaJob']);Route::post('jobrapido/{job_id}',[NewJobPostingController::class, 'sendToJobRapido']);Route::post('talent/{job_id}',[NewJobPostingController::class, 'sendToTalentJob']);
+Route::post('eluta/{job_id}',[NewJobPostingController::class, 'sendToEluta']);
+Route::post('jobisite/{job_id}',[NewJobPostingController::class, 'sendToJobisite']);Route::post('jobswype/{job_id}',[NewJobPostingController::class, 'sendToJobswype']);Route::post('workcircle/{job_id}',[NewJobPostingController::class, 'sendToWorkCircle']);Route::post('juju/{job_id}',[NewJobPostingController::class, 'sendToJuju']);
 Route::get('getshine',[CandidateResponseController::class, 'getresponseshine']);
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     
-// }
+
 Route::post('apply_candidate_happiest',[CandidateResponseController::class, 'candidateFromHappiest']);

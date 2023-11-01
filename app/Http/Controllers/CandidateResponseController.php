@@ -24,42 +24,57 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidateResponseController extends Controller
 {
-    public function allResponses($id,$portal,Request $request){
+    public function allResponses($id,$portal,$data){
+        
         $currentUser=Auth::user()->id;
         $currentUser = User::find($currentUser);
         $childUsers = $currentUser->descendantIds();
         array_unshift($childUsers,$currentUser->id);
         $positionsId=Position::whereIn('created_by',$childUsers)->where('is_active',1)->pluck('id')->toArray();
-      
         $currentUser=Auth::user()->role;
-        $fromDate = $request->input('fromDate');
-        $toDate = $request->input('toDate');
-        $minExp = $request->input('minExp');
-        $maxExp = $request->input('maxExp');
-        $Min_Current_CTC = $request->input('minCtc');
-        $Max_Current_CTC = $request->input('maxCtc');
-        $min_Expected_Salary = $request->input('minExpectedCtc');
-        $max_Expected_Salary = $request->input('maxExpectedCtc');
+        if($data !="response"){
+            parse_str($data, $queryParameters);
+            $fromDate = $queryParameters['fromDate'];;
+            $toDate = $queryParameters['toDate'];
+            $minExp = $queryParameters['minExp'];
+            $maxExp = $queryParameters['maxExp'];
+            $Min_Current_CTC = $queryParameters['minCtc'];
+            $Max_Current_CTC = $queryParameters['maxCtc'];
+            $min_Expected_Salary = $queryParameters['minExpectedCtc'];
+            $max_Expected_Salary =$queryParameters['maxExpectedCtc'];
+            $candidates = CandidateResponse::with('candidate')
+                    ->whereIn('job_id', $positionsId)
+                    ->where(function ($query) use ($fromDate, $toDate) {
+                        $query->where('created_at', '>=', $fromDate)
+                            ->orWhere('created_at', '<=', $toDate);
+                    })
+                    ->orWhereHas('candidate',function ($query) use ($minExp, $maxExp) {
+                        $query->where('total_experience', '>=', $minExp)
+                            ->orWhere('total_experience', '<=', $maxExp);
+                    })
+                    ->orWhereHas('candidate',function ($query) use ($Min_Current_CTC, $Max_Current_CTC) {
+                        $query->where('current_salary', '>=', $Min_Current_CTC)
+                            ->orWhere('current_salary', '<=', $Max_Current_CTC);
+                    })
+                    ->orWhereHas('candidate',function ($query) use ($min_Expected_Salary, $max_Expected_Salary) {
+                        $query->where('expected_salary', '>=', $min_Expected_Salary)
+                            ->orWhere('expected_salary', '<=', $max_Expected_Salary);
+                    })
+                    ->orderBy('id', 'DESC')
+                    ->paginate(30);
+                    
+                    $candidates->each(function ($candidate) {
+                        if($candidate->publish_to != "shine") {
+                            if (!empty($candidate->resume)) {
+                                $disk = Storage::disk('s3');
+                                $candidate->resume = $disk->temporaryUrl('candidate_resume/' . $candidate->resume, now()->addMinutes(5));
+                            }
+                        }
+                    });
+             return view('pages.candidate.candidate_response_data',compact('candidates','currentUser'));
+        }
 
-        // if (!empty($fromDate) || !empty($toDate) || !empty($minExp) || !empty($maxExp) || !empty($Min_Current_CTC) || !empty($Max_Current_CTC) || !empty($min_Expected_Salary) || !empty($max_Expected_Salary)) {
-        //     $candidates = CandidateResponse::with(['candidate' => function ($query) use ($Min_Current_CTC, $Max_Current_CTC, $min_Expected_Salary, $max_Expected_Salary) {
-        //         $query->where(function ($query) use ($Min_Current_CTC, $Max_Current_CTC) {
-        //             $query->whereBetween('current_salary', [$Min_Current_CTC, $Max_Current_CTC]);
-        //         })->orWhere(function ($query) use ($min_Expected_Salary, $max_Expected_Salary) {
-        //             $query->whereBetween('expected_salary', [$min_Expected_Salary, $max_Expected_Salary]);
-        //         });
-        //     }])
-        //     ->whereIn('job_id', $positionsId)
-        //     ->orderBy('id', 'DESC')
-        //     ->where('software_category', Auth::user()->software_category)
-        //     ->paginate(30);
-        //     // return $candidates;
-        //     return view('pages.candidate.candidate_response',compact('candidates','currentUser'));
-        // }
-
-
-        if($portal=="all" && $id == 0){
-            
+        if($portal=="all" && $id == 0 ){
             $candidates=CandidateResponse::with('candidate')->whereIn('job_id',$positionsId)->orderBy('id','DESC')->paginate(30);
             $candidateCount=CandidateResponse::with('candidate')->whereIn('job_id',$positionsId)->orderBy('id','DESC')->count();
 
@@ -109,10 +124,13 @@ class CandidateResponseController extends Controller
         $countries=Country::get();
         $cities=Cities::get();
         $position=Position::where('id',$jobId)->first();
-        return view('pages.candidate.applied_candidate',compact('jobId','portalName','sources','degrees','languages','industries','countries','cities','position'));
+        $user = User::where('id',$position->created_by)->first();
+        $category = $user->software_category ?? "onrole";
+        return view('pages.candidate.applied_candidate',compact('jobId','portalName','sources','degrees','languages','industries','countries','cities','position','category'));
     }
 
     public function candidateFromPortal(Request $request){
+        // return $request;
         $request->validate([
             "name"=> 'required',
             "contact"=> 'required',
@@ -188,7 +206,7 @@ class CandidateResponseController extends Controller
             $candidateResponse->user_mobile=$request->contact;
             $candidateResponse->resume=$candidate->resume_file;
             $candidateResponse->candidate_id=$candidate->id;
-            $candidateResponse->software_category=Auth::user()->software_category??'onrole';
+            $candidateResponse->software_category=$request->category;
             $candidateResponse->save();
             return back()->with('success',"Job Applied successfully");
     }
@@ -222,10 +240,11 @@ class CandidateResponseController extends Controller
                 foreach ($responses_shine->results as $key => $value) {
                 $Response_candidates = CandidateResponse::where(['user_email' => $value->email, 'job_id' => $job_id, 'publish_to' => 'shine'])->first();
                 $candidate=Candidate::where(['email' => $value->email,])->first();
-                if ($Response_candidates == "" && $candidate=='') {
+                if (isset($Response_candidates) && isset($candidate)) {
                     $Response_candidates = new CandidateResponse();
                     $candidate = new Candidate();
                 }
+
 
                 $Response_candidates->job_id = $x->position_id ?? 0;
                 //$Response_candidates->shine_job_id = $shine_job_id;

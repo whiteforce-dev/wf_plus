@@ -168,15 +168,13 @@ class AnalyseController extends Controller
 
 	public function checkemail()
 	{
-		set_time_limit(0);
-		ini_set('memory_limit', '-1');
 		$url = 'https://happyhire.co.in/mail_parsing/api/';
 		$data = [
-			"type"       => "zoho",
-			"email"      => "support@white-force.in",
-			"password"   => "8tqdCVktCPAi",
-			"start_date" => "17-10-2023",
-			"end_date"   => "19-10-2023"
+			"type"       => "gmail",
+			"email"      => "rneeta867@gmail.com",
+			"password"   => "ewvfjfqwezzbvelg",
+			"start_date" => "25-07-2023",
+			"end_date"   => "26-07-2023"
 		];
 
 		$curl = curl_init($url);
@@ -184,8 +182,50 @@ class AnalyseController extends Controller
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		$response = curl_exec($curl);
-		$response_data = json_decode($response);
-		dd($response_data->data);
+		return $response;
+		$click_res = json_decode($response);
+		dd($click_res);
+	}
+
+	
+	public function multiple_resume_matching(){
+        return view('pages.analyse.multiple_resume_matching');
+	}
+
+	public function multiple_resume_matching_result(Request $request){
+		$client = new Client();
+		
+		$apiEndpoint = 'https://happyhire.co.in/bulk_best_candidate/api/';
+		
+		$multipart = [];
+
+		foreach ($request->file('resumes') as $file) {
+			$multipart[] = [
+				'name' => 'res',
+				'contents' => fopen($file, 'r'),
+				'filename' => $file->getClientOriginalName(),
+			];
+		}
+
+		$jdFile = $request->file('jd');
+		$multipart[] = [
+			'name' => 'jd',
+			'contents' => fopen($jdFile, 'r'),
+			'filename' => $jdFile->getClientOriginalName(),
+		];
+		$response = $client->post($apiEndpoint, [
+			'multipart' => $multipart,
+		]);
+
+		$statusCode = $response->getStatusCode();
+		$responseBody = $response->getBody()->getContents();
+        $responseBodyData = json_decode($responseBody);
+		$resumes = $responseBodyData->resume;
+		$best_candidates = $responseBodyData->best_candidate;
+		
+		$tools_and_technologies = 'Tools and technologies';
+		
+		return view('pages.analyse.multiple_resume_matching_data',compact('resumes','best_candidates','tools_and_technologies'));
 	}
 
 	public function multiple_resume_matching(){

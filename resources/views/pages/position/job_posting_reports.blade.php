@@ -689,7 +689,7 @@
     </div>
     <script>
         function getName(id, portal) {
-            var url = 'all_responses/' + id + '/' + portal;
+            var url = 'all_responses/' + id + '/' + portal +'/'+'response';
             window.open(url, "_self");
         }
     </script>

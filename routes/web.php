@@ -214,7 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('add-candidate-to-multiple-pipeline', [CandidateController::class, 'addToMultiplePipeline']);
     Route::post('get-candidate-history', [CandidateController::class, 'getHistory']);
     // Candidate response section //
-    Route::get('all_responses/{job_id}/{portal}', [CandidateResponseController::class, 'allResponses']);
+    Route::get('all_responses/{job_id}/{portal}/{data}', [CandidateResponseController::class, 'allResponses'])->name('all_responses');
     // Route::get('revert-candidate-add',[CandidateResponseController::class, 'getPositionList']);
 
     Route::get('global_serch', function () {

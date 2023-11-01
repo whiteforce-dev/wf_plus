@@ -1425,6 +1425,17 @@
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
+                                <input type="checkbox" value="econjobs" name="jobPortals[]"
+                                    class="checkbox-input jobportal" id="econjobs" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/econjobs.jpg') }}" width="300px"alt="">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
                                 <input type="checkbox" name="jobPortals[]" class="checkbox-input" value="happiest"
                                     checked>
                                 <span class="checkbox-tile">
@@ -1576,6 +1587,54 @@
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/reed.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" value="eluta" name="jobPortals[]"
+                                    class="checkbox-input in_jobportal" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/eluta.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" value="jobswype" name="jobPortals[]"
+                                    class="checkbox-input in_jobportal" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/jobswype.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" value="workcircle" name="jobPortals[]"
+                                    class="checkbox-input in_jobportal" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/workcircle.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" value="juju" name="jobPortals[]"
+                                    class="checkbox-input in_jobportal" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/juju.jpg') }}" alt="">
                                     </span>
     
                                 </span>

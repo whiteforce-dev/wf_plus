@@ -177,15 +177,17 @@
     }
 </style>
 
+
+
+
+
 <link href="{{ url('assets/css/positionstyle.css') }}" rel="stylesheet">
 <div class="content-body">
-    <a href="{{ url('https://white-force.com/plus/tutorial/#positiondiv') }}" target="_blank">
-        <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-    </a>
     <div class="container mt-0">
         @php
         $checktype = $type ?? 0;
         @endphp
+
         <div class="row">
             <div class="custom-tab-1 col-sm-6">
                 <ul class="nav nav-tabs">
@@ -224,17 +226,16 @@
         <div class="tab-content">
             <div class="tab-pane fade active show" id="position-section" role="tabpanel">
                 <div class="pt-4">
-
-
+                   
+                    
                     @if ($checktype == 0)
                     <div class="row">
                         <div class="col-sm-11">
                             <input type="search" onblur="searchPosition(this);" id="search_query" name="search_query" class="form-control form-control-sm" placeholder="Search positions by enter @Position name or @Client name">
                             <small class="pull-right" style="margin-right: 8px; margin-top: 10px;">Press Enter to show search result</small>
-                        </div>
+                        </div>        
                     </div>
                     <div id="positions" class=" tab-pane active" style="margin-top:0px"><br>
-                        
                         @if (count($Positions))
                         @foreach ($Positions as $key => $position)
                         @include(
@@ -243,7 +244,7 @@
                         @endforeach
                         <br>
                         <div class="pagination-gutter" style="background: none;">
-                            {{ $Positions->links() }}
+                            {{ $Positions->appends(request()->except('page'))->links() }}
                         </div>
                         @else
                         <div class="card">
@@ -366,7 +367,7 @@
                 $('#modal-section').html(response);
                 $('#rightModal').modal('show');
             });
-
+            
         }
         function openManagerlist(position) {
 
@@ -378,7 +379,7 @@
                 $('#rightModal').modal('show');
             });
             // $('#rightModal').modal('show');
-            //
+            // 
         }
 
         function searchPosition(dis){
@@ -400,6 +401,6 @@
         });
 
 
-
+        
 </script>
 @endsection

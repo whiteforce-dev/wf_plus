@@ -128,6 +128,7 @@
                                                     <input type="text" id="json_row" name="json_row" hidden>
                                                     <input type="text" id="job_id" name="job_id" value="{{ $jobId }}" hidden>
                                                     <input type="text" id="portal_name" name="portal_name" value="{{ $portalName }}" hidden>
+                                                    <input type="text" id="category" name="category" value="{{ $category }}" hidden>
                                                     <input type="file" id="resume"class="form-control"
                                                       accept="application/pdf" name="resume">
                                                 </div>
