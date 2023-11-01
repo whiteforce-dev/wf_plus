@@ -8,11 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TimesjobController;
 use App\Jobs\adzunaIndia_Job;
 use App\Jobs\adzunaUSA_job;
+use App\Jobs\bebee_Job;
 use App\Jobs\careerjet_Job;
+use App\Jobs\cari_Job;
 use App\Jobs\carrierblissJob;
 use App\Jobs\clickIndiaJob;
 use App\Jobs\cvLibrary_Job;
 use App\Jobs\drJob_job;
+use App\Jobs\econ_Job;
 use App\Jobs\eluta_Job;
 use App\Jobs\facebookJob;
 use App\Jobs\google_Job;
@@ -739,6 +742,42 @@ class PositionController extends Controller
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 talentJob::dispatch($job_id)->delay($dispach_time);
             }
+            if (in_array('econjobs', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'econjobs';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+               
+                //Job Dispatch
+                // return (new NewJobPostingController())->sendTojobsora($job_id);
+                econ_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('carijobs', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'carijobs';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+               
+                //Job Dispatch
+                // return (new NewJobPostingController())->sendTojobsora($job_id);
+                cari_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('bebee', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'bebee';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+               
+                //Job Dispatch
+                // return (new NewJobPostingController())->sendTojobsora($job_id);
+                bebee_Job::dispatch($job_id)->delay($dispach_time);
+            }
 
             //------------------international portal------------
 
@@ -1392,6 +1431,42 @@ class PositionController extends Controller
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     jobrapidoJob::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('econjobs', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'econjobs';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                   
+                    //Job Dispatch
+                    // return (new NewJobPostingController())->sendTojobsora($job_id);
+                    econ_Job::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('carijobs', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'carijobs';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                   
+                    //Job Dispatch
+                    // return (new NewJobPostingController())->sendTojobsora($job_id);
+                    cari_Job::dispatch($job_id)->delay($dispach_time);
+                }
+                if (in_array('bebee', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'bebee';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                   
+                    //Job Dispatch
+                    // return (new NewJobPostingController())->sendTojobsora($job_id);
+                    bebee_Job::dispatch($job_id)->delay($dispach_time);
                 }
                 //-----------international portal------------
                 if (in_array('job_vertise_inter', $selectedPortals)) {
