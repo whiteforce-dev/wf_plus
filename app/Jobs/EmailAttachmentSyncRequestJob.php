@@ -17,6 +17,7 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $request_id;
+    public $timeout = 300; 
 
     /**
      * Create a new job instance.
@@ -55,9 +56,21 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
     
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_TIMEOUT , 600);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             $response = curl_exec($curl);
+            if ($response === false) {
+                if (curl_errno($curl) == 300) {
+                    $sync_request->status = 5;
+                    $sync_request->save();
+                    return 0;
+                } else {
+                    $sync_request->status = 3;
+                    $sync_request->save();
+                    return 0;
+                }
+            }
             $response_data = json_decode($response);
             if(!empty($response_data) && !empty($response_data->data)){
                 $save_candidate_ids = $this->saveData($response_data->data, $sync_request->user_id, $sync_request->software_category);
@@ -95,6 +108,22 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
                     $candidate->added_from = 'email';
                     $candidate->created_by = $user_id;
                     $candidate->software_category = $software_category;
+                    
+                    if (!empty($data->PDF_Path)) {
+                        $filepath = time() . '_' . rand() . '.pdf';
+                        Storage::disk('public_uploads')->put('candidate_resume/' . $filepath, file_get_contents($data->PDF_Path));
+                        $base_path = str_replace('src', '', base_path());
+                        $temppdfpath = $base_path . "/candidate_resume/" . $filepath;
+                        // $convertedpdfpath = convertPdfVersion($temppdfpath);
+                        if (!empty($temppdfpath)) {
+                            Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
+                            unlink($temppdfpath);
+                        } else {
+                            Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
+                        }
+            
+                        $candidate->resume_file = $filepath;
+                    }
                     $candidate->save();
                     array_push($save_candidate_ids,$candidate->id);
                 }

@@ -185,6 +185,8 @@
                                                                                 <span class="badge badge-danger">Failed</span>
                                                                                 @elseif($sync_request->status == 4)
                                                                                 <span class="badge badge-secondary" style="background:#838383">Data Not Found</span>
+                                                                                @elseif($sync_request->status == 5)
+                                                                                <span class="badge badge-secondary" style="background-color:#b85a5a">Time Out</span>
                                                                                 @endif
                                                                             </h5>
                                                                         </div>

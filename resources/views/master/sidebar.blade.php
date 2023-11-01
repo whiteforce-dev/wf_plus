@@ -53,6 +53,7 @@
 
                     <li class="liwithmargin"><a href="{{ url('analyse') }}">Job Analyse</a></li>
                     @if(Auth::user()->role == 'admin')
+                    <li class="liwithmargin"><a href="{{ url('multiple_resume_matching') }}">Multiple Resume Matching</a></li>
                     <li class="liwithmargin"><a href="{{ url('sync_email_attachments') }}">Sync Email Attachments</a></li>
                     @endif
 

@@ -380,6 +380,10 @@ Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_atta
 Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
 Route::get('checkemail', [AnalyseController::class, 'checkemail']);
 
+//Multiple resume matching
+Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
+Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
+
 //Check
 Route::get('test', [CandidateController::class, 'test']);
 

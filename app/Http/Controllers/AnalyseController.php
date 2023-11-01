@@ -187,4 +187,44 @@ class AnalyseController extends Controller
 		$response_data = json_decode($response);
 		dd($response_data->data);
 	}
+
+	public function multiple_resume_matching(){
+        return view('pages.analyse.multiple_resume_matching');
+	}
+
+	public function multiple_resume_matching_result(Request $request){
+		$client = new Client();
+		
+		$apiEndpoint = 'https://happyhire.co.in/bulk_best_candidate/api/';
+		
+		$multipart = [];
+
+		foreach ($request->file('resumes') as $file) {
+			$multipart[] = [
+				'name' => 'res',
+				'contents' => fopen($file, 'r'),
+				'filename' => $file->getClientOriginalName(),
+			];
+		}
+
+		$jdFile = $request->file('jd');
+		$multipart[] = [
+			'name' => 'jd',
+			'contents' => fopen($jdFile, 'r'),
+			'filename' => $jdFile->getClientOriginalName(),
+		];
+		$response = $client->post($apiEndpoint, [
+			'multipart' => $multipart,
+		]);
+
+		$statusCode = $response->getStatusCode();
+		$responseBody = $response->getBody()->getContents();
+        $responseBodyData = json_decode($responseBody);
+		$resumes = $responseBodyData->resume;
+		$best_candidates = $responseBodyData->best_candidate;
+		
+		$tools_and_technologies = 'Tools and technologies';
+		
+		return view('pages.analyse.multiple_resume_matching_data',compact('resumes','best_candidates','tools_and_technologies'));
+	}
 }
