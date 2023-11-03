@@ -10,6 +10,9 @@
                 <h6>{{ $date }}</h6>
             </th>
             @endforeach
+            <th>
+                <h6>Total Count</h6>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -32,42 +35,14 @@
                 </h6>
             </td>
             @endforeach
+            <td class="text-black font-w600">
+                {{ $data["total"] }}
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
-{{-- <div class="modal right fade right-Modal" id="candidates" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header custom-modal-header">
-                <div class="d-flex flex-wrap align-items-center w-100 justify-content-between">
-                    <div class="position_Information d-flex flex-wrap align-items-center">
-                        <!-- <input type="text" id="searchQuery"
-                            placeholder="Serach Position By Name, Client Name or Number Of Position"
-                            class="form-control" onkeyup="getC()">
-                        <div class="m-2 d-flex between">
-                            <small>Checked Position will see you
-                                after clicking the button</small>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="modal-body custom-modal-body">
-                <div class="custom-tab-1">
-                    <div class="tab-content custom-tab-content">
-                        <div id="details-tab" class="tab-pane fade active show" role="tabpanel">
-                            <div id="can_search_sec">
-                                <ul class="grid">
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
+ 
 
 <script>
     function showChild(id) {

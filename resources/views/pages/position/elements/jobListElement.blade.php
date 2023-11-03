@@ -40,6 +40,7 @@
                     <li><a href="{{ route('related_candidate', [$position->id]) }}"  target="_blank" style="color:#e66025">Related Candidate</a></li>
                     {{-- @endif --}}
                     <li onclick="openJobPostingReport({{ $position->id }});">Job Posting Report</li>
+                    <li onclick="AddQuestionAnswer({{ $position->id }});">Add Interview Q&A</li>
                 </ul>
 
                 {{-- <div class="col-sm-12 mt-2 mb-2" style="border-bottom: 1px dashed #00377130; ">
@@ -492,6 +493,17 @@
                                         Bebeejobs
                                     </h4>
                                 </div>
+                                <div class="col-sm-3">
+                                    <h4 class="ps">
+                                        @php
+                                            $status = $position->portalResponse->where('portal', 'jobinventory')->first();
+                                        @endphp
+                                        @include('pages.position.elements.portalStatus', [
+                                            'status' => $status->is_success ?? 0,
+                                        ])
+                                        Jobinventory
+                                    </h4>
+                                </div>
                                 <div class="col-sm-12"
                                     style="border-bottom: 1px dashed #00377130; margin: 12px 0px; margin-left:-24px;">
                                 </div>
@@ -664,8 +676,9 @@
                 </div>
                 <div class="d-flex justify-content-around" align="center">
                     <p>
-                        Parent <br> <span style="font-weight: 500; font-size: 14px;"
-                            class="ps">{{ $position->findUserData->realparent->name ?? $position->findUserData->realparent->name }}</span>
+                        Parent <br> 
+                        <span style="font-weight: 500; font-size: 14px;"
+                            class="ps"></span>
                     </p>
                     <p>
                         Alloted To <br> <span style="font-weight: 500; font-size: 14px;" class="ps">{{ $position->findUserData->name ?? $position->findUserData->name }}

@@ -59,7 +59,6 @@ class AnalyseController extends Controller
 
 				$score = $data->data['score'][0] ?? 0;
 
-
 				//Missing Keywords
 				$missing_tools_and_technologies = $missing_keywords['Tools_and_technologies'] ?? [];
 				$missing_role = $missing_keywords['Role'] ?? [];
@@ -81,6 +80,7 @@ class AnalyseController extends Controller
 				$analysis = new Analysis();
 				$analysis->user_id = Auth::user()->id;
 				$analysis->software_category = Auth::user()->software_category;
+				$analysis->score = $score;
 				$analysis->save();
 
 
@@ -182,7 +182,7 @@ class AnalyseController extends Controller
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		$response = curl_exec($curl);
-		return $response;
+		//return $response;
 		$click_res = json_decode($response);
 		dd($click_res);
 	}

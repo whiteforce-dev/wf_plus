@@ -13,7 +13,7 @@
                 Date<small style="color:red">*</small></label>
             <div class="col-sm-9">
                 <input type="date" class="form-control" name="interview_date"
-                    value="{{ $interview_date ?? '' }}"placeholder="Interview Date" required>
+                    value="{{ $interview_date ?? '' }}"placeholder="Interview Date" min="{{ date("Y-m-d") }}" required>
             </div>
         </div>
         <div class="mb-3 row">

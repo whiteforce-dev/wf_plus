@@ -38,14 +38,40 @@ thead {
   top: 0;
   background-color: #f2f2f2;
 }
-
+#my_toast {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
 
 tfoot {
   position: sticky;
   bottom: 0;
   background-color: #f2f2f2;
 }
+.table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
+<!-- Include Bootstrap CSS and JavaScript -->
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="col-xl-12 col-lg-12">
@@ -90,7 +116,7 @@ tfoot {
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive card" id="analysis_table">
+                    <div class="table-responsive card table-scroll" id="analysis_table">
                         @include('master.404')
                     </div>
                 </div>
@@ -118,6 +144,7 @@ tfoot {
             }
         })
     }
+
 </script>
 
 @endsection

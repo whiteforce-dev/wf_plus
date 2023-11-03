@@ -45,6 +45,26 @@ tfoot {
   bottom: 0;
   background-color: #f2f2f2;
 }
+.table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -90,9 +110,9 @@ tfoot {
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive">
+                    <div class="table-responsive table-scroll">
                         <table id="calling_sheet_table" class="table table-bordered table-striped" style="min-width: 845px" role="grid">
-                            <thead>
+                            <thead id="stickytypeheader">
                                 <tr role="row">
                                     <th><h6>Managers</h6></th>
                                     @foreach($dates as $date)
@@ -101,6 +121,33 @@ tfoot {
                                 </tr>
                             </thead>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal right fade right-Modal" id="candidates" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header custom-modal-header">
+                <div class="d-flex flex-wrap align-items-center w-100 justify-content-between">
+                    <div class="position_Information d-flex flex-wrap align-items-center">
+                        <h4>Repeted Number Information</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body custom-modal-body">
+                <div class="custom-tab-1">
+                    <div class="tab-content custom-tab-content">
+                        <div id="details-tab" class="tab-pane fade active show" role="tabpanel">
+                            <div id="can_search_sec">
+                                <ul class="grid">
+                                    <div class="alert  fade show" style="height: 120px;" id='percentage'>   
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,16 +175,7 @@ tfoot {
         })
     }
 
-    const tableContainer = document.querySelector('.calling_sheet_table');
-    const thead = document.querySelector('thead');
-
-        tableContainer.addEventListener('scroll', () => {
-        if (tableContainer.scrollTop > 0) {
-            thead.classList.add('sticky');
-        } else {
-            thead.classList.remove('sticky');
-        }
-        });
+    
 </script>
 
 @endsection

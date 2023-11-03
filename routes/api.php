@@ -37,6 +37,10 @@ Route::post('jobisite/{job_id}',[NewJobPostingController::class, 'sendToJobisite
 Route::post('econ/{job_id}',[NewJobPostingController::class, 'sendToEconJob']);
 Route::post('cari/{job_id}',[NewJobPostingController::class, 'sendToCariJob']);
 Route::post('bebee/{job_id}',[NewJobPostingController::class, 'sendToBebeeJob']);
+Route::post('jobinventory/{job_id}',[NewJobPostingController::class, 'sendToJobinventoryJob']);
+Route::get('muse',[NewJobPostingController::class, 'getMuseJobs']);
+Route::get('jobjobjob',[NewJobPostingController::class, 'getJobjobjob']);
+Route::get('jobsoid',[NewJobPostingController::class, 'getJobsoidJobs']);
 
 
 

@@ -192,6 +192,24 @@
                             </div>
                         </a>
                     </div>
+                    <div class="col-sm-4 mt-3">
+                        <a target="_blank" href="{{ url('reports/client-portal-jobs') }}">
+                            <div class="box" align="center" style="border-left: 15px solid #ffd300; position:relative">
+                                <h3>Client's Portal Jobs</h3>
+                                <span>Report</span>
+                                <span class="fa fa-bar-chart icons"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-4 mt-3">
+                        <a target="_blank" href="{{ url('reports/applied-candidate-report') }}">
+                            <div class="box" align="center" style="border-left: 15px solid #ffd300; position:relative">
+                                <h3>Applied Candidate </h3>
+                                <span>Report</span>
+                                <span class="fa fa-bar-chart icons"></span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,6 +24,26 @@
     table.table tr>th{
         border: 1px solid #cfcfcf !important;
     }
+    .table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -72,18 +92,23 @@
                               @endforeach
                             </select>
                         </div>
+                        <div class="col-md-3" style="padding-top:15px">
+                            <label for="">Client Name <small>(optional)</small></label>
+                            <input type="text" class="form-control" id="client">
+                        </div>
                         <div class="col-md-4" style="padding-top:15px">
                             <label for=""></label>
                             <button class="btn btn-info col-md-12" onclick="getReport()">Get Report</button>
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive">
-                        <table id="interview_pannel_report_table" class="table table-bordered table-striped" style="min-width: 845px" role="grid">
+                    <div class="table-responsive table-scroll">
+                        <table id="interview_pannel_report_table" class="table table-bordered table-hover" style="min-width: 845px" role="grid">
                             <thead>
                                 <tr role="row">
                                     <th><strong>S. No</strong></th>
-                                    <th><strong>Client & Position</strong></th>
+                                    <th><strong>Client</strong></th>
+                                    <th><strong>Position</strong></th>
                                     <th><strong>Candidate Name</strong></th>
                                     <th><strong>Interview Date</strong></th>
                                     <th><strong>Current Stage</strong></th>
@@ -125,7 +150,8 @@
                 team: $("#team").val(),
                 from_date: $("#from_date").val(),
                 to_date: $("#to_date").val(),
-                stage: $("#stage").val()
+                stage: $("#stage").val(),
+                client:$("#client").val()
             },
             success: function(response){
                 $('#interview_pannel_report_table tbody').empty();

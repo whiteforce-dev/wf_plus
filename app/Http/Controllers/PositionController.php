@@ -34,11 +34,13 @@ use App\Jobs\naukriJob;
 use App\Jobs\postJobFree_Job;
 use App\Jobs\reedJob;
 use App\Jobs\jobgrinJob;
+use App\Jobs\jobinventory_Job;
 use App\Jobs\jobisite_Job;
 use App\Jobs\jobrapidoJob;
 use App\Jobs\jobswype_Job;
 use App\Jobs\juju_Job;
 // use App\Jobs\postJobFree;
+use App\Models\InterviewQuestions;
 use App\Jobs\shineJob;
 use App\Jobs\talentJob;
 use App\Jobs\tanqeeb_UAE_Job;
@@ -778,6 +780,18 @@ class PositionController extends Controller
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 bebee_Job::dispatch($job_id)->delay($dispach_time);
             }
+            if (in_array('jobinventory', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'jobinventory';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+               
+                //Job Dispatch
+                // return (new NewJobPostingController())->sendTojobsora($job_id);
+                jobinventory_Job::dispatch($job_id)->delay($dispach_time);
+            }
 
             //------------------international portal------------
 
@@ -1468,6 +1482,18 @@ class PositionController extends Controller
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     bebee_Job::dispatch($job_id)->delay($dispach_time);
                 }
+                if (in_array('jobinventory', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'jobinventory';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                   
+                    //Job Dispatch
+                    // return (new NewJobPostingController())->sendTojobsora($job_id);
+                    jobinventory_Job::dispatch($job_id)->delay($dispach_time);
+                }
                 //-----------international portal------------
                 if (in_array('job_vertise_inter', $selectedPortals)) {
                     $job_posted_tos = new JobPostedTo();
@@ -2039,5 +2065,22 @@ class PositionController extends Controller
         foreach($area as $value){
             echo "<option value='{$value->category_function_id}'>{$value->category_function_name}</option>";
           }
+    }
+    function showQuestionAnswer(Request $request){
+        $position = $request->position;
+        $question = InterviewQuestions::where('position_id', $position)->first();
+        $qna = '<h5>No Question Added</h5>';
+        if($question){
+            $qna = $question->description;
+        }
+        return view('pages.position.qnaList', compact('position', 'qna')) ;
+    }
+
+    function saveQuestionAndAnswer(Request $request){
+        $qna = InterviewQuestions::firstOrNew(array('position_id' => $request->position));
+        $qna->description = $request->questionandanswer;
+        $qna->created_by = Auth::user()->id;
+        $qna->save();
+        return back()->with('success', 'Question Answer saved successfully.');
     }
 }

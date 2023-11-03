@@ -160,10 +160,10 @@ class CommonController extends Controller
         $company = "White Force Outsourcing Pvt Ltd";
         $postDescription = "
                              Company Name : $company \r\n
-                             Job Title : $job->positionName \r\n 
-                             Experience : $job->minYearExp \r\n 
-                             Salary : $job->minSalary \r\n 
-                             Job Type : $job->jobType \r\n 
+                             Job Title : $job->position_name \r\n 
+                             Experience : $job->min_year_exp \r\n 
+                             Salary : $job->min_salary \r\n 
+                             Job Type : $job->job_type \r\n 
                              Person Email : $job->person_email \r\n 
                              Contact No : $job->person_contact  \r\n 
                              Job Description: $job->job_description \r\n 

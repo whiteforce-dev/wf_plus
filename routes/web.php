@@ -314,9 +314,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/daily-lineup-report', [ReportsController::class, 'daily_lineup_report']);
         Route::post('/daily-lineup-report', [ReportsController::class, 'daily_lineup_report_data']);
         Route::post('/get-lineup-report', [ReportsController::class, 'get_lineup_report_data']);
-        Route::get('/pipeline-report', [ReportsController::class, 'pipeline_report']);
         Route::post('/get-user-child', [ReportsController::class, 'get_user_child']);
         Route::post('/pipeline-report', [ReportsController::class, 'pipeline_report_data']);
+        Route::get('/pipeline-report', [ReportsController::class, 'pipeline_report']);Route::get('/client-portal-jobs', [ReportsController::class, 'client_portal_jobs']);Route::get('/applied-candidate-report', [ReportsController::class, 'applied_candidate_report']);
+        Route::post('/applied-candidate-report-data', [ReportsController::class, 'applied_candidate_report_data']);
 
         //LeaderBoard
         route::get('leader-board', [LeaderboardController::class, 'leaderBoard']);
@@ -442,3 +443,6 @@ Route::get('getshine/{id}', [NewJobPostingController::class, 'shine']);
 
 Route::get('xml', [NewJobPostingController::class, 'xml']);
 Route::get('xml', [NewJobPostingController::class, 'xml']);
+
+Route::get('show-question-answer', [PositionController::class, 'showQuestionAnswer']);
+Route::get('save-questionAndAnswer', [PositionController::class, 'saveQuestionAndAnswer']);

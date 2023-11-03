@@ -97,6 +97,26 @@
         -webkit-animation-delay: -0.16s;
         animation-delay: -0.16s;
     }
+    .table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
 <!-- Example file paths for DataTables CSS and JavaScript -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
@@ -166,7 +186,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive card" id="joining_report_table" >
+                    <div class="table-responsive card table-scroll" id="joining_report_table" >
                        @include('master.404')
                     </div>
                 </div>

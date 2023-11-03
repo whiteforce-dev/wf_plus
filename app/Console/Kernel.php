@@ -16,6 +16,10 @@ class Kernel extends ConsoleKernel
         Commands\CloneOldOnroleCandidate::class,
         Commands\CloneOldOffroleCandidate::class,
         Commands\GetShineJob::class,
+        Commands\GetMuseJobs::class,
+        Commands\GetJobjobjobJob::class,
+        Commands\GetIndianInternshipJob::class,
+        Commands\GetJobsoidJob::class,
     ];
 
     /**
@@ -34,6 +38,21 @@ class Kernel extends ConsoleKernel
             $schedule->command('command:getshinejob')->everyTenMinutes();
         } catch (\Exception $e) {}
 
+        try {
+            $schedule->command('command:getmusejob')->everyTenMinutes();
+        } catch (\Exception $e) {}
+
+        try {
+            $schedule->command('command:getjobjobjob')->everyTenMinutes();
+        } catch (\Exception $e) {}
+
+        try {
+            $schedule->command('command:getindianinternship')->everyTenMinutes();
+        } catch (\Exception $e) {}
+
+        try {
+            $schedule->command('command:getjobsoidjob')->everyTenMinutes();
+        } catch (\Exception $e) {}
 
     }
 

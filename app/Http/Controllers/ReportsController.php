@@ -17,6 +17,7 @@ use App\Models\Candidate;
 use App\Models\Client;
 use App\Models\ClientAllotment;
 use App\Models\Position;
+use App\Models\ThirdPartyJobs;
 
 class ReportsController extends Controller
 {
@@ -47,7 +48,6 @@ class ReportsController extends Controller
 
     public function job_analysis_report_data(Request $request)
     {
-
         $startDate = $request->start_date;
         $endDate = $request->end_date;
         $start = Carbon::parse($startDate);
@@ -74,12 +74,19 @@ class ReportsController extends Controller
             for ($i = 0; $i < count($dates); $i++) {
                 $countsRow[$i] = Analysis::where('user_id', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->count();
             }
+            $score =[];
+            for ($i = 0; $i < count($dates); $i++) {
+                $score[$i] = Analysis::where('user_id', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->select('score', 'created_at')
+                ->get();
+            }
+
             $counts['id'] = $id;
             $counts['name'] = $team[$key];
             $counts['counts'] = $countsRow;
+            $counts['score'] = $score;
             $combine[] = $counts;
         }
-
+        // return $combine;
         return view('reports.job_analysis_report_data', compact('dates', 'combine'));
     }
 
@@ -179,8 +186,13 @@ class ReportsController extends Controller
         if (!empty($request->stage)) {
             $interviews = $interviews->where('stage', $request->stage);
         }
-        $interviews = $interviews->with(['position:id,client_id,position_name', 'position.findClientGet:id,name', 'candidate:id,name', 'pco:id,name', 'position_owner:id,name'])->get();
-
+        if (!empty($request->client)) {
+            $interviews = $interviews->whereHas('position.findClientGet', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->client . '%');
+            });
+        }
+        $interviews = $interviews->with(['position:id,client_id,position_name', 'position.findClientGet:id,name', 'candidate:id,name', 'pco:id,name', 'position_owner:id,name'])
+       ->get();
         return view('reports.interview_pannel_report_data', compact('interviews'));
     }
 
@@ -334,13 +346,27 @@ class ReportsController extends Controller
 
     public function hr_birthdays(Request $request)
     {
+        $parent = User::find(Auth::user()->id);
+        $allChilds = $parent->descendantIds();
+        array_unshift($allChilds, (int)Auth::user()->id);
+        $users = User::whereIn('id',$allChilds)->get();
+       
         $current_date = Carbon::now();
         $days = $request->days ?? 30;
         $last_date = $current_date->addDays($days)->format('d-m');
         $last = $last_date;
-        $hrdata = Hr::with('hr_master')->where('software_category', FacadesAuth::user()->software_category ?? 'onrole')->whereRaw("DATE_FORMAT(dob, '%m%d') BETWEEN DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $days DAY), '%m%d')")->get();
+        $manager = $request->manager;
+        if(isset($request->manager) && $request->manager != 1){
 
-        return view('reports.hr_birthday_report', compact('hrdata'));
+            $hrdata = Hr::with('hr_master')->where('software_category', Auth::user()->software_category ?? 'onrole')->whereRaw("DATE_FORMAT(dob, '%m%d') IS NULL OR DATE_FORMAT(dob, '%m%d') BETWEEN DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $days DAY), '%m%d')")
+            ->whereHas('hr_master', function ($query) use ($request) {
+                $query->where('created_by',$request->manager );
+            })->get();
+            return view('reports.hr_birthday_report', compact('hrdata','users','manager'));
+        }
+        $hrdata = Hr::with('hr_master')->where('software_category', Auth::user()->software_category ?? 'onrole')->whereRaw("DATE_FORMAT(dob, '%m%d') IS NULL OR DATE_FORMAT(dob, '%m%d') BETWEEN DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $days DAY), '%m%d')")->get();
+
+        return view('reports.hr_birthday_report', compact('hrdata','users','manager'));
     }
 
     public function calling_sheet_report()
@@ -362,6 +388,7 @@ class ReportsController extends Controller
     }
     public function calling_sheet_report_data(Request $request)
     {
+        
         $startDate = $request->start_date;
         $endDate = $request->end_date;
         $manager_id = $request->parent_id;
@@ -376,14 +403,32 @@ class ReportsController extends Controller
         $user_ids = $parent->descendantIds();
         array_unshift($user_ids, (int) $manager_id);
         $counts = [];
+        // foreach ($user_ids as $id) {
+        //     $countsRow = [];
+        //     for ($i = 0; $i < count($dates); $i++) {
+        //         $countsRow[$i] = Sheet::where('created_by', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->where('software_category', Auth::user()->software_category)->orderBy('id', 'DESC')->count();
+        //     }
+        //     $counts[$id] = $countsRow;
+        // }
         foreach ($user_ids as $id) {
             $countsRow = [];
             for ($i = 0; $i < count($dates); $i++) {
-                $countsRow[$i] = Sheet::where('created_by', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->where('software_category', Auth::user()->software_category)->orderBy('id', 'DESC')->count();
+                $d = Carbon::parse($dates[$i])->format('Y-m-d');
+                $startOfDay = $d . ' 00:00:00';
+                $endOfDay = $d . ' 23:59:59';
+                $countsRow[$i] = Sheet::where('created_by', $id)->where('created_at', '>=', $startOfDay)
+                ->where('created_at', '<=', $endOfDay)->where('software_category', Auth::user()->software_category)->count();
+                $countsRow["number"] = Sheet::select('mobile')->where('created_by', $id)->where('created_at', '>=', $startOfDay)
+                ->where('created_at', '<=', $endOfDay)->where('software_category', Auth::user()->software_category)->groupBy('mobile')
+                ->havingRaw('COUNT(*) > 1')->get();
+                $countsRow["data"] = Sheet::select('mobile','candidate_name','company_name','position','created_at')->whereIn('mobile', $countsRow["number"])->get(); 
+                
             }
-            $counts[$id] = $countsRow;
+            $user = User::where('id',$id)->first();
+            $countsRow["user"] = $user->name;
+            $counts[] = $countsRow;
         }
-        // return ["count"=>$counts];
+        // return $counts;
         return view('reports.calling_sheet_report_data', compact('dates', 'counts'));
     }
 
@@ -437,11 +482,17 @@ class ReportsController extends Controller
             for ($i = 0; $i < count($dates); $i++) {
                 $countsRow[$i] = Pipeline::where('created_by', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->where('software_category', Auth::user()->software_category)->orderBy('id', 'DESC')->count();
             }
+            $total = 0;
+            foreach($countsRow as $c){
+                $total = $total+(int)$c;
+            }
             $counts['id'] = $id;
             $counts['name'] = $team[$key];
             $counts['counts'] = $countsRow;
+            $counts['total'] = $total;
             $combine[] = $counts;
         }
+        
         return view('reports.daily_lineup_report_data', compact('dates', 'combine'));
     }
 
@@ -786,5 +837,28 @@ class ReportsController extends Controller
                 ->get();
         }
         return view('reports.month_joining_report_data', compact('candidates'));
+    }
+
+    public function client_portal_jobs(){
+       
+        $portals =  ThirdPartyJobs::select('publisher')->distinct()->pluck('publisher')->toArray();
+        $totalJobs = ThirdPartyJobs::count();
+        $jobCount = [];
+        foreach ($portals as $key => $portal) {
+            $jobCount[$portal] = ThirdPartyJobs::where('publisher', $portal)->count();
+        }
+        return view('reports.client_portal_job_report',compact('jobCount','totalJobs'));
+    }
+
+    public function applied_candidate_report(){
+        $source = Candidate::select('source')->distinct()->pluck('source')->toArray();
+            
+        return view('reports.applied_candidate_report',compact('source'));
+    }
+
+    public function applied_candidate_report_data(Request $request){
+        $candidates = Candidate::where('source',$request->source)->whereBetween('created_at', [$request->fromdate . ' 00:00:00', $request->todate . ' 23:59:59'])->paginate(20);
+        $total= Candidate::where('source',$request->source)->whereBetween('created_at', [$request->fromdate . ' 00:00:00', $request->todate . ' 23:59:59'])->count();
+        return view('reports.applied_candidate_report_data',compact('candidates','total'));
     }
 }

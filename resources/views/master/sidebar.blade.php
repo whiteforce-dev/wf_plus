@@ -62,7 +62,7 @@
             </li>
 
             <!-- Admin Specific -->
-            @if(Auth::user()->role == 'admin')
+            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'general_manager')
             <li class="nav-label">Target</li>
             <li class="{{ Request::is('manager-team-*') ? 'mm-active' : '' }}"><a class="has-arrow ai-icon "
                     href="javascript:void()" aria-expanded="false">

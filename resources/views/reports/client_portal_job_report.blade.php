@@ -1,5 +1,5 @@
 @extends('master.master')
-@section('title', 'Consolidate Report')
+@section('title', 'Portal Jobs Report')
 @section('content')
 <!-- Example file paths for DataTables CSS and JavaScript -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
@@ -135,45 +135,75 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card alljobPortals">
                 <div class="card-header bg-primary">
-                    <h4 class="card-title" style="color: #fff;">Consolidate Report</h4>
+                    <h4 class="card-title" style="color: #fff;">Client Portal Report</h4>
+                    <span class="text-white card-title" style="font-size:x-large">Total Jobs : {{ $totalJobs ?? 0 }}</span>
                 </div>
                 <div class="card-body">
                     <div class="row col-md-12">
                         <div class="col-md-3">
-                            <label for="">Select Parent</label>
-                            <select name="parent_id" id="parent_id" class="form-control"
-                                onchange="getChild(this.value)">
-                                <option value="">Select</option>
-                                @foreach($allParents as $role => $users)
-                                @if(count($users))
-                                <optgroup label="{{ $role }}">
-                                    @foreach($users as $id => $user)
-                                    <option value="{{ $id }}">{{ $user }}</option>
-                                    @endforeach
-                                </optgroup>
-                                @endif
-                                @endforeach
-                            </select>
+                            <label for="">From Date</label>
+                            <input type="date" id="fromdate" class="form-control">
                         </div>
                         <div class="col-md-3">
-                            <label for="">Select Child</label>
-                            <select name="child_id" id="child_id" class="form-control">
-                                <option value="">Select</option>
+                            <label for="">To Date</label>
+                            <input type="date" id="todate" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="">Portal</label>
+                            <select name="portal" id="portal" class="form-control">
+                                <option value="">Select Portal</option>
+                               @foreach($jobCount as $key =>$val)
+                               <option value="{{ $key }}">{{ $key }}</option>
+                               @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label for=""> Date</label>
-                            <input type="date" name="endDate" id="endDate" class="form-control"
-                                value="{{ $currentDate }}">
-                        </div>
+                       
                         <div class="col-md-3">
                             <label for=""></label>
                             <button class="btn btn-info col-md-12" onclick="getReport()">Search</button>
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive card table-scroll" id="consolidate_report_table" >
-                       @include('master.404')
+                    <div class="table-responsive card table-scroll" id="job_report_table" >
+                       <!-- @include('master.404') -->
+                       <table class="table no-footer table-hover"  id="sortable">
+                            <thead style="overflow: auto;">
+                                <tr>
+                                    <th >
+                                        <h6 style="cursor:pointer" onclick="sortBy(0)">S.No</h6>
+                                    </th>
+                                    <th >
+                                        <h6 style="cursor:pointer" onclick="sortBy(1)">Portal Name </h6>
+                                    </th>
+                                    <th >
+                                        <h6 style="cursor:pointer" onclick="sortBy(1)">Jobs Count </h6>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $count=1;
+                                @endphp
+                                @foreach($jobCount as $key =>$value)
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">
+                                            <h6>{{ $count++ }}.</h6>
+                                        </td>
+                                        <td class="sorting_1">
+                                            <h6>{{ $key }}</h6>
+                                        </td>
+                                        <td>
+                                            <div class="media style-1">
+                                                <div class="media-body">
+                                                    <h6>{{ ucwords($value) }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                 @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -197,27 +227,23 @@
             }
         });
     }
-
+var res;
     function getReport() {
         document.querySelector('#loader-container').style.display="block";
         $.ajax({
             type: 'POST',
-            url: "{{ url('reports/joining-consolidate-report') }}",
+            url: "{{ url('reports/company-report') }}",
             data: {
                 _token: "{{ csrf_token() }}",
                 parent_id: $("#parent_id").val(),
                 child_id: $("#child_id").val(),
-                end_date: $("#endDate").val()
+                status:$("#status").val(),
             },
             success: function (response) {
-                // if(response.status == 200){
-                    document.querySelector('#loader-container').style.display="none";
-                    console.log(response)
-                    $('#consolidate_report_table').empty();
-                    $("#consolidate_report_table").html(response);
-                // }else{
-                //     document.querySelector('#loader-container').style.display="none";
-                // }
+                console.log(response);
+                document.querySelector('#loader-container').style.display="none";
+                $('#company_report_table').empty();
+                $("#company_report_table").html(response);
 
             }
         })
@@ -226,6 +252,47 @@
     let cPrev = -1; // global var saves the previous c, used to
             // determine if the same column is clicked again
 
+// function sortBy(c) {
+//     rows = document.getElementById("sortable").rows.length; // num of rows
+//     columns = document.getElementById("sortable").rows[0].cells.length; // num of columns
+//     arrTable = [...Array(rows)].map(e => Array(columns)); // create an empty 2d array
+
+//     for (ro=0; ro<rows; ro++) { // cycle through rows
+//         for (co=0; co<columns; co++) { // cycle through columns
+//             // assign the value in each row-column to a 2d array by row-column
+//             arrTable[ro][co] = document.getElementById("sortable").rows[ro].cells[co].innerHTML;
+//         }
+//     }
+
+//     th = arrTable.shift(); // remove the header row from the array, and save it
+
+//     if (c !== cPrev) { // different column is clicked, so sort by the new column
+//         arrTable.sort(
+//             function (a, b) {
+//                 if (a[c] === b[c]) {
+//                     return 0;
+//                 } else {
+//                     return (a[c] < b[c]) ? -1 : 1;
+//                 }
+//             }
+//         );
+//     } else { // if the same column is clicked then reverse the array
+//         arrTable.reverse();
+//     }
+
+//     cPrev = c; // save in previous c
+
+//     arrTable.unshift(th); // put the header back in to the array
+
+//     // cycle through rows-columns placing values from the array back into the html table
+//     for (ro=0; ro<rows; ro++) {
+//         for (co=0; co<columns; co++) {
+//             document.getElementById("sortable").rows[ro].cells[co].innerHTML = arrTable[ro][co];
+//         }
+//     }
+// }
+
+// variable to store the previously sorted column index
 
 function sortBy(c) {
     const table = document.getElementById("sortable");
@@ -262,6 +329,8 @@ function sortBy(c) {
         }
     }
 }
+
+
 
 </script>
 

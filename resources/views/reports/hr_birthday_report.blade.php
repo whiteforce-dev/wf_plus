@@ -48,6 +48,26 @@
             bottom: 0;
             background-color: #f2f2f2;
         }
+        .table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
     </style>
     <div class="content-body">
         <div class="container-fluid">
@@ -73,10 +93,17 @@
                                         <option value="90">90 Days</option>
                                         <option value="120">120 Days</option>
                                     </select>
-
-                                    </select>
                                 </div>
 
+                                <div class="col-4"> 
+                                    <label for="">Select Manager</label>
+                                    <select name="manager" id="manager" class="form-control">
+                                     @foreach($users as $user)
+                                     <option value="{{ $user->id }}" {{ $manager == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+
+                                     @endforeach
+                                    </select>
+                                </div>
                                 <div class="col-md-3">
                                     <label for=""></label>
                                     <button type="submit" class="btn btn-info col-md-12"
@@ -85,7 +112,7 @@
                             </div>
                         </form>
                         <hr>
-                        <div class="table-responsive">
+                        <div class="table-responsive table-scroll">
                             <div id="example_wrapper" class="dataTables_wrapper">
                                 <table id="example" class="table table-striped table-responsive-sm">
                                     <thead>
@@ -126,7 +153,7 @@
                                                     $diffrence_one = $diff->format('%a');
                                                     
                                                 @endphp
-                                                @if ($birth == $today)
+                                                @if ($birth == $today && $item->dob != null)
                                                     <tr>
                                                         <td><b>{{ isset($manager->name) ? $manager->name : 'N/A' }}</b></td>
 
@@ -145,6 +172,26 @@
                                                                     class="btn btn-success btn-block">Send
                                                                     Wishes</button></a></td>
                                                     </tr>
+                                                @elseif($item->dob == null)
+                                               
+                                                <tr>
+                                                    <td><b>{{ isset($manager->name) ? $manager->name : 'N/A' }}</b></td>
+
+                                                    <td><b><a target="_blank"
+                                                                href="{{ url('position/client', $clients->id) }}">{{ ucwords($clients->name) }}</a></b>
+                                                    </td>
+
+                                                    <td><b>{{ ucwords($item->name ?? '-') }}</b></td>
+                                                    <td><b>{{ \Carbon\carbon::parse($item->dob)->format('d F') }}</b>
+                                                    </td>
+                                                    <td><b>{{ ucwords($item->designation ?? '-') }}</b></td>
+                                                    <td><b>DOB NOT FOUND</b></td>
+
+
+                                                    <td><a><button
+                                                                class="btn btn-dark btn-block">N/A
+                                                               </button></a></td>
+                                                </tr>
                                                 @else
                                                     <tr>
                                                         {{-- <td style="max-width: 11%"><b>{{ $k+1 }}</b></td> --}}
@@ -195,6 +242,7 @@
         </div>
     </div>
 
+   
 
     @if (Auth::user()->type == 'admin')
         <script>

@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\EmailAttachmentSyncRequest;
 use GuzzleHttp\Client;
 use App\Models\Candidate;
+use Illuminate\Support\Facades\Storage;
 
 
 class EmailAttachmentSyncRequestJob implements ShouldQueue
@@ -108,6 +109,22 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
                     $candidate->added_from = 'email';
                     $candidate->created_by = $user_id;
                     $candidate->software_category = $software_category;
+                    
+                    if (!empty($data->PDF_Path)) {
+                        $filepath = time() . '_' . rand() . '.pdf';
+                        Storage::disk('public_uploads')->put('candidate_resume/' . $filepath, file_get_contents($data->PDF_Path));
+                        $base_path = str_replace('src', '', base_path());
+                        $temppdfpath = $base_path . "/candidate_resume/" . $filepath;
+                        // $convertedpdfpath = convertPdfVersion($temppdfpath);
+                        if (!empty($temppdfpath)) {
+                            Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
+                            unlink($temppdfpath);
+                        } else {
+                            Storage::disk('s3')->put('candidate_resume/' . $filepath, file_get_contents($temppdfpath), 'public');
+                        }
+            
+                        $candidate->resume_file = $filepath;
+                    }
                     $candidate->save();
                     array_push($save_candidate_ids,$candidate->id);
                 }

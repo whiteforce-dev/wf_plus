@@ -246,13 +246,13 @@ class CandidateResponseController extends Controller
                 }
 
 
-                $Response_candidates->job_id = $x->position_id ?? 0;
+                $Response_candidates->job_id = $x->position_id ? $x->position_id : 0;
                 //$Response_candidates->shine_job_id = $shine_job_id;
                 $Response_candidates->publish_to = 'shine';
                 $Response_candidates->user_name = $value->name;
                 $Response_candidates->user_email = $value->email;
                 $Response_candidates->user_mobile = $value->phone;
-                $Response_candidates->resume = $value->resume;
+                // $Response_candidates->resume = $value->resume;
                 $Response_candidates->software_category=Auth::user()->software_category??'onrole';
 
                 if ($Response_candidates->candidate_id != "") {
@@ -274,7 +274,7 @@ class CandidateResponseController extends Controller
                 $candidate->gender = $value->gender;
                 $skills = $value->skills;
                 $candidate->skills = implode(",", $skills);
-                $candidate->resume_file= $value->resume;
+                // $candidate->resume_file= $value->resume;
                 $preferred_locations = $value->preferred_locations;
                 $candidate->preferred_location = implode(",", $preferred_locations);
                 $candidate->notice_period = $value->notice_period;
