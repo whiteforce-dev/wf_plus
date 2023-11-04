@@ -40,6 +40,7 @@
                     <h6 class="dropdown-header cnav-head">Home Section </h6>
 
                     <li class="liwithmargin"><a href="{{ url('dashboard') }}">Dashboard</a></li>
+                    <li class="liwithmargin"><a href="{{ url('receiver-list') }}">Joining Form </a></li>
                 </ul>
             </li>
 
