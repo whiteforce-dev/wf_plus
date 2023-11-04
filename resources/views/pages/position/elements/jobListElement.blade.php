@@ -30,14 +30,16 @@
                     @php
                     $appliedCount = \App\Models\CandidateResponse::where('job_id', $position->id)->count();
                     @endphp
+                    
                     <li ><a href="{{ url('all_responses', ['job_id' => $position->id, 'portal' => 'all', 'data' => 'response']) }}
                         " target="_blank" style="color:#e66025">Applied Candidate</a>
-                    <span class="badge badge-danger badge-pill">{{ $appliedCount ?? 0 }}</span></li>
+                    <span class="badge badge-danger badge-pill">0</span></li>
                     @if(Auth::user()->id == $position->created_by)
                     <li onclick="openManagerlist({{ $position->id }});">Share Position</li>
                     @endif
                     {{-- @if(Auth::user()->role == 'admin') --}}
-                    <li><a href="{{ route('related_candidate', [$position->id]) }}"  target="_blank" style="color:#e66025">Related Candidate</a></li>
+                    <li><a href="{{ route('related_candidate', [$position->id]) }}"  target="_blank" style="color:#e66025">Related Candidate</a>
+                    </li>
                     {{-- @endif --}}
                     <li onclick="openJobPostingReport({{ $position->id }});">Job Posting Report</li>
                     <li onclick="AddQuestionAnswer({{ $position->id }});">Add Interview Q&A</li>
@@ -699,4 +701,9 @@
     </div>
 </div>
 
+<script>
+    function relatedCount(e){
+        return e;
+    }
+</script>
 

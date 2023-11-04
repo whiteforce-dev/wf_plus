@@ -170,11 +170,11 @@ class AnalyseController extends Controller
 	{
 		$url = 'https://happyhire.co.in/mail_parsing/api/';
 		$data = [
-			"type"       => "gmail",
-			"email"      => "rneeta867@gmail.com",
-			"password"   => "ewvfjfqwezzbvelg",
-			"start_date" => "25-07-2023",
-			"end_date"   => "26-07-2023"
+			"type"       => "zoho",
+			"email"      => "mohit.yadav@white-force.in",
+			"password"   => "e23Xd5vLrhTs",
+			"start_date" => "02-11-2023",
+			"end_date"   => "03-11-2023"
 		];
 
 		$curl = curl_init($url);
