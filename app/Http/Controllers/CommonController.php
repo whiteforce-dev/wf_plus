@@ -1499,6 +1499,9 @@ H:i:s'))->orderBy('id', 'DESC')->first();
                 'minSalary' => $job->min_salary,
                 'maxSalary' => $job->max_salary,
                 'skills' => $job->skill_set,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
                 'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'job_description' => $job->job_description,
@@ -1514,17 +1517,15 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             $response = curl_exec($curl);
 
             $res = json_decode($response);
-
+            curl_close($curl);
             if ($res->true == 1) {
                 $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
                 $job_posting->my_job_helper = 1;
                 $job_posting->save();
-
-                curl_close($curl);
                 $response = new Portalresponse();
                 $response->portal = 'my_job_helper';
                 $response->is_success = 1;
@@ -1578,22 +1579,22 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             // 2. Set the CURLOPT_POST option to true for POST request
             curl_setopt($curl, CURLOPT_POST, true);
             // 3. Set the request data as JSON using json_encode function
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
 
 
             $response = curl_exec($curl);
-
             $res = json_decode($response);
+            curl_close($curl);
 
             if ($res->true == 1) {
                 $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
                 $job_posting->job_vertise = 1;
                 $job_posting->save();
 
-                curl_close($curl);
+                
                 $response = new Portalresponse();
                 $response->portal = 'job_vertise';
                 $response->is_success = 1;
@@ -1645,15 +1646,16 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             // 2. Set the CURLOPT_POST option to true for POST request
             curl_setopt($curl, CURLOPT_POST, true);
             // 3. Set the request data as JSON using json_encode function
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
             $response = curl_exec($curl);
+            curl_close($curl);
 
             $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
             $job_posting->whatsjob = 1;
             $job_posting->save();
 
-            curl_close($curl);
+            
             $response = new Portalresponse();
             $response->portal = 'whatsjob india';
             $response->is_success = 1;
@@ -1778,21 +1780,20 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             // 2. Set the CURLOPT_POST option to true for POST request
             curl_setopt($curl, CURLOPT_POST, true);
             // 3. Set the request data as JSON using json_encode function
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 
             $response = curl_exec($curl);
 
             $res = json_decode($response);
+            curl_close($curl);
 
             if ($res->true == 1) {
 
                 $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
                 $job_posting->adzuna = 1;
                 $job_posting->save();
-
-
-                curl_close($curl);
+                
                 $response = new Portalresponse();
                 $response->portal = 'Adzuna india';
                 $response->is_success = 1;
@@ -2014,18 +2015,17 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             // 2. Set the CURLOPT_POST option to true for POST request
             curl_setopt($curl, CURLOPT_POST, true);
             // 3. Set the request data as JSON using json_encode function
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
             $response = curl_exec($curl);
 
             $res = json_decode($response);
+            curl_close($curl);
 
         if ($res->true == 1) {
             $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
             $job_posting->adzunausa = 1;
             $job_posting->save();
-
-            curl_close($curl);
             $response = new Portalresponse();
             $response->portal = 'adzuna usa';
             $response->is_success = 1;
@@ -2073,17 +2073,15 @@ H:i:s'))->orderBy('id', 'DESC')->first();
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             $response = curl_exec($curl);
 
             $res = json_decode($response);
-
+            curl_close($curl);
             if ($res->true == 1) {
                 $job_posting = JobPostingModel::where('job_id', $job_position_id)->first();
                 $job_posting->whatsjobusa = 1;
                 $job_posting->save();
-
-                curl_close($curl);
                 $response = new Portalresponse();
                 $response->portal = 'whatsjob USA';
                 $response->is_success = 1;

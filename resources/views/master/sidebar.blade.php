@@ -140,7 +140,7 @@
                     <li class="liwithmargin"><a href="{{ url('position-hold') }}">Hold Positions</a></li>
                     <li class="liwithmargin"><a href="{{ url('position-closed') }}">Closed Positions</a></li>
                     <h6 class="dropdown-header cnav-head">Job Posting Section </h6>
-                    <li class="liwithmargin"><a href="{{ url('job-posting-reports') }}">Job Posting Report</span></a>
+                    <li class="liwithmargin"><a href="{{ url('job-posting-reports') }}">Portal Posting Report</span></a>
                     </li>
                     <li class="liwithmargin"><a href="{{ route('job_description.index') }}">Job Template</span></a></li>
                 </ul>

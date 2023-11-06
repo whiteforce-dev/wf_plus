@@ -28,10 +28,11 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <tbody> @php
-
-           
-        @endphp <tr>
+        <tbody> 
+            @php
+                $logos = logo();
+            @endphp
+         <tr>
                 <td>1</td>
                 <td style="width: 30% !important;"> <img class="" src="{{ url('job-posting-assets/happiest.png') }}"
                         alt="happiest" srcset="" style="height:30px; width:auto;"></td>
@@ -49,17 +50,17 @@
             </tr> @php $count = 2;
 
              @endphp @foreach ($portals as $key => $item)
-             @php
-                $src = logos($item->portal);
-             @endphp
+            
                 <tr>
                     <td>{{ ++$count }}</td>
                     <td style="width: 30% !important;"> <img class="{{ $item->is_success == 1 ? '' : 'disabled' }}"
-                        src="{{ $src ?? '' }}"
+                        src="{{ $logos[$item->portal] }}"
                         alt="{{ $item->portal }}" srcset=""
-                            style="height:30px; width:auto;"></td>
-                    <td> <span
-                            class="badge {{ $item->is_success == 1 ? '-' : 'badge-danger' }}">{{ $item->is_success == 1 ? 'Posted' : 'Not Posted' }}</span>
+                        style="height:50px; width:100px;"></td>
+                    <td> <span class="badge {{ $item->is_success == 1 ? '' : 'badge-danger' }}">
+                        {{ $item->is_success == 1 ? 'Posted' : 'Not Posted' }}
+                    </span>
+                    
                     </td>
                     @if (strlen($item->response) > 50)
                         <td style="width: 30% !important;">{{ substr($item->response, 0, 50) }} <a
@@ -84,13 +85,11 @@
                     </tr>
                 </thead>
                 @foreach ($notSelectedPortals as $key => $item)
-                @php
-                $src = logos($item);
-                @endphp
+                
                     <tr>
                         <td>{{ ++$count }}</td>
-                        <td style="width: 30% !important;"> <img src="{{ $src ?? '' }}"
-                                alt="{{ $item }}" srcset="" style="height:30px; width:auto;"></td>
+                        <td style="width: 30% !important;"> <img src="{{ $logos[$item] ?? '' }}"
+                                alt="{{ $item }}" srcset="" style="height:50px; width:100px;"></td>
                         <td> <span class="badge badge-danger">Not Selected</span> </td>
                         <td style="width: 30% !important;" colspan="2">{{ ucfirst($item) }} Portal Not selected.
                         </td>
