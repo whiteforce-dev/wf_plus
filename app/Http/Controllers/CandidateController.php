@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Storage;
 use Mpdf\Mpdf as Mpdf;
 use Illuminate\Validation\Rule;
 use App\Models\EmailAttachmentSyncRequest;
+use App\Models\InterviewQuestions;
 
 class CandidateController extends Controller
 {
@@ -559,6 +560,44 @@ class CandidateController extends Controller
         return 1;
         // return response()->json(['message' => $description]);
     }
+    // public function set_interview(Request $request)
+    // {
+
+    //     $pipelineId = $request->pipeline;
+    //     $data = Pipeline::find($pipelineId);
+    //     $data->interview_date = $request->interview_date;
+    //     $data->interview_time_from = $request->interview_time_from;
+    //     $data->interview_time_to = $request->interview_time_to;
+    //     $data->interview_venue = $request->interview_venue;
+    //     $interview_date = Carbon::parse($data->interview_date)->format('d-m-Y');
+
+    //     $data->save();
+
+
+    //     $info = array(
+    //         'name' => $data->candidate->name ?? '',
+    //         'candidate_email' => $data->candidate->email ?? '',
+    //         'position' => $data->position->position_name,
+    //         'companyname' => $data->position->clientname,
+    //         'interview_date' =>  $interview_date ?? '',
+    //         'timefrom' => $data->interview_time_from,
+    //         'timeto' => $data->interview_time_to,
+    //         'venue' => $data->interview_venue,
+    //         'job_description' => $data->position->job_description,
+    //         'min_exp' => $data->position->min_year_exp,
+    //         'max_exp' => $data->position->max_year_exp,
+    //         'job_type' =>  $data->position->job_type,
+    //         'min_salary' => $data->position->min_salary,
+    //         'max_salary' => $data->position->max_salary,
+    //         'sender_email' => Auth::user()->email,
+    //         'sender_name' => Auth::user()->name,
+    //         'sender_contact' => Auth::user()->contact,
+    //         // 'date'=> ''
+    //     );
+    //     $dispach_time = getDispatchTime();
+    //     SendEmailsJob::dispatch($info)->delay($dispach_time);
+    //     return 1;
+    // }
     public function set_interview(Request $request)
     {
 
@@ -573,9 +612,13 @@ class CandidateController extends Controller
         $data->save();
 
 
+        $questions = InterviewQuestions::where('position_id', $data->position->id)->first();
+        $qdata = $questions->description ?? '<h5>-</h5>';
+
         $info = array(
             'name' => $data->candidate->name ?? '',
             'candidate_email' => $data->candidate->email ?? '',
+            // 'candidate_email' => 'aadishriz@mailinator.com',
             'position' => $data->position->position_name,
             'companyname' => $data->position->clientname,
             'interview_date' =>  $interview_date ?? '',
@@ -591,10 +634,12 @@ class CandidateController extends Controller
             'sender_email' => Auth::user()->email,
             'sender_name' => Auth::user()->name,
             'sender_contact' => Auth::user()->contact,
+            'qdata' => $qdata,
             // 'date'=> ''
         );
         $dispach_time = getDispatchTime();
         SendEmailsJob::dispatch($info)->delay($dispach_time);
+        // SendEmailsJob::dispatch($info);
         return 1;
     }
 
@@ -612,6 +657,8 @@ class CandidateController extends Controller
 
             $data->save();
 
+            $questions=InterviewQuestions::where('position_id', $data->position->id)->first();
+            $qdata = $questions->description ?? '<h5>-</h5>';
 
             $info = array(
                 'name' => $data->candidate->name ?? '',
@@ -632,7 +679,7 @@ class CandidateController extends Controller
                 'sender_email' => Auth::user()->email,
                 'sender_name' => Auth::user()->name,
                 'sender_contact' => Auth::user()->contact,
-                // 'date'=> ''
+                'qdata' => $qdata,
             );
             $dispach_time = getDispatchTime();
             SendEmailsJob::dispatch($info)->delay($dispach_time);

@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\EmailAttachmentSyncRequest;
 use GuzzleHttp\Client;
 use App\Models\Candidate;
+use Illuminate\Support\Facades\Storage;
 
 
 class EmailAttachmentSyncRequestJob implements ShouldQueue

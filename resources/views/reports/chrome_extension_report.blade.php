@@ -47,7 +47,26 @@
         background: #eaeaea;
     }
 
-    
+    .table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
 <style>
     #loader-container {
@@ -147,7 +166,7 @@
                         </div>
                     </div>
                     <br>
-                    <div class="table-responsive">
+                    <div class="table-responsive table-scroll">
                         <table id="chrome_extension_report_table" class="table table-bordered table-striped" style="min-width: 845px" role="grid">
                         </table>
                     </div>

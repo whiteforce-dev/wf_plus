@@ -34,11 +34,13 @@ use App\Jobs\naukriJob;
 use App\Jobs\postJobFree_Job;
 use App\Jobs\reedJob;
 use App\Jobs\jobgrinJob;
+use App\Jobs\jobinventory_Job;
 use App\Jobs\jobisite_Job;
 use App\Jobs\jobrapidoJob;
 use App\Jobs\jobswype_Job;
 use App\Jobs\juju_Job;
 // use App\Jobs\postJobFree;
+use App\Models\InterviewQuestions;
 use App\Jobs\shineJob;
 use App\Jobs\talentJob;
 use App\Jobs\tanqeeb_UAE_Job;
@@ -588,6 +590,7 @@ class PositionController extends Controller
 
                 $api_hit = file_get_contents("https://happiestresume.com/google_final/index.php?jobId=$job_id");
 
+
                 if($api_hit == 200){
                     $response = new Portalresponse();
                     $response->portal = 'google';
@@ -777,6 +780,18 @@ class PositionController extends Controller
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 bebee_Job::dispatch($job_id)->delay($dispach_time);
+            }
+            if (in_array('jobinventory', $selectedPortals)) {
+                $job_posted_tos = new JobPostedTo();
+                $job_posted_tos->job_id = $job_id;
+                $job_posted_tos->reference_no = $reference_no;
+                $job_posted_tos->publish_to = 'jobinventory';
+                $job_posted_tos->user_id = Auth::user()->id;
+                $job_posted_tos->save();
+               
+                //Job Dispatch
+                // return (new NewJobPostingController())->sendTojobsora($job_id);
+                jobinventory_Job::dispatch($job_id)->delay($dispach_time);
             }
 
             //------------------international portal------------
@@ -1468,6 +1483,18 @@ class PositionController extends Controller
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     bebee_Job::dispatch($job_id)->delay($dispach_time);
                 }
+                if (in_array('jobinventory', $selectedPortals)) {
+                    $job_posted_tos = new JobPostedTo();
+                    $job_posted_tos->job_id = $job_id;
+                    $job_posted_tos->reference_no = $reference_no;
+                    $job_posted_tos->publish_to = 'jobinventory';
+                    $job_posted_tos->user_id = Auth::user()->id;
+                    $job_posted_tos->save();
+                   
+                    //Job Dispatch
+                    // return (new NewJobPostingController())->sendTojobsora($job_id);
+                    jobinventory_Job::dispatch($job_id)->delay($dispach_time);
+                }
                 //-----------international portal------------
                 if (in_array('job_vertise_inter', $selectedPortals)) {
                     $job_posted_tos = new JobPostedTo();
@@ -1752,7 +1779,7 @@ class PositionController extends Controller
         return redirect()->back()->with('success', 'stage is change Successfully');
     }
 
-    public function jobPostingReports()
+    public function jobPostingReports(Request $request)
     {
         $currentUser = User::find(Auth::user()->id);
         $childUsers = $currentUser->descendantIds();
@@ -1760,71 +1787,64 @@ class PositionController extends Controller
         $users = User::whereIn('id', $childUsers)->get();
         $job_platforms = Portalresponse::select('portal')->distinct()->pluck('portal')->toArray();
         // return $job_platforms;
-        $logos = [
-            'linkedin' => url('job-posting-assets/linkedin.png'),
-            'facebook' => url('job-posting-assets/facebook.png'),
-            'shine' => url('job-posting-assets/shine.png'),
-            'clickindia' => url('job-posting-assets/clickIndia.png'),
-            'monster' => url('job-posting-assets/monster.jpg'),
-            'Careerjet' => url('job-posting-assets/careerjet.png'),
-            'post_job_free' => url('job-posting-assets/postjobfree.png'),
-            'jora' => url('job-posting-assets/jora.png'),
-            'naukri' => url('job-posting-assets/naukri.png'),
-            'indeed' => url('job-posting-assets/Indeed.png'),
-            'jooble' => url('job-posting-assets/jooble.jpg'),
-            'timesjob' => url('job-posting-assets/timesjob.png'),
-            'google' => url('job-posting-assets/google.png'),
-            'whatsjob india' => url('job-posting-assets/whatJobs.png'),
-            'Drjobs india' => url('job-posting-assets/drjob.png'),
-            'Adzuna india' => url('job-posting-assets/aduzana.png'),
-            'Linkedin Ats' => url('job-posting-assets/ats.png'),
-            'job_vertise' => url('job-posting-assets/jobvertise.webp'),
-            'my_job_helper' => url('job-posting-assets/myjobhelper.png'),
-            'Cv Library' => url('job-posting-assets/cv.png'),
-            'adzuna usa' => url('job-posting-assets/adzuna.png'),
-            'whatsjob USA' => url('job-posting-assets/whatJobs.png'),
-            'ziprecruiter' => url('job-posting-assets/zip.png'),
-            'Times Ascent USA' => url('job-posting-assets/times-ascent.png'),
-            'Tanqeeb UAE' => url('job-posting-assets/tanqeeb.png'),
-            'jobIsJob' => url('job-posting-assets/jobisjob.jpg'),
-            'whiteforce' => url('job-posting-assets/wf.png'),
-            'happiest' => url('job-posting-assets/happiest.png'),
-            'Jobsora' => url('https://images.crunchbase.com/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/qjxttcoa76aweq98xzzb'),
-            'learn4good' => url('https://www.lankacareersandtalents.com/photos/products/6fc461aeaf944df940e258a2778163cd-std.jpg'),
-            'jobgrin' => url('data:image/png;base64,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'),
-            'careerbliss' => url('https://media.careerbliss.com/logo-square.png'),
-            'The india Job'=> url('https://www.theindiajobs.com/blog/wp-content/uploads/2018/05/foot_logo.png'),
-        ];
-
-
+        $logos = logo();
         //Candidates Accrording Jobportals
-        $results = CandidateResponse::select('publish_to', DB::raw('COUNT(*) as count'))
-            ->groupBy('publish_to')
-            ->whereIn('publish_to', $job_platforms)
-            ->orderByRaw("FIELD(publish_to, '" . implode("','", $job_platforms) .
-                "')")
-            ->get();
+        // $results = CandidateResponse::select('publish_to', DB::raw('COUNT(*) as count'))
+        //     ->groupBy('publish_to')
+        //     ->whereIn('publish_to', $job_platforms)
+        //     ->orderByRaw("FIELD(publish_to, '" . implode("','", $job_platforms) .
+        //         "')")
+        //     ->get();
 
         // Job Counts
-        $portalResults = Portalresponse::select('portal', DB::raw('COUNT(*) as count'))
-            ->groupBy('portal')
-            ->whereIn('portal', $job_platforms)
-            ->orderByRaw("FIELD(portal, '" . implode("','", $job_platforms) .
-                "')")
-            ->get();
+        // $portalResults = Portalresponse::select('portal', DB::raw('COUNT(*) as count'))
+        //     ->groupBy('portal')
+        //     ->whereIn('portal', $job_platforms)
+        //     ->orderByRaw("FIELD(portal, '" . implode("','", $job_platforms) .
+        //         "')")
+        //     ->get();
 
+       
+        // foreach ($results as $result) {
+        //     $portal = [
+        //         'name' => $result->publish_to,
+        //         'candidates' => $result->count,
+        //         'logo' => $logos[$result->publish_to] ?? '',
+        //         'positions' => $portalResults->where('portal', $result->publish_to)->first()->count ?? 0,
+        //     ];
 
+        //     $jobPortals[] = $portal;
+        // }
+        $fromDate = $request->fromdate;
+        $toDate = $request->todate;
         $jobPortals = [];
-        foreach ($results as $result) {
-            $portal = [
-                'name' => $result->publish_to,
-                'candidates' => $result->count,
-                'logo' => $logos[$result->publish_to] ?? '',
-                'positions' => $portalResults->where('portal', $result->publish_to)->first()->count ?? 0,
-            ];
-
-            $jobPortals[] = $portal;
+        if(!empty($fromDate) && !empty($toDate)){
+            foreach($job_platforms as $result){
+                $positionCount =  $portalResults = Portalresponse::where('portal',$result)->whereBetween('created_at', [$fromDate, $toDate])->count();
+                $candidateCount = CandidateResponse::where('publish_to',$result)->whereBetween('created_at', [$fromDate, $toDate])->count();
+                    $portal = [
+                        'name' => $result,
+                        'logo' =>$logos[$result],
+                        'position' => $positionCount,
+                        'candidate' =>  $candidateCount 
+                    ];
+                    $jobPortals[] = $portal;
+                }
+        }else{
+            foreach($job_platforms as $result){
+                $positionCount =  $portalResults = Portalresponse::where('portal',$result)->count();
+                $candidateCount = CandidateResponse::where('publish_to',$result)->count();
+                    $portal = [
+                        'name' => $result,
+                        'logo' =>$logos[$result],
+                        'position' => $positionCount,
+                        'candidate' =>  $candidateCount 
+                    ];
+                    $jobPortals[] = $portal;
+                }
         }
+            
+       
         return view('pages.position.job_posting_reports')->with(compact('users', 'jobPortals'));
     }
     public function positionList(Request $request)
@@ -1910,8 +1930,9 @@ class PositionController extends Controller
         $portals = Portalresponse::where('job_id', $request->positionId)->get();
         $portalsArray = Portalresponse::where('job_id', $request->positionId)->pluck('portal')->toArray();
         $allPortalsArray = Portalresponse::select('portal')->distinct()->pluck('portal')->toArray();
-        // $allPortalsArray = ['linkedin', 'facebook', 'shine', 'Click India', 'monster', 'careerJet', 'post_job_free', 'jora', 'naukri', 'indeed', 'jooble', 'timesjob', 'google', 'whatsjob india', 'Drjobs india', 'Adzuna india', 'Linkedin Ats', 'jobIsJob', 'Cv Library', 'Tanqeeb UAE', 'job_vertise', 'Times Ascent USA', 'WhatsJob USA', 'my_job_helper', 'ziprecruiter', 'adzuna usa'];
+       
         $notSelectedPortals = array_diff($allPortalsArray, $portalsArray);
+        // return $notSelectedPortals;
         return view('pages.position.jobpostingreport', compact('portals', 'notSelectedPortals'));
     }
 
@@ -2039,5 +2060,22 @@ class PositionController extends Controller
         foreach($area as $value){
             echo "<option value='{$value->category_function_id}'>{$value->category_function_name}</option>";
           }
+    }
+    function showQuestionAnswer(Request $request){
+        $position = $request->position;
+        $question = InterviewQuestions::where('position_id', $position)->first();
+        $qna = '<h5>No Question Added</h5>';
+        if($question){
+            $qna = $question->description;
+        }
+        return view('pages.position.qnaList', compact('position', 'qna')) ;
+    }
+
+    function saveQuestionAndAnswer(Request $request){
+        $qna = InterviewQuestions::firstOrNew(array('position_id' => $request->position));
+        $qna->description = $request->questionandanswer;
+        $qna->created_by = Auth::user()->id;
+        $qna->save();
+        return back()->with('success', 'Question Answer saved successfully.');
     }
 }

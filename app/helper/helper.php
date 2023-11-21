@@ -688,3 +688,52 @@ function getDispatchTime(){
     }
     return $dispach_time;
 }
+function logo(){
+    $logos = [
+        "shine" => url('logo/shine.png'),
+        "clickindia" => url('images/jobpostingportal/clickIndia.png'),
+        "linkedin" => url('https://www.white-force.com/onrole/job-posting-assets/linkedin.png'),
+        "monster" => url('images/jobpostingportal/monster.png'),
+        "jobIsJob" => url('https://www.white-force.com/onrole/job-posting-assets/jobisjob.jpg'),
+        "careerJet" => url('images/jobpostingportal/careerjet.png'),
+        "post_job_free" => url('images/jobpostingportal/postJobFree.png'),
+        "jora" => url('logo/jora.png'),
+        "naukri" => url('logo/Naukri.com.png') ,
+        "indeed" => url('images/jobpostingportal/Indeed-logo.png'),
+        "jooble" => url('https://www.white-force.com/onrole/job-posting-assets/jooble.jpg'),
+        "timesjob" => url('images/jobpostingportal/TimesJobs-logo.png'),
+        "facebook" => url('https://www.white-force.com/onrole/job-posting-assets/facebook.png'),
+        "whatsjob india" => url('https://www.white-force.com/onrole/job-posting-assets/whatJobs.png'),
+        "Drjobs india" => url('logo/DrJob.png'),
+        "Adzuna india" => url('images/jobpostingportal/Adzuna_Logo.png'),
+        "Linkedin Ats" => url('https://www.white-force.com/onrole/job-posting-assets/ats.png'),
+        "Jobsora" => url('logo/jobsora.png'),
+        "learn4good" => url('logo/learn4good.jpg'),
+        "jobgrin" => url('logo/jobgrin.png'),
+        "careerbliss" => url('logo/careerbliss.png'),
+        "indiajob" => url('logo/theIndiaJobs.png'),
+        "jobrapido" => url('logo/jobrapido.png'),
+        "google" => url('logo/google.png'),
+        "my_job_helper" => url('https://www.white-force.com/onrole/job-posting-assets/job_helper.png'),
+        "job_vertise" => url('logo/jobvertise.webp'),
+        "Cv Library" => url('https://www.white-force.com/onrole/job-posting-assets/cv.png'),
+        "adzuna usa" => url('images/jobpostingportal/Adzuna_Logo.png'),
+        "whatsjob USA" => url('https://www.white-force.com/onrole/job-posting-assets/whatJobs.png'),
+        "Times Ascent USA" => url('https://www.white-force.com/onrole/job-posting-assets/times-ascent.png'),
+        "Tanqeeb UAE" => url('https://www.white-force.com/onrole/job-posting-assets/tanqeeb.png'),
+        "ziprecruiter" => url('https://www.white-force.com/onrole/job-posting-assets/zip.png'),
+        "eluta" => url('logo/eluta.png') ,
+        "jobisite" => url('logo/jobisite.jpg'),
+        "jobswype" => url('logo/jobswype.png'),
+        "workcircle" => url('logo/workcircle.png'),
+        "juju" => url('logo/juju.jpg'),
+        "econ" => url('logo/econ.png'),
+        "cari" => url('logo/cari.png'),
+        "bebee" => url('logo/bebee.jpg'),
+        "jobinventory" => url('logo/jobinventory.png'),
+        "talent" => url('logo/talent.png'),
+        "reed" => url('logo/reed.png'),
+        
+    ];
+    return $logos;
+}

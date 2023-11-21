@@ -51,6 +51,26 @@
         bottom: 0;
         background-color: #f2f2f2;
     }
+    .table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 
 </style>
 <style>
@@ -152,7 +172,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive card" id="consolidate_report_table" >
+                    <div class="table-responsive card table-scroll" id="consolidate_report_table" >
                        @include('master.404')
                     </div>
                 </div>

@@ -17,6 +17,8 @@ use DateTimeZone;
 use Illuminate\Support\Facades\Storage;
 use XMLWriter;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 class NewJobPostingController extends Controller
 {
@@ -87,7 +89,7 @@ class NewJobPostingController extends Controller
             }
             return $e->getMessage();
         }
-        
+
         // guzzal http request
 
         $client = new Client();
@@ -227,13 +229,13 @@ class NewJobPostingController extends Controller
                 'maxSalary' => $job->max_salary,
                 'salaryType' => $job->salary_type,
                 'payType' => $job->pay_type,
-                'education'=>$job->edu_qualification,
+                'education' => $job->edu_qualification,
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
                 'industry' => $job->industry,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -243,7 +245,7 @@ class NewJobPostingController extends Controller
                 'created_at' => $job->created_at,
                 'updated_at' => $job->updated_at
             ];
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -275,7 +277,6 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
     public function sendToEluta($job_id)
@@ -297,15 +298,15 @@ class NewJobPostingController extends Controller
                 'maxSalary' => $job->max_salary,
                 'salaryType' => $job->salary_type,
                 'payType' => $job->pay_type,
-                'education'=>$job->edu_qualification,
+                'education' => $job->edu_qualification,
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
                 'industry' => $job->industry,
                 'postalCode' => $job->postal_code,
-                'jobType'=> $job->job_type,
-                'experience'=> $job->min_year_exp,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'experience' => $job->min_year_exp,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -315,7 +316,7 @@ class NewJobPostingController extends Controller
                 'created_at' => $job->created_at,
                 'updated_at' => $job->updated_at
             ];
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -344,7 +345,6 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
     public function jobgrin()
@@ -370,15 +370,15 @@ class NewJobPostingController extends Controller
                 'maxSalary' => $job->max_salary,
                 'salaryType' => $job->salary_type,
                 'payType' => $job->pay_type,
-                'education'=>$job->edu_qualification,
+                'education' => $job->edu_qualification,
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
                 'industry' => $job->industry,
                 'postalCode' => $job->postal_code,
-                'jobType'=> $job->job_type,
-                'experience'=> $job->min_year_exp,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'experience' => $job->min_year_exp,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -388,7 +388,7 @@ class NewJobPostingController extends Controller
                 'created_at' => $job->created_at,
                 'updated_at' => $job->updated_at
             ];
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -420,7 +420,6 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
     public function jobinventory()
@@ -428,41 +427,77 @@ class NewJobPostingController extends Controller
         return view('newjobportal.jobinventory_form');
     }
 
-    public function sendToJobinventory(Request $request)
+    public function sendToJobinventoryJob($job_id)
     {
-        $xml = '<?xml version="1.0" encoding="utf-8"?>';
-        $xml .= '<listing>';
 
-        $xml .= '<ctime>2011-03-01T14:00:00-07:00</ctime>';
+        try {
+            $job = Position::where('id', $job_id)->first();
+            // $job = Position::find($job_id);
+            $url = 'https://happiestresume.com/api/sendtojobinventory';
+            $address = "$job->city, $job->states, $job->countries";
+            $data = [
+                'job_id' => $job->id,
+                'positionName' => $job->position_name,
+                'job_description' => $job->job_description,
+                'country' => $job->countries,
+                'state' => $job->states,
+                'city' => $job->city,
+                'minSalary' => $job->min_salary,
+                'maxSalary' => $job->max_salary,
+                'salaryType' => $job->salary_type,
+                'payType' => $job->pay_type,
+                'education' => $job->edu_qualification,
+                'clientImage' => $job->findClientGet->clientImage,
+                'aboutClient' => $job->findClientGet->aboutClient,
+                'skills' => $job->skill_set,
+                'industry' => $job->industry,
+                'postalCode' => $job->postal_code,
+                'jobType' => $job->job_type,
+                'experience' => $job->min_year_exp,
+                'closeDate' => $job->close_date,
+                'minYearExp' => $job->min_year_exp,
+                'expire_on' => $job->close_date,
+                'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
+                'contact_person_name' => $job->contact_person_name,
+                'person_contact' => $job->person_contact,
+                'person_email' => $job->person_email,
+                'created_at' => $job->created_at,
+                'updated_at' => $job->updated_at
+            ];
 
-        // Job entry
-        $xml .= '<entry>';
-        $xml .= '<id><![CDATA[101647600000100]]></id>';
-        $xml .= '<title><![CDATA[Example title]]></title>';
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($curl);
+            $res = json_decode($response);
 
-        // Location information
-        $xml .= '<location>';
-        $xml .= '<country><![CDATA[US]]></country>';
-        $xml .= '<state><![CDATA[CA]]></state>';
-        $xml .= '<city><![CDATA[Sacramento]]></city>';
-        $xml .= '<postalcode><![CDATA[95814]]></postalcode>';
-        $xml .= '</location>';
+            if ($res == 1) {
+                $job_posting = JobPostingModel::where('job_id', $job_id)->first();
+                $job_posting->careerbliss = 1;
+                $job_posting->save();
+            }
+            curl_close($curl);
+            $response = new Portalresponse();
+            $response->portal = 'jobinventory';
+            $response->is_success = 1;
+            $response->response = 'Job Posted Successfully in Jobinventory Jobs';
+            $response->job_id = $job->id;
+            $response->save();
+            return 1;
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            $response = new Portalresponse();
+            $response->portal = 'jobinventory';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
+            $response->job_id = $job->id;
+            $response->save();
+            return 0;
+        }
+        
 
-        $xml .= '<description><![CDATA[Example description]]></description>';
-        $xml .= '<date><![CDATA[2011-03-01T14:00:00-07:00]]></date>';
-        $xml .= '<url><![CDATA[http://www.example.com/listing-url.html]]></url>';
-        $xml .= '<category><![CDATA[Community and Social Service]]></category>';
-        $xml .= '<company><![CDATA[Example Company]]></company>';
-        $xml .= '<jobtype><![CDATA[Contract]]></jobtype>';
-        $xml .= '<education><![CDATA[Doctorate]]></education>';
-        $xml .= '<experience><![CDATA[5-7 years]]></experience>';
-        $xml .= '</entry>';
-
-        $xml .= '</listing>';
-
-        $response = response($xml, 200);
-        $response->header('Content-Type', 'text/xml');
-        return $response;
+      
     }
 
     public function sendToCareerBliss($job_id)
@@ -483,15 +518,15 @@ class NewJobPostingController extends Controller
                 'maxSalary' => $job->max_salary,
                 'salaryType' => $job->salary_type,
                 'payType' => $job->pay_type,
-                'education'=>$job->edu_qualification,
+                'education' => $job->edu_qualification,
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
                 'industry' => $job->industry,
                 'postalCode' => $job->postal_code,
-                'jobType'=> $job->job_type,
-                'experience'=> $job->min_year_exp,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'experience' => $job->min_year_exp,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -501,12 +536,12 @@ class NewJobPostingController extends Controller
                 'created_at' => $job->created_at,
                 'updated_at' => $job->updated_at
             ];
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-             $response = curl_exec($curl);
+            $response = curl_exec($curl);
             $res = json_decode($response);
 
             if ($res == 1) {
@@ -532,14 +567,15 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
 
-    public function clickIndia(){
+    public function clickIndia()
+    {
         return view('newjobportal.clickIndia_form');
     }
-    public function sendToClickIndia(Request $request){
+    public function sendToClickIndia(Request $request)
+    {
 
         // return $request;
         try {
@@ -652,23 +688,25 @@ class NewJobPostingController extends Controller
 
             // Close cURL session
             curl_close($ch);
-
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function newMonster(){
-        $industries=NewMonsterField::distinct()->get();
+    public function newMonster()
+    {
+        $industries = NewMonsterField::distinct()->get();
         // return $industries;
-        return view('newjobportal.new_monster_form',compact('industries'));
+        return view('newjobportal.new_monster_form', compact('industries'));
     }
-    public function getIndustry(Request $request){
-        $area=NewMonsterFieldArea::where('industry_id',$request->monster_industry_id)->get();
+    public function getIndustry(Request $request)
+    {
+        $area = NewMonsterFieldArea::where('industry_id', $request->monster_industry_id)->get();
         return $area;
     }
 
-    public function sendToNewMonster(Request $request){
+    public function sendToNewMonster(Request $request)
+    {
         // return $request;
         $xml = '<?xml version="1.0" encoding="UTF-8" ?>';
         $xml .= '<JobPositionPostings>';
@@ -683,16 +721,16 @@ class NewJobPostingController extends Controller
         $xml .= '<Channel founditId="1"/>';
         $xml .= '<JobTitle><![CDATA[Branch Manager]]></JobTitle>';
         $xml .= '<Categories>';
-        $xml .= '<Category>'.$request->monster_category_function_id.'</Category>';
+        $xml .= '<Category>' . $request->monster_category_function_id . '</Category>';
         $xml .= '</Categories>';
         $xml .= '<Roles>';
-        $xml .= '<Role>'.$request->category_role_id.'</Role>';
+        $xml .= '<Role>' . $request->category_role_id . '</Role>';
         $xml .= '</Roles>';
         $xml .= '<Industries>';
-        $xml .= '<Industry>'.$request->monster_industry_id.'</Industry>';
+        $xml .= '<Industry>' . $request->monster_industry_id . '</Industry>';
         $xml .= '</Industries>';
         $xml .= '<Locations>';
-        $xml .= '<Location>'.$request->monster_location.'</Location>';
+        $xml .= '<Location>' . $request->monster_location . '</Location>';
         $xml .= '<Location>183</Location>';
         $xml .= '</Locations>';
         $xml .= '<WorkExperience>';
@@ -700,7 +738,7 @@ class NewJobPostingController extends Controller
         $xml .= '<MaximumYear>4</MaximumYear>';
         $xml .= '</WorkExperience>';
         $xml .= '<Education>';
-        $xml .= '<Level>'.$request->monster_education_level_id.'</Level>';
+        $xml .= '<Level>' . $request->monster_education_level_id . '</Level>';
         $xml .= '</Education>';
         $xml .= '<Salary>';
         $xml .= '<Currency founditId="4">INR</Currency>';
@@ -736,7 +774,7 @@ class NewJobPostingController extends Controller
         if ($response === false) {
             echo 'cURL error: ' . curl_error($ch);
         } else {
-            echo 'Response from API: ' .$response;
+            echo 'Response from API: ' . $response;
         }
         // Close cURL session
         curl_close($ch);
@@ -746,41 +784,42 @@ class NewJobPostingController extends Controller
         // return $response;
 
     }
-    public function talent(){
-            $xml = '<?xml version="1.0" encoding="utf-8"?>';
-            $xml .= '<source>';
-            $xml .= '<publisher>Random Publisher</publisher>';
-            $xml .= '<publisherurl>https://www.randompublisher.com</publisherurl>';
-            $xml .= '<lastbuilddate>' . gmdate("D, d M Y H:i:s") . ' GMT</lastbuilddate>';
+    public function talent()
+    {
+        $xml = '<?xml version="1.0" encoding="utf-8"?>';
+        $xml .= '<source>';
+        $xml .= '<publisher>Random Publisher</publisher>';
+        $xml .= '<publisherurl>https://www.randompublisher.com</publisherurl>';
+        $xml .= '<lastbuilddate>' . gmdate("D, d M Y H:i:s") . ' GMT</lastbuilddate>';
 
-            // Your job entry
-            $xml .= '<job>';
-            $xml .= '<title>Random Job Title</title>';
-            $xml .= '<company>Random Company</company>';
-            $xml .= '<city>Random City</city>';
-            $xml .= '<state>Random State</state>';
-            $xml .= '<country>Random Country</country>';
-            $xml .= '<dateposted>' . gmdate("D, d M Y H:i:s") . ' GMT</dateposted>';
-            $xml .= '<expirationdate>' . gmdate("D, d M Y H:i:s", strtotime("+30 days")) . ' GMT</expirationdate>';
-            $xml .= '<referencenumber>123456</referencenumber>';
-            $xml .= '<url>https://www.randomjoburl.com</url>';
-            $xml .= '<description>Random Job Description goes here...</description>';
-            $xml .= '<salary>Random Salary</salary>';
-            $xml .= '<jobtype>Full-Time</jobtype>';
-            $xml .= '<category>Random Category</category>';
-            $xml .= '<logo>https://www.randompublisher.com/logo.png</logo>';
-            $xml .= '<talent-apply-data><![CDATA[talent-apply-posturl=https%3A%2F%2Famazingcompany.com%2F%0A&talent-apply-questions=https%3A%2F%2Fwww.talent.com%2Fintegrations%2Fquestions]]></talent-apply-data>';
-            $xml .= '</job>';
+        // Your job entry
+        $xml .= '<job>';
+        $xml .= '<title>Random Job Title</title>';
+        $xml .= '<company>Random Company</company>';
+        $xml .= '<city>Random City</city>';
+        $xml .= '<state>Random State</state>';
+        $xml .= '<country>Random Country</country>';
+        $xml .= '<dateposted>' . gmdate("D, d M Y H:i:s") . ' GMT</dateposted>';
+        $xml .= '<expirationdate>' . gmdate("D, d M Y H:i:s", strtotime("+30 days")) . ' GMT</expirationdate>';
+        $xml .= '<referencenumber>123456</referencenumber>';
+        $xml .= '<url>https://www.randomjoburl.com</url>';
+        $xml .= '<description>Random Job Description goes here...</description>';
+        $xml .= '<salary>Random Salary</salary>';
+        $xml .= '<jobtype>Full-Time</jobtype>';
+        $xml .= '<category>Random Category</category>';
+        $xml .= '<logo>https://www.randompublisher.com/logo.png</logo>';
+        $xml .= '<talent-apply-data><![CDATA[talent-apply-posturl=https%3A%2F%2Famazingcompany.com%2F%0A&talent-apply-questions=https%3A%2F%2Fwww.talent.com%2Fintegrations%2Fquestions]]></talent-apply-data>';
+        $xml .= '</job>';
 
-            $xml .= '</source>';
+        $xml .= '</source>';
 
-            $response = response($xml, 200);
-            $response->header('Content-Type', 'text/xml');
-            return $response;
-
+        $response = response($xml, 200);
+        $response->header('Content-Type', 'text/xml');
+        return $response;
     }
 
-    public function sendToTalentJob($job_id){
+    public function sendToTalentJob($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -798,8 +837,8 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -810,7 +849,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -827,7 +866,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -839,113 +877,114 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
-    public function sendToReed($reedInfo){ 
-    try{
-        $position=Position::find($reedInfo['job_id']);
-        // return $position;
-        $array = explode(',', $position['skill_set']);
-        $currentDate = Carbon::now();
-        $endDate = Carbon::parse($position['close_date']);
-        $diffInDays = $currentDate->diffInDays($endDate);
-      
-        $user_agent = 'ReedAgent';
-        $api_token = '4257484f-1725-4eff-8ee8-16ce72244133';
-        $client_id = '7358769';
-        $url = 'https://www.reed.co.uk/recruiter/api/1.0/jobs';
-        $http_method = 'POST';
+    public function sendToReed($reedInfo)
+    {
+        try {
+            $position = Position::find($reedInfo['job_id']);
+            // return $position;
+            $array = explode(',', $position['skill_set']);
+            $currentDate = Carbon::now();
+            $endDate = Carbon::parse($position['close_date']);
+            $diffInDays = $currentDate->diffInDays($endDate);
 
-        $dt = new DateTime('now', new DateTimeZone('UTC'));
-        $timestamp = $dt->format('Y-m-d\TH:i:s') . '+00:00';
+            $user_agent = 'ReedAgent';
+            $api_token = '4257484f-1725-4eff-8ee8-16ce72244133';
+            $client_id = '7358769';
+            $url = 'https://www.reed.co.uk/recruiter/api/1.0/jobs';
+            $http_method = 'POST';
 
-        // Calculate signature
-        $string_to_sign = $http_method . $user_agent . $url . parse_url($url, PHP_URL_HOST) . $timestamp;
-        $hmac_sha1_hash = hash_hmac('sha1', $string_to_sign, $api_token , true);
-        $api_signature = base64_encode($hmac_sha1_hash);
+            $dt = new DateTime('now', new DateTimeZone('UTC'));
+            $timestamp = $dt->format('Y-m-d\TH:i:s') . '+00:00';
 
-        // Add required headers
-        $headers = [
-            'Content-Type: application/x-www-form-urlencoded',
-            'User-Agent: ' . $user_agent,
-            'X-ApiSignature: ' . $api_signature,
-            'X-ApiClientId: ' . $client_id,
-            'X-TimeStamp: ' . $timestamp,
-        ];
+            // Calculate signature
+            $string_to_sign = $http_method . $user_agent . $url . parse_url($url, PHP_URL_HOST) . $timestamp;
+            $hmac_sha1_hash = hash_hmac('sha1', $string_to_sign, $api_token, true);
+            $api_signature = base64_encode($hmac_sha1_hash);
 
-        // Construct job data
-        $data = [
-            "JobType" => $reedInfo["reed_job_type"],
-            "Title"=>$position['position_name'],
-            "Username"=>"bhavna@happiestresume.com",
-            "Description" => $position['job_description'],
-            "TownName" => $position['countries'].$position['states'].$position['city'],
-            "CountyName" => $position['states'],
-            "CountryName" =>$position['countries'],
-            "WorkingHours" =>$reedInfo["reed_working_hour"],
-            "EmailForApplications" => "bhavna@happiestresume.com",
-            "PostingKey"=> "253702f5-e7d5-463b-a7bd-e144fd09be5a",
-            "MinSalary" => $position['min_salary'],
-            "MaxSalary" => $position['max_salary'],
-            "SalaryType"=>$reedInfo["reed_salary_type"],
-            "Currency" => $reedInfo["reed_currency_type"],
-            "ExpiryInDays" =>  $diffInDays,
-            "ProductId" => "2",
-            "Skills" => $array,
-            "CoverLetterPreference" => "3",
-        ];
+            // Add required headers
+            $headers = [
+                'Content-Type: application/x-www-form-urlencoded',
+                'User-Agent: ' . $user_agent,
+                'X-ApiSignature: ' . $api_signature,
+                'X-ApiClientId: ' . $client_id,
+                'X-TimeStamp: ' . $timestamp,
+            ];
 
-        // return $data;
+            // Construct job data
+            $data = [
+                "JobType" => $reedInfo["reed_job_type"],
+                "Title" => $position['position_name'],
+                "Username" => "bhavna@happiestresume.com",
+                "Description" => $position['job_description'],
+                "TownName" => $position['countries'] . $position['states'] . $position['city'],
+                "CountyName" => $position['states'],
+                "CountryName" => $position['countries'],
+                "WorkingHours" => $reedInfo["reed_working_hour"],
+                "EmailForApplications" => "bhavna@happiestresume.com",
+                "PostingKey" => "253702f5-e7d5-463b-a7bd-e144fd09be5a",
+                "MinSalary" => $position['min_salary'],
+                "MaxSalary" => $position['max_salary'],
+                "SalaryType" => $reedInfo["reed_salary_type"],
+                "Currency" => $reedInfo["reed_currency_type"],
+                "ExpiryInDays" =>  $diffInDays,
+                "ProductId" => "2",
+                "Skills" => $array,
+                "CoverLetterPreference" => "3",
+            ];
 
-        // Build request using cURL
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        $response = curl_exec($ch);
-        if ($response == 1) {
-            $job_posting = JobPostingModel::where('job_id', $reedInfo['job_id'])->first();
-            $job_posting->reed = 1;
-            $job_posting->save();
+            // return $data;
 
-            curl_close($ch);
+            // Build request using cURL
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            $response = curl_exec($ch);
+            if ($response == 1) {
+                $job_posting = JobPostingModel::where('job_id', $reedInfo['job_id'])->first();
+                $job_posting->reed = 1;
+                $job_posting->save();
+
+                curl_close($ch);
+                $response = new Portalresponse();
+                $response->portal = 'Reed';
+                $response->is_success = 1;
+                $response->response = 'Job Posted Successfully in Jobsora Jobs';
+                $response->job_id = $reedInfo['job_id'];
+                $response->save();
+                return 1;
+            }
+        } catch (\Exception $e) {
+            // return $e->getMessage();
             $response = new Portalresponse();
             $response->portal = 'Reed';
-            $response->is_success = 1;
-            $response->response = 'Job Posted Successfully in Jobsora Jobs';
+            $response->is_success = 0;
+            $response->response = $e->getMessage();
             $response->job_id = $reedInfo['job_id'];
             $response->save();
-            return 1;
+            return 0;
         }
-    } catch (\Exception $e) {
-        // return $e->getMessage();
-        $response = new Portalresponse();
-        $response->portal = 'Reed';
-        $response->is_success = 0;
-        $response->response = $e->getMessage();
-        $response->job_id = $reedInfo['job_id'];
-        $response->save();
-        return 0;
-    }
         // return response()->json(['response' => $response]);
     }
 
-    public function jobsoid(){
+    public function jobsoid()
+    {
         return view('newjobportal.reed_form');
     }
     public function user()
     {
         $filePath = public_path('user.txt');
-    
+
         try {
             $fileContents = file_get_contents($filePath);
-    
+
             // Now, $fileContents contains the content of the file
             // You can do whatever you need with $fileContents
             echo $fileContents;
@@ -955,29 +994,30 @@ class NewJobPostingController extends Controller
             echo "Error: " . $e->getMessage();
         }
     }
-    public function shine($id){
-        
-            $ch = curl_init();
-            $url = "https://recruiter.shine.com/api/v2/job/" . $id . "/applications";
-            $username = 'HSO';
-            $password = 'White@1234';
-    
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HEADER, FALSE);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-              "Content-Type: application/json",
-              "Authorization: Basic " . base64_encode("$username:$password")
-            ));
-    
-            $responses_json = curl_exec($ch);
-            curl_close($ch);
-            $responses_shine = json_decode($responses_json);
-    
-            return $responses_shine;
-        
+    public function shine($id)
+    {
+
+        $ch = curl_init();
+        $url = "https://recruiter.shine.com/api/v2/job/" . $id . "/applications";
+        $username = 'HSO';
+        $password = 'White@1234';
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Authorization: Basic " . base64_encode("$username:$password")
+        ));
+
+        $responses_json = curl_exec($ch);
+        curl_close($ch);
+        $responses_shine = json_decode($responses_json);
+
+        return $responses_shine;
     }
-    public function xml(){
+    public function xml()
+    {
         $jsonData = '{
             "position_Name": "TestIng Position",
             "openings": "2",
@@ -1024,14 +1064,14 @@ class NewJobPostingController extends Controller
             "created_at": "2022-03-08T06:19:09.000000Z",
             "updated_at": "2023-07-03T12:37:38.000000Z"
           }';
-          
-          // Decode the JSON data
-          $data = json_decode($jsonData, true);
-          
-          // Create a new XMLWriter
 
-          // Create a new XMLWriter
-          $data = [
+        // Decode the JSON data
+        $data = json_decode($jsonData, true);
+
+        // Create a new XMLWriter
+
+        // Create a new XMLWriter
+        $data = [
             "position_Name" => "TestIng Position",
             "openings" => "2",
             "job_description" => "<p>Sentreo Systems Software Developer &bull;Majorly responsible for build chat based web application and maintain low latency, high-performance system design. Implement and create graphql queries, troubleshooting and debugging as required for bug fixing and solve interesting scaling problems. &bull;Integrated WhatsApp APIs and chatbots like Google Dialogflow and JSON chatbot in this web application.</p>",
@@ -1076,13 +1116,13 @@ class NewJobPostingController extends Controller
             "key" => null,
             "created_at" => "2022-03-08T06:19:09.000000Z",
             "updated_at" => "2023-07-03T12:37:38.000000Z"
-        ]; 
+        ];
         // return $data;
         // Create a new XMLWriter
         $xml = new XMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
-        $xml->startDocument('1.0', 'UTF-8');   
+        $xml->startDocument('1.0', 'UTF-8');
         // Start the root element
         $xml->startElement('job_data');
         // Loop through the data and create elements with tags
@@ -1096,11 +1136,12 @@ class NewJobPostingController extends Controller
         // Set the Content-Type header to specify that the content is XML
         header('Content-Type: application/xml');
         // Output the XML
-        echo $xml->outputMemory();  
+        echo $xml->outputMemory();
     }
 
-    public function sendToJobsora($job_id){
-       
+    public function sendToJobsora($job_id)
+    {
+
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1118,8 +1159,8 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1129,7 +1170,7 @@ class NewJobPostingController extends Controller
                 'created_at' => $job->created_at,
                 'updated_at' => $job->updated_at
             ];
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1163,7 +1204,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-    public function sendToTheIndiaJob($job_id){
+    public function sendToTheIndiaJob($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1181,8 +1223,8 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1193,7 +1235,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1210,7 +1252,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1222,9 +1263,9 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
-    public function sendToJobRapido($job_id){
+    public function sendToJobRapido($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1242,8 +1283,8 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1254,7 +1295,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1271,7 +1312,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1283,10 +1323,10 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
-    public function sendToJobisite($job_id){
+    public function sendToJobisite($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1304,8 +1344,8 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1316,7 +1356,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1333,7 +1373,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1347,7 +1386,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-    public function sendToJobswype($job_id){
+    public function sendToJobswype($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1365,9 +1405,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1378,7 +1418,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1395,7 +1435,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1407,10 +1446,10 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
-
     }
 
-    public function sendToWorkCircle($job_id){
+    public function sendToWorkCircle($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1428,9 +1467,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1441,7 +1480,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1458,7 +1497,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1472,7 +1510,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-    public function sendToJuju($job_id){
+    public function sendToJuju($job_id)
+    {
 
         try {
             $job = Position::where('id', $job_id)->first();
@@ -1491,9 +1530,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1504,7 +1543,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1521,7 +1560,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1535,7 +1573,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-      public function sendToEconJob($job_id){
+    public function sendToEconJob($job_id)
+    {
         try {
             $job = Position::where('id', $job_id)->first();
             // $job = Position::find($job_id);
@@ -1553,9 +1592,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'expire_on' => $job->close_date,
                 'apply_button_url' => "https://happiestresume.com/job-description/$job->id",
@@ -1566,7 +1605,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1583,7 +1622,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1597,7 +1635,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-    public function sendToCariJob($job_id){
+    public function sendToCariJob($job_id)
+    {
 
         try {
             $job = Position::where('id', $job_id)->first();
@@ -1616,9 +1655,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'education' => $job->edu_qualification,
                 'industry' => $job->industry,
@@ -1631,7 +1670,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1648,7 +1687,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1662,7 +1700,8 @@ class NewJobPostingController extends Controller
         }
     }
 
-    public function sendToBebeeJob($job_id){
+    public function sendToBebeeJob($job_id)
+    {
 
         try {
             $job = Position::where('id', $job_id)->first();
@@ -1681,9 +1720,9 @@ class NewJobPostingController extends Controller
                 'clientImage' => $job->findClientGet->clientImage,
                 'aboutClient' => $job->findClientGet->aboutClient,
                 'skills' => $job->skill_set,
-                'jobType'=> $job->job_type,
-                'salaryType'=> $job->salary_type,
-                'closeDate'=>$job->close_date,
+                'jobType' => $job->job_type,
+                'salaryType' => $job->salary_type,
+                'closeDate' => $job->close_date,
                 'minYearExp' => $job->min_year_exp,
                 'education' => $job->edu_qualification,
                 'industry' => $job->industry,
@@ -1696,7 +1735,7 @@ class NewJobPostingController extends Controller
                 'updated_at' => $job->updated_at
             ];
             // return $data;
-           
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POST, true);
@@ -1713,7 +1752,6 @@ class NewJobPostingController extends Controller
                 $response->job_id = $job->id;
                 $response->save();
                 return 1;
-                
             }
         } catch (\Exception $e) {
             // return $e->getMessage();
@@ -1725,5 +1763,265 @@ class NewJobPostingController extends Controller
             $response->save();
             return 0;
         }
+    }
+
+    public function getMuseJobs()
+    {
+        try {
+            $ch = curl_init();
+            $url = "https://www.themuse.com/api/public/jobs?page=1&descending=true";
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array());
+
+            $responses_json = curl_exec($ch);
+            curl_close($ch);
+            $result = json_decode($responses_json);
+            $responses = $result->results;
+            foreach ($responses as $response) {
+
+                foreach ($response->locations as $value) {
+                    $location = $value->name;
+                }
+                foreach ($response->categories as $value) {
+                    $category = $value->name;
+                }
+
+                $jobs =  DB::table('third_party_jobs')->where(['job_id' => $response->id])->first();
+                if (isset($jobs)) {
+                    DB::table('third_party_jobs')
+                        ->where('job_id', $response->id)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'job_id' => $response->id,
+                                'position_name' => $response->name,
+                                'description' => $response->contents,
+                                'type' => $response->type,
+                                'publish_date' => $response->publication_date,
+                                'short_name' => $response->short_name,
+                                'location' => $location,
+                                'category' => $category,
+                                'url' => $response->refs->landing_page,
+                                'company_name' => $response->company->name,
+                                'publisher' => "muse",
+                            )
+                        );
+                } else {
+                    DB::table('third_party_jobs')->insert(
+                        array(
+                            'job_id' => $response->id,
+                            'position_name' => $response->name,
+                            'description' => $response->contents,
+                            'type' => $response->type,
+                            'publish_date' => $response->publication_date,
+                            'short_name' => $response->short_name,
+                            'location' => $location,
+                            'category' => $category,
+                            'url' => $response->refs->landing_page,
+                            'company_name' => $response->company->name,
+                            'publisher' => "muse",
+                        )
+                    );
+                }
+            }
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    public function getJobjobjob()
+    {
+        try {
+        $ch = curl_init();
+        $url = "https://www.jobsjobsjobs.com.au/job/rss.aspx?search=1";
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array());
+
+        $response_xml = curl_exec($ch);
+        curl_close($ch);
+
+        
+        if ($response_xml !== false) {
+            $xml = simplexml_load_string($response_xml);
+
+            foreach ($xml->channel->item as $job) {
+                $jobs =  DB::table('third_party_jobs')->where(['job_id' =>$job->refNo])->first();
+                if (isset($jobs)) {
+                    DB::table('third_party_jobs')
+                        ->where('job_id', $job->refNo)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'job_id' =>  $job->refNo,
+                                'position_name' =>  $job->title,
+                                'description' =>  $job->description,
+                                'publish_date' =>  $job->pubDate,
+                                'category' =>  $job->category,
+                                'url' =>  $job->link,
+                                'company_name' =>  $job->author,
+                                'min_salary' =>  $job->salaryLowerBand,
+                                'max_salary' =>  $job->salaryUpperBand,
+                                'publisher' => "jobjobjob",
+                            )
+                        );
+                } else {
+                    DB::table('third_party_jobs')->insert(
+                        array(
+                            'job_id' =>  $job->refNo,
+                            'position_name' =>  $job->title,
+                            'description' =>  $job->description,
+                            'publish_date' =>  $job->pubDate,
+                            'category' =>  $job->category,
+                            'url' =>  $job->link,
+                            'company_name' =>  $job->author,
+                            'min_salary' =>  $job->salaryLowerBand,
+                            'max_salary' =>  $job->salaryUpperBand,
+                            'publisher' => "jobjobjob",
+                        )
+                    );
+                }
+          
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    } catch (\Exception $e) {
+        return 0;
+    }
+    }
+
+    public function getIndianInternship(){
+
+        try {
+            $ch = curl_init();
+            $url = "https://feeds.feedburner.com/IndianInternships";
+    
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array());
+    
+            $response_xml = curl_exec($ch);
+            curl_close($ch);
+    
+            
+            if ($response_xml !== false) {
+                $xml = simplexml_load_string($response_xml);
+    
+                foreach ($xml->channel->item as $job) {
+                    $url = $job->guid ;
+                    $pattern = '/[0-9]+/';
+                    preg_match($pattern, $url, $matches);
+                    $jobid=$matches[0];
+                    $jobs =  DB::table('third_party_jobs')->where(['job_id' =>$jobid])->first();
+                    if (isset($jobs)) {
+                        DB::table('third_party_jobs')
+                            ->where('job_id', $jobid)
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'job_id' =>  $jobid,
+                                    'position_name' =>  $job->title,
+                                    'description' =>  $job->description,
+                                    'publish_date' =>  $job->pubDate,
+                                    'category' =>  $job->category,
+                                    'url' =>  $job->link,
+                                    'company_name' =>  "Indian Internship",
+                                    'publisher' => "indianinternship",
+                                )
+                            );
+                    } else {
+                        DB::table('third_party_jobs')->insert(
+                            array(
+                               'job_id' =>  $jobid,
+                                'position_name' =>  $job->title,
+                                'description' =>  $job->description,
+                                'publish_date' =>  $job->pubDate,
+                                'category' =>  $job->category,
+                                'url' =>  $job->link,
+                                'company_name' =>  "Indian Internship",
+                                'publisher' => "indianinternship",
+                            )
+                        );
+                    }
+              
+                }
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    public function getJobsoidJobs(){
+        try {
+            $ch = curl_init();
+            $url = "https://demo.jobsoid.com/api/v1/jobs";
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array());
+
+            $responses_json = curl_exec($ch);
+            curl_close($ch);
+             $responses = json_decode($responses_json);
+            foreach ($responses as $response) {
+                $jobs =  DB::table('third_party_jobs')->where(['job_id' => $response->id])->first();
+                if (isset($jobs)) {
+                    DB::table('third_party_jobs')
+                        ->where('job_id', $response->id)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'job_id' => $response->id,
+                                'position_name' => $response->title,
+                                'description' => $response->description,
+                                'type' => $response->type,
+                                'publish_date' => $response->postedDate,
+                                'short_name' => $response->slug,
+                                'max_salary' => $response->salary,
+                                'location' => $response->city. ' ' .$response->state . ' ' .$response->country,
+                                'category' => $response->industry,
+                                'url' => $response->applyUrl,
+                                'company_name' => $response->company,
+                                'publisher' => "jobsoid",
+                            )
+                        );
+                } else {
+                    DB::table('third_party_jobs')->insert(
+                        array(
+                            'job_id' => $response->id,
+                                'position_name' => $response->title,
+                                'description' => $response->description,
+                                'type' => $response->type,
+                                'publish_date' => $response->postedDate,
+                                'short_name' => $response->slug,
+                                'max_salary' => $response->salary,
+                                'location' => $response->location->city. ' ' .$response->location->state . ' ' .$response->location->country,
+                                'category' => $response->industry,
+                                'url' => $response->applyUrl,
+                                'company_name' => $response->company,
+                                'publisher' => "jobsoid",
+                        )
+                    );
+                }
+            }
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+            return $e->getMessage();
+        }
+       
     }
 }

@@ -59,7 +59,6 @@ class AnalyseController extends Controller
 
 				$score = $data->data['score'][0] ?? 0;
 
-
 				//Missing Keywords
 				$missing_tools_and_technologies = $missing_keywords['Tools_and_technologies'] ?? [];
 				$missing_role = $missing_keywords['Role'] ?? [];
@@ -81,6 +80,7 @@ class AnalyseController extends Controller
 				$analysis = new Analysis();
 				$analysis->user_id = Auth::user()->id;
 				$analysis->software_category = Auth::user()->software_category;
+				$analysis->score = $score;
 				$analysis->save();
 
 
@@ -170,11 +170,11 @@ class AnalyseController extends Controller
 	{
 		$url = 'https://happyhire.co.in/mail_parsing/api/';
 		$data = [
-			"type"       => "gmail",
-			"email"      => "rneeta867@gmail.com",
-			"password"   => "ewvfjfqwezzbvelg",
-			"start_date" => "25-07-2023",
-			"end_date"   => "26-07-2023"
+			"type"       => "zoho",
+			"email"      => "mohit.yadav@white-force.in",
+			"password"   => "e23Xd5vLrhTs",
+			"start_date" => "02-11-2023",
+			"end_date"   => "03-11-2023"
 		];
 
 		$curl = curl_init($url);
@@ -182,7 +182,7 @@ class AnalyseController extends Controller
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		$response = curl_exec($curl);
-		return $response;
+		//return $response;
 		$click_res = json_decode($response);
 		dd($click_res);
 	}

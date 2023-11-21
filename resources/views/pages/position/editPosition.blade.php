@@ -1105,29 +1105,163 @@
 
 
                     <div class="d-flex flex-wrap justify-content-center">
+                   
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal"
-                                    value="linkedin">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/linkedin.png"
-                                            alt="">
+                                <input type="checkbox" name="jobPortals[]" class="checkbox-input " value="shine"
+                                    id="shine" onchange="showShineForm();">
+                                <span class="checkbox-tile" style="overflow:hidden;border:2px solid #1976c6;">
+                                    <span style="background: linear-gradient(90deg, rgba(13,4,168,1) 0%, rgba(0,212,255,1) 100%);
+                                    padding: 3px 7px;
+                                    color: white;
+                                    font-size: 10px;
+                                    width: 100%;
+                                    position: absolute;
+                                    text-align: center;
+                                    rotate: 45deg;
+                                    translate: 35px -35px;">
+                                        Paid
                                     </span>
-
+                                    <span class="checkbox-icon">
+                                        <img src="https://www.white-force.com/onrole/job-posting-assets/shine.png" alt="">
+                                    </span>
+    
                                 </span>
                             </label>
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" id="facebook" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="facebook">
-                                <span class="checkbox-tile">
+                                <input type="checkbox" name="jobPortals[]" id="clickIndia" class="checkbox-input "
+                                    value="clickIndia" onchange="showClickIndiaForm();">
+                                    <span class="checkbox-tile" style="overflow:hidden;border:2px solid #1976c6;">
+                                        <span style="background: linear-gradient(90deg, rgba(13,4,168,1) 0%, rgba(0,212,255,1) 100%);
+                                        padding: 3px 7px;
+                                        color: white;
+                                        font-size: 10px;
+                                        width: 100%;
+                                        position: absolute;
+                                        text-align: center;
+                                        rotate: 45deg;
+                                        translate: 35px -35px;">
+                                            Paid
+                                        </span><span class="checkbox-icon">
+                                        <img src="{{ url('images/jobpostingportal/clickIndia.png') }}" alt="">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="jobPortals[]" id="monster" class="checkbox-input "
+                                    onchange="showMonsterForm();" value="monster">
+                                    <span class="checkbox-tile" style="overflow:hidden;border:2px solid #1976c6;">
+                                        <span style="background: linear-gradient(90deg, rgba(13,4,168,1) 0%, rgba(0,212,255,1) 100%);
+                                        padding: 3px 7px;
+                                        color: white;
+                                        font-size: 10px;
+                                        width: 100%;
+                                        position: absolute;
+                                        text-align: center;
+                                        rotate: 45deg;
+                                        translate: 35px -35px;">
+                                            Paid
+                                        </span>  <span class="checkbox-icon">
+                                        <img src="{{ url('images/jobpostingportal/monster.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                       
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="naukri" onchange="showNaukriForm();" name="jobPortals[]"
+                                    class="checkbox-input " value="naukri">
+                                    <span class="checkbox-tile" style="overflow:hidden;border:2px solid #1976c6;">
+                                        <span style="background: linear-gradient(90deg, rgba(13,4,168,1) 0%, rgba(0,212,255,1) 100%);
+                                        padding: 3px 7px;
+                                        color: white;
+                                        font-size: 10px;
+                                        width: 100%;
+                                        position: absolute;
+                                        text-align: center;
+                                        rotate: 45deg;
+                                        translate: 35px -35px;">
+                                            Paid
+                                        </span>  <span class="checkbox-icon">
+                                        <img src="{{ url('images/jobpostingportal/Naukri.jpg') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="timesjob" name="jobPortals[]" class="checkbox-input "
+                                    value="timesjob" onchange="showTimesJobForm();">
+                                    <span class="checkbox-tile" style="overflow:hidden;border:2px solid #1976c6;">
+                                        <span style="background: linear-gradient(90deg, rgba(13,4,168,1) 0%, rgba(0,212,255,1) 100%);
+                                        padding: 3px 7px;
+                                        color: white;
+                                        font-size: 10px;
+                                        width: 100%;
+                                        position: absolute;
+                                        text-align: center;
+                                        rotate: 45deg;
+                                        translate: 35px -35px;">
+                                            Paid
+                                        </span> <span class="checkbox-icon">
+                                        <img src="{{ url('images/jobpostingportal/TimesJobs-logo.png') }}" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="jobPortals[]" id="linkedinATS" class="checkbox-input jobportal"
+                                    value="linkedinATS">
+                                <span class="checkbox-tile" >
+                                    <span class="checkbox-icon">
+                                        <img src="https://www.white-force.com/onrole/job-posting-assets/ats.png" alt="">
+                                    </span>
+    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox" >
+                            <label class="checkbox-wrapper" >
+                                <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="linkedin">
+                                <span class="checkbox-tile" >
+                                    <span class="checkbox-icon">
+                                        <img src="https://www.white-force.com/onrole/job-posting-assets/linkedin.png"
+                                            alt="">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="facebook" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="facebook">
+                                <span class="checkbox-tile" >
                                     <span class="checkbox-icon">
                                         <img src="https://www.white-force.com/onrole/job-posting-assets/facebook.png"
                                             alt="">
                                     </span>
-
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="google" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="google" onchange="showGoogleJobForm();">
+                                <span class="checkbox-tile" >
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/google.png') }}" alt="">
+                                    </span>
+    
                                 </span>
                             </label>
                         </div>
@@ -1140,7 +1274,7 @@
                                         <img src="https://www.white-force.com/onrole/job-posting-assets/jobisjob.jpg"
                                             alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1152,45 +1286,44 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/careerjet.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" id="indeed" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="indeed">
+                                <input type="checkbox" id="indeed" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="indeed">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/Indeed-logo.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" id="jooble" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="jooble" onchange="showJoobleForm();">
+                                <input type="checkbox" id="jooble" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="jooble" onchange="showJoobleForm();">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/jooble.jpg"
-                                            alt="">
+                                        <img src="https://www.white-force.com/onrole/job-posting-assets/jooble.jpg" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
-
+    
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" id="drJob"
-                                    class="checkbox-input jobportal" value="drJob">
+                                <input type="checkbox" name="jobPortals[]" id="drJob" class="checkbox-input jobportal"
+                                    value="drJob">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/dr-logo-org.webp') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1202,7 +1335,7 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/Adzuna_Logo.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1214,62 +1347,12 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/jora.jpg') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
-
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" id="google" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="google" onchange="showGoogleJobForm();">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="{{ url('logo/google.png') }}" alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal"
-                                    value="shine" id="shine" onchange="showShineForm();">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/shine.png"
-                                            alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" id="clickIndia"
-                                    class="checkbox-input jobportal" value="clickIndia" onchange="showClickIndiaForm();">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="{{ url('images/jobpostingportal/clickIndia.png') }}" alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-
-
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" id="monster"
-                                    class="checkbox-input jobportal" onchange="showMonsterForm();" value="monster">
-                                <span class="checkbox-tile ">
-                                    <span class="checkbox-icon">
-                                        <img src="{{ url('images/jobpostingportal/monster.png') }}" alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
+    
+                        
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal"
@@ -1278,71 +1361,35 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/postJobFree.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
+                        
+    
+                        
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" id="naukri" onchange="showNaukriForm();" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="naukri">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="{{ url('images/jobpostingportal/Naukri.jpg') }}" alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" id="timesjob" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="timesjob" onchange="showTimesJobForm();">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="{{ url('images/jobpostingportal/TimesJobs-logo.png') }}"
-                                            alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" id="whatJobs" name="jobPortals[]"
-                                    class="checkbox-input jobportal" value="whatJobs">
+                                <input type="checkbox" id="whatJobs" name="jobPortals[]" class="checkbox-input jobportal"
+                                    value="whatJobs">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="https://www.white-force.com/onrole/job-posting-assets/whatJobs.png"
                                             alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
+                        
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" id="linkedinATS"
-                                    class="checkbox-input jobportal" value="linkedinATS">
-                                <span class="checkbox-tile">
-                                    <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/ats.png"
-                                            alt="">
-                                    </span>
-
-                                </span>
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal" value="jobsora"
-                                   >
+                                <input type="checkbox" name="jobPortals[]" class="checkbox-input jobportal" value="jobsora">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/jobsora.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1458,13 +1505,23 @@
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" name="jobPortals[]" class="checkbox-input" value="happiest"
-                                    checked>
+                                <input type="checkbox" value="jobinventory" name="jobPortals[]"
+                                    class="checkbox-input jobportal" id="jobinventory" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="{{ url('logo/jobinventory.png') }}" width="300px"alt="">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="jobPortals[]" class="checkbox-input" value="happiest" checked>
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/HappiestResume.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1476,7 +1533,6 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/whiteforce.png') }}" alt="">
                                     </span>
-
                                 </span>
                             </label>
                         </div>
@@ -1604,8 +1660,8 @@
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" value="reed" name="jobPortals[]"
-                                    class="checkbox-input in_jobportal"  onchange="showReedForm();" id="reed" />
+                                <input type="checkbox"  name="jobPortals[]"
+                                    class="checkbox-input "  onchange="showReedForm();" id="reed" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/reed.png') }}" alt="">
@@ -1822,13 +1878,7 @@
                     countries: "required",
                     states: "required",
                     city: "required",
-                    postal_code: {
-
-                        required: true,
-                        min: 1,
-                        minlength: 6,
-                        maxlength: 6,
-                    },
+                   
                     "skill_set[]": "required",
                     edu_qualification: "required",
                     close_date: "required",
@@ -1856,11 +1906,6 @@
                     countries: "Select Country ",
                     states: "Select State ",
                     city: "Select city ",
-                    postal_code: {
-                        required: "Enter Postal Code",
-                        min: "Enter Positive value",
-                       
-                    },
                     "skill_set[]": "Enter Skills ",
                     edu_qualification: "Select Qualification",
                     close_date: "Select Close date",
@@ -1891,9 +1936,6 @@
             option.selected = true;
             return option;
         }
-
-
-
 
         $(document).ready(function() {
             $('#js-example-basic-multiple').select2();

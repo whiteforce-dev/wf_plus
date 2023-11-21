@@ -45,6 +45,26 @@ tfoot {
   bottom: 0;
   background-color: #f2f2f2;
 }
+.table-container{
+        position: relative;
+       
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse;
+    }
+    thead {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    }
+
+.table-scroll {
+    max-height: 400px; 
+    overflow-y: scroll;
+    border-top: 1px solid #ccc; 
+}
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -90,8 +110,46 @@ tfoot {
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive card" id="daily_lineup_table">
+                    <div class="table-responsive card table-scroll" id="daily_lineup_table">
                         @include('master.404')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal right fade right-Modal" tabindex="-1"
+    role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header custom-modal-header">
+                <div class="d-flex flex-wrap align-items-center w-100 justify-content-between">
+                    <div class="position_Information d-flex flex-wrap align-items-center">
+                        <input type="text" id="searchQuery"
+                            placeholder="Serach Position By Name, Client Name or Number Of Position"
+                            class="form-control" onkeyup="getC()">
+                        <div class="m-2 d-flex between">
+                            <small>Checked Position will see you
+                                after clicking the button</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body custom-modal-body">
+                <div class="custom-tab-1">
+                    <div class="tab-content custom-tab-content">
+                        <div id="details-tab" class="tab-pane fade active show" role="tabpanel">
+                            <div id="can_search_sec">
+                                <ul class="grid">
+
+                                </ul>
+
+                                <div class="a14" >
+                                    <span style="font-size:80px; color: coral"
+                                        class="mdi mdi-checkbox-marked-circle"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +170,7 @@ tfoot {
                 end_date: $("#endDate").val()
             },
             success: function(response){
-               
+               console.log(response);
                 $('#daily_lineup_table').empty();
                 $("#daily_lineup_table").html(response);
             }

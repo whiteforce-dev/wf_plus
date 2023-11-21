@@ -26,16 +26,44 @@
             @endphp
             <td>
                 <h6>
-                    <a href="javascript:void(0)"><span
-                            class="badge badge-primary">{{ $count }}</span></a>
+                    <a >
+                    <span class="badge badge-primary" style="cursor:pointer;" onclick = 'show({{$data["score"][$ckey]  }});' >{{ $count }}</span>
+                    </a>       
                 </h6>
             </td>
             @endforeach
         </tr>
+        
         @endforeach
     </tbody>
 </table>
-
+<div class="modal right fade right-Modal" id="candidates" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header custom-modal-header">
+                <div class="d-flex flex-wrap align-items-center w-100 justify-content-between">
+                    <div class="position_Information d-flex flex-wrap align-items-center">
+                        <h4>Matching Percentage List</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body custom-modal-body">
+                <div class="custom-tab-1">
+                    <div class="tab-content custom-tab-content">
+                        <div id="details-tab" class="tab-pane fade active show" role="tabpanel">
+                            <div id="can_search_sec">
+                                <ul class="grid">
+                                    <div class="alert  fade show" style="height: 120px;" id='percentage'>   
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 
 <script>
     function showChild(id) {
@@ -43,6 +71,23 @@
         getReport();
     }
 
-    
+   function show(e){
+   console.log(typeof e);
+   let data = "Resume Matching Data";
+        for (a in e) {
+            console.log(a);
+            data += `<div class="alert alert-info alert-dismissible alert-alt fade show" style="display: flex; margin-top:10px;">
+                <div class="d-flex justify-content-between" style="width:78%; justify-content:center; align-items:center; margin-top:10px;">
+                    <p style="color: #43474b; font-size:0.8rem; font-weight:500; width:60%;">Percentage Matching: <br> <span style="color: rgb(255,76,65);font-size:35px;">` + e[a].score + `%</span></p>
+                    <p style="color: #404249; font-size:0.8rem; font-weight:500; width:40%;"> Created At: <br> <span style="color: rgb(255,76,65);">` + e[a].created_at.substring(0,10) + `</span></p>
+                </div>
+            </div>`;
+        }
+
+
+    $('#candidates').modal('show');
+    $('#percentage').empty();
+    $('#percentage').html(data);
+   }
 
 </script>

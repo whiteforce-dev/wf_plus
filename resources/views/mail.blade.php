@@ -457,6 +457,14 @@ extract($data);
                                                                         • Support continuous improvement by
                                                                         investigating alternatives and technologies and
                                                                         presenting these for architectural review.</p>
+
+                                                                    <br/>
+                                                                    <p style="margin: 0; margin-bottom: 6px;">
+                                                                        <strong>Interview Questions And Answer : </strong>
+                                                                    </p>
+                                                                    <p style="margin: 0;">
+                                                                        {!! $qdata !!}
+                                                                    </p>
                                                                 </div>
                                                             </td>
                                                         </tr>

@@ -31,6 +31,7 @@ use App\Http\Controllers\TimesjobController;
 use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\JoiningCandidateController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -314,9 +315,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/daily-lineup-report', [ReportsController::class, 'daily_lineup_report']);
         Route::post('/daily-lineup-report', [ReportsController::class, 'daily_lineup_report_data']);
         Route::post('/get-lineup-report', [ReportsController::class, 'get_lineup_report_data']);
-        Route::get('/pipeline-report', [ReportsController::class, 'pipeline_report']);
         Route::post('/get-user-child', [ReportsController::class, 'get_user_child']);
         Route::post('/pipeline-report', [ReportsController::class, 'pipeline_report_data']);
+        Route::get('/pipeline-report', [ReportsController::class, 'pipeline_report']);Route::get('/client-portal-jobs', [ReportsController::class, 'client_portal_jobs']);Route::get('/applied-candidate-report', [ReportsController::class, 'applied_candidate_report']);
+        Route::post('/applied-candidate-report-data', [ReportsController::class, 'applied_candidate_report_data']);
 
         //LeaderBoard
         route::get('leader-board', [LeaderboardController::class, 'leaderBoard']);
@@ -442,3 +444,42 @@ Route::get('getshine/{id}', [NewJobPostingController::class, 'shine']);
 
 Route::get('xml', [NewJobPostingController::class, 'xml']);
 Route::get('xml', [NewJobPostingController::class, 'xml']);
+
+Route::get('show-question-answer', [PositionController::class, 'showQuestionAnswer']);
+Route::get('save-questionAndAnswer', [PositionController::class, 'saveQuestionAndAnswer']);
+
+
+/*****Joining Form Formalities******/
+Route::get('joining-form/basic-details', [JoiningCandidateController::class,'basicDetails']);
+Route::post('store-basic-details', [JoiningCandidateController::class,'storeBasicDetails']);
+
+// step -2
+Route::get('joining-form/education', [JoiningCandidateController::class,'education']);
+Route::post('store-education', [JoiningCandidateController::class,'storeEducation']);
+
+//step -3
+Route::get('joining-form/bank-details', [JoiningCandidateController::class,'bankDetails']);
+Route::post('store-bank-details', [JoiningCandidateController::class,'storeBankDetails']);
+
+//step -4
+Route::get('joining-form/work-experience', [JoiningCandidateController::class,'workExperience']);
+Route::post('store-work-experience', [JoiningCandidateController::class,'storeWorkExperience']);
+
+//step -5
+Route::get('joining-form/skills',[JoiningCandidateController::class,'skills']);
+Route::any('store-skills', [JoiningCandidateController::class,'storeSkills']);
+
+//step -6
+Route::get('joining-form/thankyou',[JoiningCandidateController::class,'thankyou']);
+Route::get('approved-newjoinee', [JoiningCandidateController::class,'approvedNewjoinee']);
+Route::any('approvedNewjoinee', [ApiController::class,'approvedNewjoinee']);
+Route::get('candidateapproval/{id}',[JoiningCandidateController::class,'candidateapproval']);
+
+Route::get('join', [JoiningCandidateController::class,'join']);
+Route::post('sendjoiningform', [JoiningCandidateController::class,'sendjoinform']);
+Route::get('newjoinee', [JoiningCandidateController::class,'newjoinee']);
+Route::get('receiver-list', [JoiningCandidateController::class,'receiverEmail']);
+Route::get('newjoineefulldetail/{id}', [JoiningCandidateController::class,'newjoineefulldetail']);
+Route::any('getstate/{country}', [JoiningCandidateController::class,'get_state']);
+Route::any('getcity/{state}',[JoiningCandidateController::class,'get_city']);
+/*****Joining Form Formalities******/

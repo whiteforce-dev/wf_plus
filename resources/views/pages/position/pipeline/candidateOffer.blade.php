@@ -19,7 +19,7 @@
 
 
                 <input type="date" class="form-control" value="{{ $pipelineData->joining_date }}" name="joining_date"
-                    id="date_picker" placeholder="Enter Joining Date">
+                    id="date_picker" placeholder="Enter Joining Date" min="{{ date("Y-m-d") }}">
             </div>
         </div>
 

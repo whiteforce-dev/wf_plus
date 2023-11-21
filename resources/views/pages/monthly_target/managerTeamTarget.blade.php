@@ -158,7 +158,7 @@
                                                 </tbody>
                                             </table>
 
-                                            @if (Auth::user()->role == 'admin')
+                                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'general_manager')
 
                                                 @if ($month == date('m'))
                                                     <button type="submit"
@@ -177,7 +177,6 @@
                                             @endif
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

@@ -270,30 +270,33 @@
             <div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
                 <div class="col-xl-12">
                     <div class="card col-12">
+                        <form action="{{ url('job-posting-reports') }}" style="display:inline;">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div class="col-2">
                                 <h4>All Posted Jobs</h4>
                             </div>
                             <div class="col-3">
                                 <div class="input-group ">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="fromdate">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="input-group ">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="todate">
                                 </div>
                             </div>
                             <div class=" col-3">
-                                <select class="default-select form-control wide" name="created_by" id="created_by"
+                                <!-- <select class="default-select form-control wide" name="created_by" id="created_by"
                                     onchange="">
                                     <option selected value="0">All Managers</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }} </option>
                                     @endforeach
-                                </select>
+                                </select> -->
+                                <button class="btn btn-primary btn-block" type="submit">Submit</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
 
@@ -302,23 +305,29 @@
                 <div class="col-sm-3 p-2">
                     <div class="custom-card">
                         <article class="information [ card ]" align="center">
-                            <h2 class="title"><img
-                                    src="{{ $portal['logo'] }}"
-                                    alt="" class="img-fluid rounded-squre"></h2>
-
+                            <h2 class="title">
+                                <div style="width: 225px; height: 75px; overflow: hidden;">
+                                    <img
+                                        src="{{ $portal['logo'] }}"
+                                        alt=""
+                                        class="img-fluid rounded-square"
+                                    >
+                                </div>
+                            </h2>
                             <dl class="details">
                                 <div>
                                     <dt>Positions</dt>
-                                    <dd>{{ $portal['positions'] }}</dd>
+                                    <dd>{{ $portal['position'] ?? 0 }}</dd>
                                 </div>
                                 <div class="point" onclick='getName("0","{{ $portal["name"] }}")'>
                                     <dt>Candidates</dt>
-                                    <dd>{{ $portal['candidates'] }}</dd>
+                                    <dd>{{ $portal['candidate'] ?? 0 }}</dd>
                                 </div>
                             </dl>
                         </article>
                     </div>
                 </div>
+                
                 @endforeach
 
 

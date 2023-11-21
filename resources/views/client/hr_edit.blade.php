@@ -110,7 +110,7 @@
             rules: {
                 client_name: 'required',
                 hr_name: 'required',
-                birthday: 'required',
+               // birthday: 'required',
                 hr_mobile: 'required',
                 hr_location: 'required',
                 hr_email: {
@@ -124,7 +124,7 @@
 
                 client_name: '*Please enter client name',
                 hr_name: '*Please enter HR name',
-                birthday: '*Please enter birthday',
+                //birthday: '*Please enter birthday',
                 hr_mobile: '*Please enter mobile number',
                 hr_location: '*Please enter location',
                 hr_email: {
