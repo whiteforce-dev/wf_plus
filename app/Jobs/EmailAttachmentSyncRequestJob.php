@@ -18,7 +18,7 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $request_id;
-    public $timeout = 300; 
+    public $timeout = 600; 
 
     /**
      * Create a new job instance.
@@ -39,8 +39,6 @@ class EmailAttachmentSyncRequestJob implements ShouldQueue
     {
         $sync_request = EmailAttachmentSyncRequest::find($this->request_id);
         if(empty($sync_request)){
-            $sync_request->status = 3;
-            $sync_request->save();
             return 0;
         }
 

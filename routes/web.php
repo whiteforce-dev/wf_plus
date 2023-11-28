@@ -342,10 +342,22 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/job-analysis-report', [ReportsController::class, 'job_analysis_report']);
         Route::post('/job-analysis-report', [ReportsController::class, 'job_analysis_report_data']);
-
-
-
     });
+
+    // Job Match With Resume
+    Route::get('analyse', [AnalyseController::class, 'analyse']);
+    Route::post('get-match-result', [AnalyseController::class, 'getMatchResult']);
+    Route::post('show-result', [AnalyseController::class, 'showResult']);
+    Route::get('delete_sync_request/{id}', [AnalyseController::class, 'delete_sync_request']);
+
+    //email attachment syncing
+    Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments']);
+    Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
+    Route::get('checkemail', [AnalyseController::class, 'checkemail']);
+
+    //Multiple resume matching
+    Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
+    Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
 });
 
 //Events
@@ -370,21 +382,6 @@ Route::get('prescreening/thank-you', function () {
 // Tracker
 Route::post('download-tracker', [TrackerController::class, 'exportToExcel']);
 Route::get('cloneCandidateData', [CandidateController::class, 'cloneCandidateData']);
-
-// Job Match With Resume
-Route::get('analyse', [AnalyseController::class, 'analyse']);
-Route::post('get-match-result', [AnalyseController::class, 'getMatchResult']);
-Route::post('show-result', [AnalyseController::class, 'showResult']);
-Route::get('delete_sync_request/{id}', [AnalyseController::class, 'delete_sync_request']);
-
-//email attachment syncing
-Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments']);
-Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
-Route::get('checkemail', [AnalyseController::class, 'checkemail']);
-
-//Multiple resume matching
-Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
-Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
 
 //Check
 Route::get('test', [CandidateController::class, 'test']);

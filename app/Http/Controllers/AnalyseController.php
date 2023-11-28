@@ -153,8 +153,8 @@ class AnalyseController extends Controller
 		$sync_request->software_category = Auth::user()->software_category;
 		$sync_request->save();
 
-		//EmailAttachmentSyncRequestJob::dispatch($sync_request->id)->delay(Carbon::today()->setTime(23, 0, 0));
-		EmailAttachmentSyncRequestJob::dispatch($sync_request->id);
+		EmailAttachmentSyncRequestJob::dispatch($sync_request->id)->delay(getDispatchTime());
+		//EmailAttachmentSyncRequestJob::dispatch($sync_request->id);
 		return back()->withSuccess('Your request is successfully generated. Attachment will sync sortly');
 	}
 
