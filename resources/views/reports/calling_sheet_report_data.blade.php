@@ -9,13 +9,9 @@
 <tbody style="overflow: auto;">
     @foreach ($counts as  $count)
     <tr>
-        @if($count["number"]->count() != 0)
-        <td><h6 class="text-danger" style="cursor:pointer;" onclick ="showDetail({{ $count['data'] }})" >{{ $count['user'] }}</h6></td>
-        @else
         <td><h6 >{{ $count['user'] }}</h6></td>
-        @endif
         @foreach($count as $k => $value)
-         @if(is_numeric($k))
+         @if(is_numeric($k)) 
             <td><span class="badge badge-primary">{{ $value }}</span></td>
         @endif
         @endforeach
@@ -25,6 +21,22 @@
 </tbody>
 <script>
     function showDetail(e){
+        console.log( e);
+        if(e['mobile'] == ''){
+            return "hello";
+        }
+        else{
+        $.ajax({
+            url:"{{ url('get-calling-detail') }}",
+            type:"GET",
+            data:e,
+            success:function(response){
+                console.log(response);
+            },
+            error:function(error){
+                console.log(error);
+            }
+        })
       
         let data = "";
         for (a of e) {
@@ -42,5 +54,6 @@
     $('#candidates').modal('show');
     $('#percentage').empty();
     $('#percentage').html(data);
+        }
     }
 </script>

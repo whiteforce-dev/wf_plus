@@ -72,19 +72,27 @@
     }
 
    function show(e){
-   console.log(typeof e);
+   console.log(e);
    let data = "Resume Matching Data";
         for (a in e) {
             console.log(a);
-            data += `<div class="alert alert-info alert-dismissible alert-alt fade show" style="display: flex; margin-top:10px;">
-                <div class="d-flex justify-content-between" style="width:78%; justify-content:center; align-items:center; margin-top:10px;">
-                    <p style="color: #43474b; font-size:0.8rem; font-weight:500; width:60%;">Percentage Matching: <br> <span style="color: rgb(255,76,65);font-size:35px;">` + e[a].score + `%</span></p>
-                    <p style="color: #404249; font-size:0.8rem; font-weight:500; width:40%;"> Created At: <br> <span style="color: rgb(255,76,65);">` + e[a].created_at.substring(0,10) + `</span></p>
+            data += `<div class="alert alert-info alert-dismissible alert-alt fade show" style="; margin-top:0px;">
+                <div class=row>
+                    <div class=col-6>
+                        <p style="color: #404249; font-size:0.8rem; font-weight:500;"> Resume Name: <br> <span style="color: rgb(255,76,65);">` + e[a].resume_name + `</span></p>
+                    </div>
+                    <div class=col-6>
+                        <p style="color: #404249; font-size:0.8rem; font-weight:500; "> Jd Name: <br> <span style="color: rgb(255,76,65);">` + e[a].jd_name + `</span></p>
+                    </div>
+                    <div class=col-6>
+                        <p style="color: #404249; font-size:0.8rem; font-weight:500; "> Percentage Matching: <br> <span style="color: rgb(255,76,65);font-size:20px;">` + e[a].score + `%</span></p>
+                    </div>
+                    <div class=col-6>
+                        <p style="color: #404249; font-size:0.8rem; font-weight:500; "> Created At: <br> <span style="color: rgb(255,76,65);">` +e[a].created_at.substring(0,10) + `</span></p>
+                    </div>
                 </div>
             </div>`;
         }
-
-
     $('#candidates').modal('show');
     $('#percentage').empty();
     $('#percentage').html(data);

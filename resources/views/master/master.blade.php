@@ -178,8 +178,9 @@
     <!--*******************
         Preloader end
     ********************-->
-
-
+    <a href="{{ url('https://white-force.com/plus/tutorial/WFP_Tutorial.html') }}" target="_blank">
+        <span class="a14 btn btn-primary" style="bottom:50px;z-index:1">Help</span>
+    </a>
     <div id="main-wrapper" class="menu-toggle">
         <div class="nav-header">
             <a href="{{ url('dashboard') }}" class="brand-logo">

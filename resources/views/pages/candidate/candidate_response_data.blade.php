@@ -1,4 +1,4 @@
-@foreach ($candidates as $candidate)
+@foreach ($candidates as $key=> $candidate)
 <div class="card">
     <div class="d-flex justify-content-between card-header">
         <div class="d-flex" style="margin-top: 5px;">
@@ -155,7 +155,7 @@
         </div>
     </div>
 </div>
-
+ 
     <div class="modal right fade right-Modal" id="myModal2{{ $candidate->id }}" tabindex="-1"
         role="dialog" aria-labelledby="myModalLabel2">
         <div class="modal-dialog" role="document">

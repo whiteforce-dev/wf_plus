@@ -83,10 +83,10 @@ class TimesjobController extends Controller
              $location=json_decode($times->times_location);
              $industry= json_decode($times->times_industry) ;
              $farea=json_decode($times->times_farea);
-             $post_Graduation=json_decode($times->times_post_Graduation_Course);
-             $greduation_course=json_decode($times->times_Graduation_Course);
-             $times_Graduation_Specialisation =json_decode($times->times_Graduation_Specialisation);
-             $times_areaOfSpec=json_decode($times->times_areaOfSpec);
+             $post_Graduation=json_decode($times->times_post_graduation_course);
+             $greduation_course=json_decode($times->times_graduation_course);
+             $times_Graduation_Specialisation =json_decode($times->times_graduation_specialisation);
+             $times_areaOfSpec=json_decode($times->times_area_of_spec);
 
              $times_FaRoles=json_decode($times->times_FaRoles);
              $description =$times->times_job_description;
@@ -96,8 +96,8 @@ class TimesjobController extends Controller
              $data = [
                  "designation" => $job->position_name,
                  "keySkills" =>  $skilset,
-                 "minExp" => $times->times_minYearExp,
-                 "maxExp" => $times->times_maxYearExp,
+                 "minExp" => $times->times_min_year_exp,
+                 "maxExp" => $times->times_max_year_exp,
                  "joblocation" =>  $location,
                  "joblocationOther"=>$times->times_location_others,
                  "currency"=>$times->times_currency,
@@ -111,16 +111,16 @@ class TimesjobController extends Controller
                  "industryOther"=>$times->times_industry_others,
                  "funcArea"=> $farea,
                  "funcAreaOther"=>$times->times_farea_others,
-                 "areaOfSpec"=> $times_areaOfSpec ?? '[]',
+                 "areaOfSpec"=> $times_areaOfSpec ?? [],
                  "areaOther"=> "test",
                  "cboFaRoles"=>  $times_FaRoles,
                  "jobDescription"=> $times_job_description,
-                 "rdoCourse1"=>$times->times_post_Graduation,
-                 "rdoCourse2"=>$times->times_Graduation,
+                 "rdoCourse1"=>$times->times_post_graduation,
+                 "rdoCourse2"=>$times->times_graduation,
                  "cboDegree1"=> $post_Graduation,
                  "cboDegree2"=> $greduation_course,
                  "cboSecAreaSpecial"=> $times_Graduation_Specialisation,
-                 "cboHighAreaSpecial"=>$times->times_post_Graduation_Specialisation,
+                 "cboHighAreaSpecial"=>$times->times_post_graduation_specialisation,
                  "cboDegree1Other"=> "",
                  "cboDegree2Other"=>"",
                  "cboSecAreaSpecialOther"=>"",
@@ -131,7 +131,7 @@ class TimesjobController extends Controller
             //  return $data;
 
              $data_array= json_encode($data);
-
+            //  return $data_array;
              $atspost = "params=".$data_array."&authJson=".$authjson;
 
 
@@ -146,10 +146,17 @@ class TimesjobController extends Controller
 
              $detail=json_decode($response);
 
-
              if($detail->JobId) {
                  $times->response_id = $detail->JobId;
                  $times->save();
+                 DB::table("new_times_job_ids")->upsert(
+                    [
+                        'times_job_id' => $detail->JobId,
+                        'position_id' => $job->id,
+                    ],
+                    ['times_job_id'], // Unique key or keys to check for existing records
+                    ['times_job_id' => $detail->JobId, 'position_id' => $job->id] // Values to update if record exists
+                );  
              }
 
              if($detail->statusMsg == "success") {
@@ -165,6 +172,7 @@ class TimesjobController extends Controller
              $file=file_get_contents("$url/authenticate.html?tokenId=$tokenid");
              $response = new Portalresponse();
              $response->portal = 'timesjob';
+             $response->is_success = 1;
              $response->response = 'Job Posted In TimesJob Portal';
              $response->job_id = $job->id;
              $response->save();
@@ -290,15 +298,16 @@ class TimesjobController extends Controller
      public function timesjobCandidateResponse()
      {
 
-         $times = DB::table('jobs_to_timesjobs')->get();
+         $times = DB::table('new_times_job_ids')->get();
+         $all = [];
          foreach ($times as $keys => $x) {
 
-             if(is_numeric($x->job_id)) {
-                 $times_job_id = $x->job_id;
-                 $job_id = $x->job_id;
-
-                 $job = Position::find($times_job_id);
-                 $times = Jobs_to_timesjobs::where('job_id', $times_job_id)->first();
+             if(is_numeric($x->times_job_id)) {
+                 $times_job_id = $x->times_job_id;
+                 
+                //  $job_id = $x->times_job_id;
+                //  $job = Position::find($times_job_id);
+                //  $times = Jobs_to_timesjobs::where('job_id', $times_job_id)->first();
 
                  $url = $this->getUrl();
                  $tokenid="aGFwcHk6ODQ5MDk2NA==";
@@ -310,7 +319,7 @@ class TimesjobController extends Controller
                  $authjson= json_encode($auth);
 
                  $params= [
-                     "jobId" => $times->response_id,
+                     "jobId" => $times_job_id,
                      "pageNo" => "1",
                      "sortType" => "2"
                  ];
@@ -325,45 +334,47 @@ class TimesjobController extends Controller
                  $response = curl_exec($curl);
                  curl_close($curl);
                  $responses_timesjobs=json_decode($response);
-                 if(!empty($responses_timesjobs->applicationList)) {
-                     foreach ($responses_timesjobs->applicationList as $value) {
-                         $Response_candidates = CandidateResponse::where(['user_email' => $value->email,'job_id'=>$job_id,'publish_to'=>'timesjob'])->first();
-                         if(!isset($candidates) || $Response_candidates == "") {
-                             $Response_candidates = new CandidateResponse();
-                             $candidate = new Candidate();
-                         }
+                 $all[$keys] = $responses_timesjobs;
+                //  if(!empty($responses_timesjobs->applicationList)) {
+                //      foreach ($responses_timesjobs->applicationList as $value) {
+                //          $Response_candidates = CandidateResponse::where(['user_email' => $value->email,'job_id'=>$job_id,'publish_to'=>'timesjob'])->first();
+                //          if(!isset($candidates) || $Response_candidates == "") {
+                //              $Response_candidates = new CandidateResponse();
+                //              $candidate = new Candidate();
+                //          }
 
-                         $Response_candidates = new CandidateResponse();
-                         $Response_candidates->job_id = $job_id;
-                         $Response_candidates->publish_to = 'timesjob';
-                         $Response_candidates->user_name = $value->name;
-                         $Response_candidates->user_email = $value->email;
-                         $Response_candidates->user_mobile = $value->mobile;
-                         $Response_candidates->save();
+                //          $Response_candidates = new CandidateResponse();
+                //          $Response_candidates->job_id = $job_id;
+                //          $Response_candidates->publish_to = 'timesjob';
+                //          $Response_candidates->user_name = $value->name;
+                //          $Response_candidates->user_email = $value->email;
+                //          $Response_candidates->user_mobile = $value->mobile;
+                //          $Response_candidates->save();
 
-                         if($Response_candidates->candidate_id != "") {
-                             $candidate = Candidate::where('id', $Response_candidates->candidate_id)->first();
-                         }
-                         $candidate->name = $value->name;
-                         $candidate->mobile = $value->mobile;
-                         $candidate->email = $value->email;
-                         $candidate->currentCompany = $value->currEmp;
-                         $candidate->currentLocation = $value->currLoc;
-                         $candidate->totalExperience = $value->exp;
-                         $candidate->experience = $value->exp;
-                         $candidate->industry = $value->designation;
-                         $candidate->currentTitle = $value->title;
-                         $candidate->currentSalary = $value->ctc;
-                         $candidate->skills= $value->skills;
-                         $candidate->highestQualification = $value->postGraduation;
-                         $candidate->save();
-                         $Response_candidates->candidate_id = $candidate->id;
-                         $Response_candidates->save();
+                //          if($Response_candidates->candidate_id != "") {
+                //              $candidate = Candidate::where('id', $Response_candidates->candidate_id)->first();
+                //          }
+                //          $candidate->name = $value->name;
+                //          $candidate->mobile = $value->mobile;
+                //          $candidate->email = $value->email;
+                //          $candidate->currentCompany = $value->currEmp;
+                //          $candidate->currentLocation = $value->currLoc;
+                //          $candidate->totalExperience = $value->exp;
+                //          $candidate->experience = $value->exp;
+                //          $candidate->industry = $value->designation;
+                //          $candidate->currentTitle = $value->title;
+                //          $candidate->currentSalary = $value->ctc;
+                //          $candidate->skills= $value->skills;
+                //          $candidate->highestQualification = $value->postGraduation;
+                //          $candidate->save();
+                //          $Response_candidates->candidate_id = $candidate->id;
+                //          $Response_candidates->save();
 
-                     }
-                 }
+                //      }
+                //  }
 
              }
          }
+         return $all;
      }
 }

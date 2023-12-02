@@ -212,9 +212,6 @@
     }
 </style>
 <link href="{{ url('assets/css/jobpoststyle.css') }}" rel="stylesheet">
-<a href="{{ url('https://white-force.com/plus/tutorial/#positionlistdiv') }}" target="_blank">
-    <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-</a>
 <div class="content-body" style="padding-top: 4rem">
     <div class="container-fluid row" style="
         max-height: calc(100vh - 100px);
@@ -833,7 +830,7 @@
                                     <select name="gender" class="single-select">
                                         <option value="" disabled selected>Select Gender</option>
                                         <option value="male&female">Male And Female</option>
-                                        <option value="female">Male Only</option>
+                                        <option value="male">Male Only</option>
                                         <option value="female">Female Only</option>
                                     </select>
                                     @error('gender')
@@ -939,7 +936,7 @@
                                     Paid
                                 </span>
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/shine.png" alt="">
+                                    <img src="{{ url('logo/shine.png') }}" alt="">
                                 </span>
 
                             </span>
@@ -1039,7 +1036,7 @@
                                 value="linkedinATS">
                             <span class="checkbox-tile" >
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/ats.png" alt="">
+                                    <img src="{{ url('logo/linkedin.png') }}" alt="">
                                 </span>
 
                             </span>
@@ -1051,7 +1048,7 @@
                                 value="linkedin">
                             <span class="checkbox-tile" >
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/linkedin.png"
+                                    <img src="{{ url('logo/Linkedin1.png') }}"
                                         alt="">
                                 </span>
                             </span>
@@ -1063,7 +1060,7 @@
                                 value="facebook">
                             <span class="checkbox-tile" >
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/facebook.png"
+                                    <img src="{{ url('logo/facebook.png') }}"
                                         alt="">
                                 </span>
                             </span>
@@ -1087,7 +1084,7 @@
                                 value="jobIsJob">
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/jobisjob.jpg"
+                                    <img src="{{ url('logo/jobisjob.png') }}"
                                         alt="">
                                 </span>
 
@@ -1124,7 +1121,7 @@
                                 value="jooble" onchange="showJoobleForm();">
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/jooble.jpg" alt="">
+                                    <img src="{{ url('logo/Jooble1.png') }}" alt="">
                                 </span>
 
                             </span>
@@ -1190,7 +1187,7 @@
                                 value="whatJobs">
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/whatJobs.png"
+                                    <img src="{{ url('logo/whatjobs.png') }}"
                                         alt="">
                                 </span>
 
@@ -1386,7 +1383,7 @@
                                 class="checkbox-input in_jobportal" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/job_helper.png"
+                                    <img src="{{ url('logo/MyJobHelper.png') }}"
                                         alt="">
                                 </span>
 
@@ -1399,7 +1396,7 @@
                                 class="checkbox-input in_jobportal" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/cv.png" alt="">
+                                    <img src="{{ url('logo/CVLibrary.png') }}" alt="">
                                 </span>
 
                             </span>
@@ -1425,7 +1422,7 @@
                                 class="checkbox-input in_jobportal" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/whatJobs.png"
+                                    <img src="{{ url('logo/whatjobs.png') }}"
                                         alt="">
                                 </span>
 
@@ -1439,7 +1436,7 @@
                                 value="ziprecruiter_inter">
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/zip.png" alt="">
+                                    <img src="{{ url('logo/ziprecruiter.png') }}" alt="">
                                 </span>
 
 
@@ -1451,7 +1448,7 @@
                                 class="checkbox-input in_jobportal" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/times-ascent.png"
+                                    <img src="{{ url('logo/TimeAscent.png') }}"
                                         alt="">
                                 </span>
 
@@ -1465,7 +1462,7 @@
                                 class="checkbox-input in_jobportal" />
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
-                                    <img src="https://www.white-force.com/onrole/job-posting-assets/tanqeeb.png" alt="">
+                                    <img src="{{ url('logo/tanqeeb.png') }}" alt="">
                                 </span>
 
                             </span>

@@ -170,4 +170,27 @@
 };
 
 main();
+
+
+openPopupForUpdate();
+function openPopupForUpdate(){
+      $('.modal-dialog').css({
+          "width": "770px",
+          "max-width": "770px"
+      });
+
+      $.get("{{ url('show-popup-user') }}", function(res) {
+        if(res.status){
+            $('#modal-section').html(res.response);
+            $('#rightModal').modal('show');
+          }
+      });
+}
+
+
+function closeUpdatePopup(){
+    $.get("{{ url('close-popup-user') }}", function(response) {
+          $('#rightModal').modal('hide');
+      })
+}
 </script>

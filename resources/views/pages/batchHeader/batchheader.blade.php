@@ -128,7 +128,7 @@
 </head>
 
 <body>
-    <img src="https://white-force.com/onrole/whiteforcelogo_portrait_color.png" alt="Logo" class="logo">
+    <img src="https://white-force.com/assets/img/white-force-logo.png" alt="Logo" class="logo">
     <div class="card-container" align="center" style="margin-left: 50px; margin-top:50px">
         <h2 style="text-align: center;">Resume Summary</h2>
         <!-- Replace "logo.png" with your logo image source -->
@@ -166,7 +166,7 @@
                 <td>
                     @for($i = 1; $i <= $candidate->rating; $i++)
                         @if($i <= $candidate->rating)
-                            <img src="https://happiestresume.com/public/batch_header/icons8-star-64.png" width="20" />&nbsp;
+                            <img src="https://white-force.com/plus/batch_header/star_images/icons8-star-64.png" width="20" />&nbsp;
                         @endif
                     @endfor
                 </td>

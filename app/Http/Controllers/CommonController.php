@@ -167,7 +167,7 @@ class CommonController extends Controller
                              Person Email : $job->person_email \r\n 
                              Contact No : $job->person_contact  \r\n 
                              Job Description: $job->job_description \r\n 
-                             Apply Now: $this->apply_button_url $job->id/linkedin' 
+                             Apply Now: $this->apply_button_url . $job->id . '/linkedin' 
                              ";
 
 
@@ -531,7 +531,7 @@ class CommonController extends Controller
                 'maxSalary' => $job->max_salary,
                 'job_description' => $job->job_description,
                 'company_name' => 'White Force Outsourcing Pvt Ltd',
-                'apply_button_url' =>  $this->apply_button_url . $job->id . '/postjobsfree',
+                'apply_button_url' =>  $this->apply_button_url . $job->id . '/post_job_free',
                 'skillSet' => $job->skill_set,
                 'city' => $job->city,
                 'state' => $job->states,
@@ -597,7 +597,7 @@ class CommonController extends Controller
                 'Minimum_Salary' => $noukri->Minimum_Salary,
                 'Maximum_Salary' => $noukri->Maximum_Salary,
                 'job_description' => $noukri->noukri_job_description,
-                'apply_button_url' => $this->apply_button_url . $noukri->jobs_id . '/noukri',
+                'apply_button_url' => $this->apply_button_url . $noukri->jobs_id . '/naukri',
                 'skillSet' => $job->skill_set,
                 'Industry_Mapping' => $noukri->Industry_Mapping,
                 'Functional_Area' => $noukri->Functional_Area,

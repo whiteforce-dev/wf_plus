@@ -45,9 +45,6 @@
         color: #c7c7c736;
     }
 </style>
-<a href="{{ url('https://white-force.com/plus/tutorial/#reportdiv') }}" target="_blank">
-    <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-</a>
 <div class="content-body">
     <div class="container-fluid">
         <div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">
@@ -192,6 +189,7 @@
                             </div>
                         </a>
                     </div>
+                    @if($user == 'admin')
                     <div class="col-sm-4 mt-3">
                         <a target="_blank" href="{{ url('reports/client-portal-jobs') }}">
                             <div class="box" align="center" style="border-left: 15px solid #ffd300; position:relative">
@@ -201,6 +199,7 @@
                             </div>
                         </a>
                     </div>
+                    @endif
                     <div class="col-sm-4 mt-3">
                         <a target="_blank" href="{{ url('reports/applied-candidate-report') }}">
                             <div class="box" align="center" style="border-left: 15px solid #ffd300; position:relative">

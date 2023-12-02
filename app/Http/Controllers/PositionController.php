@@ -97,13 +97,16 @@ class PositionController extends Controller
 {
     public function index(Request $request)
     {
-
+        if(!empty($request->rec)){
+            $Positions = Position::with('portalResponse')->where(['is_active' => '1', 'software_category' => (Auth::user()->software_category ?? 'onrole'), 'created_by' => Auth::user()->id])->orderBy('id', 'DESC')->paginate(10);
+            return view('pages.position.positionList', compact('Positions'));
+        }
 
         // Check if the cached view exists
         $page = isset($request->page) ? $request->page : 1;
         $companyId = isset($request->id) ? $request->id : 0;
-        if (Cache::has('position_list_cache_'.Auth::user()->id.'_'.$page.'_'.$companyId)) {
-            return Cache::get('position_list_cache_'.Auth::user()->id.'_'.$page.'_'.$companyId);
+        if (Cache::has('position_list_cache_' . Auth::user()->id . '_' . $page . '_' . $companyId)) {
+            return Cache::get('position_list_cache_' . Auth::user()->id . '_' . $page . '_' . $companyId);
         }
 
         $position_name = $request->global_position_search ?? '';
@@ -141,24 +144,22 @@ class PositionController extends Controller
 
         //Share By Me
         $shareByMeIds = array_unique(Shareposition::where('sharebyid', Auth::user()->id)->pluck('positionId')->toArray());
-        $shareByMePositions = Position::whereIn('id', $shareByMeIds)->orderBy('id','DESC')->get();
+        $shareByMePositions = Position::whereIn('id', $shareByMeIds)->orderBy('id', 'DESC')->get();
 
         //Share With Me
         $shareWithMeIds = Shareposition::where('sharetoId', Auth::user()->id)->pluck('positionId')->toArray();
-        $shareWithMePositions = Position::whereIn('id', $shareWithMeIds)->orderBy('id','DESC')->get();
+        $shareWithMePositions = Position::whereIn('id', $shareWithMeIds)->orderBy('id', 'DESC')->get();
         // return view('pages.position.positionList', compact('Positions', 'position_name', 'shareByMePositions', 'shareWithMePositions'));
 
-        $view = view('pages.position.positionList', compact('Positions', 'position_name', 'shareByMePositions', 'shareWithMePositions'))->render();
+        $view = view('pages.position.PositionList', compact('Positions', 'position_name', 'shareByMePositions', 'shareWithMePositions'))->render();
 
         // If not cached, render the view and cache it
         // $view = view('your.view.name');
-        $cachedView = Cache::remember('position_list_cache_'.Auth::user()->id.'_'.$page.'_'.$companyId, 300, function () use ($view) {
+        $cachedView = Cache::remember('position_list_cache_' . Auth::user()->id . '_' . $page . '_' . $companyId, 300, function () use ($view) {
             return $view;
         });
 
         return $cachedView;
-
-
     }
 
     public function positionInfo(Request $request, $id)
@@ -300,7 +301,20 @@ class PositionController extends Controller
 
         $Position->clientname = $Position->findClientGet->name ?? '-';
         $Position->save();
-       
+
+        $whiteforce = new PortalResponse();
+        $whiteforce->is_success = 1;
+        $whiteforce->portal = 'whiteforce';
+        $whiteforce->response = 'Job Posted Successfully In WhiteForce';
+        $whiteforce->job_id = $Position->id;
+        $whiteforce->save();
+
+        $happiest = new PortalResponse();
+        $happiest->is_success = 1;
+        $happiest->portal = 'happiest';
+        $happiest->response = 'Job Posted Successfully In Happiest Resume ';
+        $happiest->job_id = $Position->id;
+        $happiest->save();
 
         $dispach_time = getDispatchTime();
 
@@ -339,14 +353,14 @@ class PositionController extends Controller
                 $shine->job_id = $job_id;
                 // $shine->city_grouping_id = request('shine_cities_groups_id');
                 $shine->city_id = request('shine_cities_id');
-                $shine->city_id = implode(', ',$shine->city_id);
+                $shine->city_id = implode(', ', $shine->city_id);
                 $shine->industry_id = request('shine_industries_id');
                 $shine->study_field_grouping_id = request('shine_study_field_grouping_id');
-                $shine->study_field_grouping_id = implode(', ',$shine->study_field_grouping_id);
+                $shine->study_field_grouping_id = implode(', ', $shine->study_field_grouping_id);
                 $shine->study_id = request('shine_study_id');
-                $shine->study_id = implode(', ',$shine->study_id);
+                $shine->study_id = implode(', ', $shine->study_id);
                 $shine->functional_area_id = request('shine_functional_areas_id');
-                $shine->functional_area_id = implode(', ',$shine->functional_area_id);
+                $shine->functional_area_id = implode(', ', $shine->functional_area_id);
                 $shine->min_experience_id = $request->shine_min_experience_id;
                 $shine->max_experience_id = $request->shine_max_experience_id;
                 $shine->min_salary_id = $request->shine_min_salary_id;
@@ -422,7 +436,6 @@ class PositionController extends Controller
                 //Job Dispatch
                 // return (new CommonController())->sendToJobisjob($job_id);
                 jobisjob_Job::dispatch($job_id)->delay($dispach_time);
-               
             }
             if (in_array('careerJet', $selectedPortals)) {    //done//
 
@@ -590,10 +603,19 @@ class PositionController extends Controller
 
                 $api_hit = file_get_contents("https://happiestresume.com/google_final/index.php?jobId=$job_id");
 
-
-                if($api_hit == 200){
+                if ($api_hit == 200) {
                     $response = new Portalresponse();
                     $response->portal = 'google';
+                    $response->response = 'Job Posted In Google Portal';
+                    $response->job_id = $job_id;
+                    $response->is_success = 1;
+                    $response->save();
+                }
+
+                $api_hit = file_get_contents("https://white-force.com/plus/google_final/index.php?jobId=$job_id");
+                if ($api_hit == 200) {
+                    $response = new Portalresponse();
+                    $response->portal = 'whiteforce-google';
                     $response->response = 'Job Posted In Google Portal';
                     $response->job_id = $job_id;
                     $response->is_success = 1;
@@ -655,7 +677,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'jobsora';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 jobsoraJob::dispatch($job_id)->delay($dispach_time);
@@ -667,10 +689,10 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'learn4good';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
-               learn4good::dispatch($job_id)->delay($dispach_time);
+                learn4good::dispatch($job_id)->delay($dispach_time);
             }
             if (in_array('jobgrin', $selectedPortals)) {
                 $job_posted_tos = new JobPostedTo();
@@ -679,7 +701,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'jobgrin';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 jobgrinJob::dispatch($job_id)->delay($dispach_time);
@@ -691,7 +713,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'careerbliss';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 carrierblissJob::dispatch($job_id)->delay($dispach_time);
@@ -703,7 +725,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'theindiajobs';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 theIndiaJob::dispatch($job_id)->delay($dispach_time);
@@ -715,7 +737,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'jobrapido';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 jobrapidoJob::dispatch($job_id)->delay($dispach_time);
@@ -729,9 +751,8 @@ class PositionController extends Controller
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
                 //Job Dispatch
-              
+
                 jobisite_Job::dispatch($job_id)->delay($dispach_time);
-                
             }
             if (in_array('talent', $selectedPortals)) {
                 $job_posted_tos = new JobPostedTo();
@@ -740,7 +761,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'talent';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 talentJob::dispatch($job_id)->delay($dispach_time);
@@ -752,7 +773,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'econjobs';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 econ_Job::dispatch($job_id)->delay($dispach_time);
@@ -764,7 +785,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'carijobs';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 cari_Job::dispatch($job_id)->delay($dispach_time);
@@ -776,7 +797,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'bebee';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 bebee_Job::dispatch($job_id)->delay($dispach_time);
@@ -788,7 +809,7 @@ class PositionController extends Controller
                 $job_posted_tos->publish_to = 'jobinventory';
                 $job_posted_tos->user_id = Auth::user()->id;
                 $job_posted_tos->save();
-               
+
                 //Job Dispatch
                 // return (new NewJobPostingController())->sendTojobsora($job_id);
                 jobinventory_Job::dispatch($job_id)->delay($dispach_time);
@@ -885,12 +906,12 @@ class PositionController extends Controller
                 tanqeeb_UAE_Job::dispatch($job_id)->delay($dispach_time);
             }
             if (in_array('reed', $selectedPortals)) {
-                $reedInfo=[
-                    "job_id"=>$job_id,
-                    "reed_job_type"=> $request->reed_job_type,
-                    "reed_working_hour"=> $request->reed_working_hour,
-                    "reed_currency_type"=>$request->reed_currency_type,
-                    "reed_salary_type"=> $request->reed_salary_type,
+                $reedInfo = [
+                    "job_id" => $job_id,
+                    "reed_job_type" => $request->reed_job_type,
+                    "reed_working_hour" => $request->reed_working_hour,
+                    "reed_currency_type" => $request->reed_currency_type,
+                    "reed_salary_type" => $request->reed_salary_type,
                 ];
                 $job_posted_tos = new JobPostedTo();
                 $job_posted_tos->job_id = $job_id;
@@ -942,7 +963,7 @@ class PositionController extends Controller
                 juju_Job::dispatch($job_id)->delay($dispach_time);
             }
         }
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return back()->with('success', 'Position Added Successfully.');
     }
 
@@ -1121,7 +1142,7 @@ class PositionController extends Controller
                     $job_to_click_india->save();
 
                     //Job Dispatch
-                    
+
                     clickIndiaJob::dispatch($job_id, Auth::user()->id)->delay($dispach_time);
                 }
                 if (in_array('monster', $selectedPortals)) {
@@ -1303,6 +1324,21 @@ class PositionController extends Controller
                 }
                 if (in_array('google', $selectedPortals)) {
 
+                    // $job_posted_tos = new JobPostedTo();
+                    // $job_posted_tos->job_id = $job_id;
+                    // $job_posted_tos->reference_no = $reference_no;
+                    // $job_posted_tos->publish_to = 'google';
+                    // $job_posted_tos->user_id = Auth::user()->id;
+                    // $job_posted_tos->save();
+
+                    // $Jobs_to_google = new Jobs_to_google();
+                    // $Jobs_to_google->job_id = $job_id;
+                    // $Jobs_to_google->employment_type = request('employment_type');
+                    // $Jobs_to_google->save();
+
+                    // //Job Dispatch
+                    // google_Job::dispatch($job_id)->delay($dispach_time);
+
                     $job_posted_tos = new JobPostedTo();
                     $job_posted_tos->job_id = $job_id;
                     $job_posted_tos->reference_no = $reference_no;
@@ -1315,8 +1351,26 @@ class PositionController extends Controller
                     $Jobs_to_google->employment_type = request('employment_type');
                     $Jobs_to_google->save();
 
-                    //Job Dispatch
-                    google_Job::dispatch($job_id)->delay($dispach_time);
+                    $api_hit = file_get_contents("https://happiestresume.com/google_final/index.php?jobId=$job_id");
+
+                    if ($api_hit == 200) {
+                        $response = new Portalresponse();
+                        $response->portal = 'google';
+                        $response->response = 'Job Posted In Google Portal';
+                        $response->job_id = $job_id;
+                        $response->is_success = 1;
+                        $response->save();
+                    }
+
+                    $api_hit = file_get_contents("https://white-force.com/plus/google_final/index.php?jobId=$job_id");
+                    if ($api_hit == 200) {
+                        $response = new Portalresponse();
+                        $response->portal = 'whiteforce-google';
+                        $response->response = 'Job Posted In Google Portal';
+                        $response->job_id = $job_id;
+                        $response->is_success = 1;
+                        $response->save();
+                    }
                 }
                 if (in_array('whatJobs', $selectedPortals)) {
 
@@ -1381,10 +1435,10 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'learn4good';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
-                   learn4good::dispatch($job_id)->delay($dispach_time);
+                    learn4good::dispatch($job_id)->delay($dispach_time);
                 }
                 if (in_array('jobgrin', $selectedPortals)) {
                     $job_posted_tos = new JobPostedTo();
@@ -1393,7 +1447,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'jobgrin';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     jobgrinJob::dispatch($job_id)->delay($dispach_time);
@@ -1405,7 +1459,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'careerbliss';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     carrierblissJob::dispatch($job_id)->delay($dispach_time);
@@ -1417,7 +1471,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'theindiajobs';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     theIndiaJob::dispatch($job_id)->delay($dispach_time);
@@ -1431,9 +1485,8 @@ class PositionController extends Controller
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
                     //Job Dispatch
-                  
+
                     jobisite_Job::dispatch($job_id)->delay($dispach_time);
-                    
                 }
                 if (in_array('jobrapido', $selectedPortals)) {
                     $job_posted_tos = new JobPostedTo();
@@ -1442,7 +1495,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'jobrapido';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     jobrapidoJob::dispatch($job_id)->delay($dispach_time);
@@ -1454,7 +1507,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'econjobs';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     econ_Job::dispatch($job_id)->delay($dispach_time);
@@ -1466,7 +1519,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'carijobs';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     cari_Job::dispatch($job_id)->delay($dispach_time);
@@ -1478,7 +1531,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'bebee';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     bebee_Job::dispatch($job_id)->delay($dispach_time);
@@ -1490,7 +1543,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'jobinventory';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-                   
+
                     //Job Dispatch
                     // return (new NewJobPostingController())->sendTojobsora($job_id);
                     jobinventory_Job::dispatch($job_id)->delay($dispach_time);
@@ -1584,12 +1637,12 @@ class PositionController extends Controller
                     tanqeeb_UAE_Job::dispatch($job_id)->delay($dispach_time);
                 }
                 if (in_array('reed', $selectedPortals)) {
-                    $reedInfo=[
-                        "job_id"=>$job_id,
-                        "reed_job_type"=> $request->reed_job_type,
-                        "reed_working_hour"=> $request->reed_working_hour,
-                        "reed_currency_type"=>$request->reed_currency_type,
-                        "reed_salary_type"=> $request->reed_salary_type,
+                    $reedInfo = [
+                        "job_id" => $job_id,
+                        "reed_job_type" => $request->reed_job_type,
+                        "reed_working_hour" => $request->reed_working_hour,
+                        "reed_currency_type" => $request->reed_currency_type,
+                        "reed_salary_type" => $request->reed_salary_type,
                     ];
                     $job_posted_tos = new JobPostedTo();
                     $job_posted_tos->job_id = $job_id;
@@ -1617,7 +1670,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'jobswype';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-    
+
                     jobswype_Job::dispatch($job_id)->delay($dispach_time);
                 }
                 if (in_array('workcircle', $selectedPortals)) {
@@ -1627,7 +1680,7 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'workcircle';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-    
+
                     workcircle_Job::dispatch($job_id)->delay($dispach_time);
                 }
                 if (in_array('juju', $selectedPortals)) {
@@ -1637,12 +1690,12 @@ class PositionController extends Controller
                     $job_posted_tos->publish_to = 'juju';
                     $job_posted_tos->user_id = Auth::user()->id;
                     $job_posted_tos->save();
-    
+
                     juju_Job::dispatch($job_id)->delay($dispach_time);
                 }
             }
         }
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect('position')->with('success', 'Position Updated Successfully.');
     }
 
@@ -1655,7 +1708,7 @@ class PositionController extends Controller
     public function destroy($id)
     {
         $position = Position::where('id', $id)->firstorfail()->delete();
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return back()->with('success', 'Position Deleted Successfully.');
     }
 
@@ -1704,7 +1757,7 @@ class PositionController extends Controller
             $Position->is_hold = 1;
             $Position->update();
         }
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect()->back()->with('success', 'Position has been hold Successfully');
     }
     public function positionunhold($positionId)
@@ -1717,7 +1770,7 @@ class PositionController extends Controller
             $Position->update();
             // return $Position;
         }
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect()->back()->with('success', 'Position has been Opened Successfully');
     }
 
@@ -1727,7 +1780,7 @@ class PositionController extends Controller
         $Position->is_close = 1;
         $Position->update();
         // return $Position;
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect()->back()->with('success', 'Position has been Closed Successfully');
     }
     public function positionopen($positionId)
@@ -1737,7 +1790,7 @@ class PositionController extends Controller
             $Position->is_close = 0;
             $Position->update();
         }
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect()->back()->with('success', 'Position has been Opened Successfully');
     }
 
@@ -1766,7 +1819,7 @@ class PositionController extends Controller
         $sharePosition->positionId = $request->positionId;
         $sharePosition->shareToId = json_encode(request('shareposition'));
         $sharePosition->save();
-        Cache::forget('position_list_cache_'.Auth::user()->id);
+        Cache::forget('position_list_cache_' . Auth::user()->id);
         return redirect()->back()->with('success', 'stage is change Successfully');
     }
 
@@ -1786,66 +1839,47 @@ class PositionController extends Controller
         array_unshift($childUsers, $currentUser->id);
         $users = User::whereIn('id', $childUsers)->get();
         $job_platforms = Portalresponse::select('portal')->distinct()->pluck('portal')->toArray();
-        // return $job_platforms;
         $logos = logo();
-        //Candidates Accrording Jobportals
-        // $results = CandidateResponse::select('publish_to', DB::raw('COUNT(*) as count'))
-        //     ->groupBy('publish_to')
-        //     ->whereIn('publish_to', $job_platforms)
-        //     ->orderByRaw("FIELD(publish_to, '" . implode("','", $job_platforms) .
-        //         "')")
-        //     ->get();
-
-        // Job Counts
-        // $portalResults = Portalresponse::select('portal', DB::raw('COUNT(*) as count'))
-        //     ->groupBy('portal')
-        //     ->whereIn('portal', $job_platforms)
-        //     ->orderByRaw("FIELD(portal, '" . implode("','", $job_platforms) .
-        //         "')")
-        //     ->get();
-
-       
-        // foreach ($results as $result) {
-        //     $portal = [
-        //         'name' => $result->publish_to,
-        //         'candidates' => $result->count,
-        //         'logo' => $logos[$result->publish_to] ?? '',
-        //         'positions' => $portalResults->where('portal', $result->publish_to)->first()->count ?? 0,
-        //     ];
-
-        //     $jobPortals[] = $portal;
-        // }
         $fromDate = $request->fromdate;
         $toDate = $request->todate;
+        $manager_id = $request->manager;
         $jobPortals = [];
-        if(!empty($fromDate) && !empty($toDate)){
-            foreach($job_platforms as $result){
-                $positionCount =  $portalResults = Portalresponse::where('portal',$result)->whereBetween('created_at', [$fromDate, $toDate])->count();
-                $candidateCount = CandidateResponse::where('publish_to',$result)->whereBetween('created_at', [$fromDate, $toDate])->count();
-                    $portal = [
-                        'name' => $result,
-                        'logo' =>$logos[$result],
-                        'position' => $positionCount,
-                        'candidate' =>  $candidateCount 
-                    ];
-                    $jobPortals[] = $portal;
-                }
-        }else{
-            foreach($job_platforms as $result){
-                $positionCount =  $portalResults = Portalresponse::where('portal',$result)->count();
-                $candidateCount = CandidateResponse::where('publish_to',$result)->count();
-                    $portal = [
-                        'name' => $result,
-                        'logo' =>$logos[$result],
-                        'position' => $positionCount,
-                        'candidate' =>  $candidateCount 
-                    ];
-                    $jobPortals[] = $portal;
-                }
+        if (!empty($fromDate) && !empty($toDate)) {
+            $manager = User::find($request->manager);
+            $all_ids = $manager->descendantIds();
+            array_unshift($all_ids,$manager->id);
+            $jobs_ids = Position::whereIn('created_by',$all_ids)->where('is_active',1)->pluck('id')->toArray();
+            // return $jobs_ids;
+            foreach ($job_platforms as $result) {
+                $positionCount =  Portalresponse::whereIn('job_id',$jobs_ids)->where('portal', $result)->where('is_success',1)->whereBetween('created_at', [$fromDate, $toDate])->count();
+                $candidateCount = CandidateResponse::whereIn('job_id',$jobs_ids)->where('publish_to', $result)->whereBetween('created_at', [$fromDate, $toDate])->count();
+                $portal = [
+                    'name' => $result,
+                    'logo' => $logos[$result],
+                    'position' => $positionCount,
+                    'candidate' =>  $candidateCount
+                ];
+                $jobPortals[] = $portal;
+            }
+            return view('pages.position.job_posting_reports')->with(compact('users', 'jobPortals','fromDate','toDate','manager_id'));
+        } else {
+            $manager = User::find(Auth::user()->id);
+            $all_ids = $manager->descendantIds();
+            array_unshift($all_ids,$manager->id);
+            $jobs_ids = Position::whereIn('created_by',$all_ids)->where('is_active',1)->pluck('id')->toArray();
+            foreach ($job_platforms as $result) {
+                $positionCount =  $portalResults = Portalresponse::whereIn('job_id',$jobs_ids)->where('is_success',1)->where('portal', $result)->count();
+                $candidateCount = CandidateResponse::whereIn('job_id',$jobs_ids)->where('publish_to', $result)->count();
+                $portal = [
+                    'name' => $result,
+                    'logo' => $logos[$result],
+                    'position' => $positionCount,
+                    'candidate' =>  $candidateCount
+                ];
+                $jobPortals[] = $portal;
+            }
         }
-            
-       
-        return view('pages.position.job_posting_reports')->with(compact('users', 'jobPortals'));
+        return view('pages.position.job_posting_reports')->with(compact('users', 'jobPortals','manager_id'));
     }
     public function positionList(Request $request)
     {
@@ -1930,7 +1964,7 @@ class PositionController extends Controller
         $portals = Portalresponse::where('job_id', $request->positionId)->get();
         $portalsArray = Portalresponse::where('job_id', $request->positionId)->pluck('portal')->toArray();
         $allPortalsArray = Portalresponse::select('portal')->distinct()->pluck('portal')->toArray();
-       
+
         $notSelectedPortals = array_diff($allPortalsArray, $portalsArray);
         // return $notSelectedPortals;
         return view('pages.position.jobpostingreport', compact('portals', 'notSelectedPortals'));
@@ -2026,52 +2060,56 @@ class PositionController extends Controller
             }
             $Positions = $Positions->whereIn('created_by', $teamIds);
         }
-        if($search){
+        if ($search) {
             $Positions = $Positions->where(function ($query) use ($search) {
                 $query->where('position_name', 'LIKE', '%' . $search . '%')
-                      ->orWhere('clientname', 'LIKE', '%' . $search . '%');
+                    ->orWhere('clientname', 'LIKE', '%' . $search . '%');
             })->paginate(50);
-        }else{
+        } else {
             $Positions = $Positions->paginate(50);
         }
 
         return view('pages.position.positionResult', compact('Positions'));
-
     }
-    public function getTemplate(){
-        $template=JobDescription::orderBy('id','DESC')->get();
-        return view('pages.job_descriptions.job_template',compact('template')) ;
+    public function getTemplate()
+    {
+        $template = JobDescription::orderBy('id', 'DESC')->get();
+        return view('pages.job_descriptions.job_template', compact('template'));
     }
 
-    public function refreshCache($param){
+    public function refreshCache($param)
+    {
         return $param;
     }
 
-     public function getSpecilization(Request $request)
+    public function getSpecilization(Request $request)
     {
         $specilization = NewShineEducationStream::where('degree_id', $request->shine_study_field_grouping_id)->get();
-        foreach($specilization as $value){
+        foreach ($specilization as $value) {
             echo "<option value='{$value->id}'>{$value->specialization}</option>";
-          }
+        }
     }
 
-    public function getIndustry(Request $request){
-        $area=NewMonsterFieldArea::where('industry_id',$request->monster_industry_id)->get();
-        foreach($area as $value){
+    public function getIndustry(Request $request)
+    {
+        $area = NewMonsterFieldArea::where('industry_id', $request->monster_industry_id)->get();
+        foreach ($area as $value) {
             echo "<option value='{$value->category_function_id}'>{$value->category_function_name}</option>";
-          }
+        }
     }
-    function showQuestionAnswer(Request $request){
+    function showQuestionAnswer(Request $request)
+    {
         $position = $request->position;
         $question = InterviewQuestions::where('position_id', $position)->first();
         $qna = '<h5>No Question Added</h5>';
-        if($question){
+        if ($question) {
             $qna = $question->description;
         }
-        return view('pages.position.qnaList', compact('position', 'qna')) ;
+        return view('pages.position.qnaList', compact('position', 'qna'));
     }
 
-    function saveQuestionAndAnswer(Request $request){
+    function saveQuestionAndAnswer(Request $request)
+    {
         $qna = InterviewQuestions::firstOrNew(array('position_id' => $request->position));
         $qna->description = $request->questionandanswer;
         $qna->created_by = Auth::user()->id;

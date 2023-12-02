@@ -6,6 +6,7 @@ use App\Http\Controllers\CandidateResponseController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\NewJobPostingController;
+use App\Http\Controllers\TimesjobController;
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-Requested-With,Content-Type');
@@ -42,6 +43,8 @@ Route::post('jobhelper/{job_id}',[CommonController::class, 'sendtohelper']);
 Route::get('muse',[NewJobPostingController::class, 'getMuseJobs']);
 Route::get('jobjobjob',[NewJobPostingController::class, 'getJobjobjob']);
 Route::get('jobsoid',[NewJobPostingController::class, 'getJobsoidJobs']);
+Route::post('testtimejob/{job_id}',[TimesjobController::class, 'sendTotimesjobs']);
+Route::get('get-times-candidate',[TimesjobController::class, 'timesjobCandidateResponse']);
 
 
 

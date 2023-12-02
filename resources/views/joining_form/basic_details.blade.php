@@ -128,11 +128,11 @@ dd($clientIP);
                                                 <label for="inputComp" style="font-size:18px">Company Name <span
                                                         style="color:#ff0000;">*</span></label>
                                              
-                                                <input type="text" name="company"class="form-control"
-                                                    value="{{ $clients ?? '' }}" disabled>
+                                                        <input type="text" name="company" class="form-control" value="{{ isset($clients) ? $clients : '' }}" readonly>
+
 
                                                 <input type="hidden" name="company"class="form-control"
-                                                    value={{ $clients->client_id ?? '' }}>
+                                                    value={{ $clientid ?? '' }}>
 
                                             </div>
                                             @error('company')
@@ -349,7 +349,7 @@ dd($clientIP);
                                                      value="{{ (session('basic')['country']) ?? old('country') }}"> --}}
                                                 <select type="text"
                                                     class="form-control @error('statelist') is-invalid @enderror"
-                                                    onchange="getstate(this.value);" name="country" id="country">
+                                                    onchange="getStateList();" name="country" id="country">
 
                                                     <option value="">---Select---</option>
                                                     <option value="107">India</option>
@@ -365,11 +365,11 @@ dd($clientIP);
                                             <div class="form-group">
                                                 <label for="inputstate" style="font-size:18px">State <span
                                                         style="color:#ff0000;">*</span></label>
-                                                {{-- <input type="text" placeholder="Enter State" name="statelist" id="statelist" onChange="getcity(this.value);"class="form-control @error('state') is-invalid @enderror"
+                                                {{-- <input type="text" placeholder="Enter State" name="statelist" id="state" onChange="getcity(this.value);"class="form-control @error('state') is-invalid @enderror"
                                                      value="{{ (session('basic')['state']) ?? old('state') }}"> --}}
                                                 <select type="text"
                                                     class="form-control @error('statelist') is-invalid @enderror"
-                                                    id="statelist"name="statelist" onchange="getcity(this.value);">
+                                                    id="state"name="statelist" onchange="getCityList();">
                                                     <option value="">--- Select State ---</option>
                                                 </select>
                                             </div>
@@ -564,13 +564,8 @@ dd($clientIP);
                 }
             });
         }
-    </script>
-    <script>
+
         function getcity(val) {
-
-
-
-
             // alert(val);
             $.ajax({
                 type: "get",
@@ -578,6 +573,65 @@ dd($clientIP);
                 // data:'statecode='+val,
                 success: function(data) {
                     $("#city").html(data);
+                }
+            });
+        }
+
+        function getStateList(){
+
+            const countryId = $('#country').val(); // Replace with the desired country ID
+            $.ajax({
+                url: "{{ url('getstate') }}" +"/"+ countryId,
+                type: 'GET',
+                success: function(response) {
+
+                    // Handle the response containing the state list
+                    console.log(response);
+                    // Handle the response containing the state list
+                    const selectElement = $('#state');
+
+                    // Clear previous options
+                    selectElement.empty();
+
+                    // Append new options
+                    const option = $('<option>').val('').text('Select State');
+                        selectElement.append(option);
+                        console.log(selectElement)
+                        selectElement.append(response);
+                    //$.each(response, function(id, name) {
+                        
+                        // const option = $('<option>').val(id).text(name);
+                    //});
+                },
+                error: function(xhr) {
+                    // Handle any errors
+                    console.log(xhr.responseText);
+                }
+            });
+
+        }
+        function getCityList(){
+            const stateId = $('#state').val(); // Replace with the desired country ID
+            $.ajax({
+                url: "{{ url('getcity') }}" +"/"+ stateId,
+                type: 'GET',
+                success: function(response) {
+                    // Handle the response containing the state list
+                    console.log(response);
+                    // Handle the response containing the state list
+                    const selectElement = $('#city');
+
+                    // Clear previous options
+                    selectElement.empty();
+
+                    // Append new options
+                    const option = $('<option>').val('').text('Select City');
+                    selectElement.append(option);
+                    selectElement.append(response);
+                },
+                error: function(xhr) {
+                    // Handle any errors
+                    console.log(xhr.responseText);
                 }
             });
         }

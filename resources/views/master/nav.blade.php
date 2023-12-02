@@ -176,6 +176,12 @@
                                 <span class="ms-2">Chrome Extention</span>
                             </a>
 
+                            <a href="{{ url('add-update-popup') }}"
+                                class="dropdown-item ai-icon">
+                                <i data-feather="plus-square"></i>
+                                <span class="ms-2">Update Popup</span>
+                            </a>
+
                             <a href="{{ url('logout') }}" class="dropdown-item ai-icon">
                                 {{-- <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger"
                                     width="18" height="18" viewBox="0 0 24 24" fill="none"

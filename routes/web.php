@@ -261,6 +261,8 @@ Route::group(['middleware' => 'auth'], function () {
     //created by shanki add country state city
     route::get('get-state/{country}', [LocationController::class, 'stateList']);
     route::get('get-city/{state}', [LocationController::class, 'cityList']);
+    route::get('getstate/{country}', [LocationController::class, 'state_List']);
+    route::get('getcity/{state}', [LocationController::class, 'city_List']);
 
     Route::get('addCountry', [LocationController::class, 'addCountry']);
     Route::post('storeCountry', [LocationController::class, 'storeCountry']);
@@ -308,6 +310,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/calling-sheet-report', [ReportsController::class, 'calling_sheet_report']);
         Route::post('/calling-sheet-report', [ReportsController::class, 'calling_sheet_report_data']);
+        Route::get('/ get-calling-detail', [ReportsController::class, 'get_calling_detail']);
 
         Route::get('/company-report', [ReportsController::class, 'company_report']);
         Route::post('/company-report', [ReportsController::class, 'company_report_data']);
@@ -342,10 +345,22 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/job-analysis-report', [ReportsController::class, 'job_analysis_report']);
         Route::post('/job-analysis-report', [ReportsController::class, 'job_analysis_report_data']);
-
-
-
     });
+
+    // Job Match With Resume
+    Route::get('analyse', [AnalyseController::class, 'analyse']);
+    Route::post('get-match-result', [AnalyseController::class, 'getMatchResult']);
+    Route::post('show-result', [AnalyseController::class, 'showResult']);
+    Route::get('delete_sync_request/{id}', [AnalyseController::class, 'delete_sync_request']);
+
+    //email attachment syncing
+    Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments']);
+    Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
+    Route::get('checkemail', [AnalyseController::class, 'checkemail']);
+
+    //Multiple resume matching
+    Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
+    Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
 });
 
 //Events
@@ -370,21 +385,6 @@ Route::get('prescreening/thank-you', function () {
 // Tracker
 Route::post('download-tracker', [TrackerController::class, 'exportToExcel']);
 Route::get('cloneCandidateData', [CandidateController::class, 'cloneCandidateData']);
-
-// Job Match With Resume
-Route::get('analyse', [AnalyseController::class, 'analyse']);
-Route::post('get-match-result', [AnalyseController::class, 'getMatchResult']);
-Route::post('show-result', [AnalyseController::class, 'showResult']);
-Route::get('delete_sync_request/{id}', [AnalyseController::class, 'delete_sync_request']);
-
-//email attachment syncing
-Route::get('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments']);
-Route::post('sync_email_attachments', [AnalyseController::class, 'sync_email_attachments_store']);
-Route::get('checkemail', [AnalyseController::class, 'checkemail']);
-
-//Multiple resume matching
-Route::get('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching']);
-Route::post('multiple_resume_matching', [AnalyseController::class, 'multiple_resume_matching_result']);
 
 //Check
 Route::get('test', [CandidateController::class, 'test']);
@@ -446,7 +446,7 @@ Route::get('xml', [NewJobPostingController::class, 'xml']);
 Route::get('xml', [NewJobPostingController::class, 'xml']);
 
 Route::get('show-question-answer', [PositionController::class, 'showQuestionAnswer']);
-Route::get('save-questionAndAnswer', [PositionController::class, 'saveQuestionAndAnswer']);
+Route::post('save-questionAndAnswer', [PositionController::class, 'saveQuestionAndAnswer']);
 
 
 /*****Joining Form Formalities******/
@@ -482,4 +482,14 @@ Route::get('receiver-list', [JoiningCandidateController::class,'receiverEmail'])
 Route::get('newjoineefulldetail/{id}', [JoiningCandidateController::class,'newjoineefulldetail']);
 Route::any('getstate/{country}', [JoiningCandidateController::class,'get_state']);
 Route::any('getcity/{state}',[JoiningCandidateController::class,'get_city']);
+
+
+
+Route::any('add-update-popup',[HomeController::class,'addUpdate']);
+Route::any('update-popup-description',[HomeController::class,'updatePopupDescription']);
+Route::any('show-popup-user',[HomeController::class,'showPopupUser']);
+Route::any('close-popup-user',[HomeController::class,'closePopupUser']);
+
+
+
 /*****Joining Form Formalities******/

@@ -101,10 +101,10 @@ class CandidateResponseController extends Controller
             });
         }
         else if(!empty($portal) && $id==0){
-            $candidates=CandidateResponse::with('candidate')->where('publish_to',$portal)->orderBy('id','DESC')->paginate(30);
-            $candidateCount=CandidateResponse::with('candidate')->where('publish_to',$portal)->orderBy('id','DESC')->count();
+            $candidates=CandidateResponse::with('candidate')->whereIn('job_id',$positionsId)->where('publish_to',$portal)->orderBy('id','DESC')->paginate(30);
+            $candidateCount=CandidateResponse::with('candidate')->whereIn('job_id',$positionsId)->where('publish_to',$portal)->orderBy('id','DESC')->count();
             $candidates->each(function ($candidate) {
-                if($candidate->publish_to != "shine") {
+                if($candidate->publish_to) {
                     if (!empty($candidate->resume)) {
                         $disk = Storage::disk('s3');
                         $candidate->resume = $disk->temporaryUrl('candidate_resume/' . $candidate->resume, now()->addMinutes(5));
@@ -136,7 +136,12 @@ class CandidateResponseController extends Controller
             "contact"=> 'required',
             "email"=>'required',
             "expected_salary"=>'required',]);
-            $candidate=new Candidate();
+            $candidate=Candidate::where(['email' => $request->email,])->first();
+            if (isset($candidate)) {
+                $candidate = $candidate;
+            }else{
+                $candidate = new Candidate();
+            }
             $candidate->name=$request->name;
             $candidate->mobile=$request->contact;
             $candidate->email=$request->email;
@@ -238,27 +243,9 @@ class CandidateResponseController extends Controller
             if (!isset($responses_shine->details)) {
             if (!empty($responses_shine) && $responses_shine->count > 0) {
                 foreach ($responses_shine->results as $key => $value) {
-                $Response_candidates = CandidateResponse::where(['user_email' => $value->email, 'job_id' => $job_id, 'publish_to' => 'shine'])->first();
+                
                 $candidate=Candidate::where(['email' => $value->email,])->first();
-                if (isset($Response_candidates) && isset($candidate)) {
-                    $Response_candidates = new CandidateResponse();
-                    $candidate = new Candidate();
-                }
-
-
-                $Response_candidates->job_id = $x->position_id ? $x->position_id : 0;
-                //$Response_candidates->shine_job_id = $shine_job_id;
-                $Response_candidates->publish_to = 'shine';
-                $Response_candidates->user_name = $value->name;
-                $Response_candidates->user_email = $value->email;
-                $Response_candidates->user_mobile = $value->phone;
-                // $Response_candidates->resume = $value->resume;
-                $Response_candidates->software_category=Auth::user()->software_category??'onrole';
-
-                if ($Response_candidates->candidate_id != "") {
-                    $candidate = Candidate::where('id', $Response_candidates->candidate_id)->first();
-                }
-
+                $candidate = isset($candidate) ? $candidate : new Candidate();
                 $candidate->name = $value->name;
                 $candidate->mobile = $value->phone;
                 $candidate->email = $value->email;
@@ -272,17 +259,34 @@ class CandidateResponseController extends Controller
                     $candidate->date_of_birth = $value->dob;
                 }
                 $candidate->gender = $value->gender;
-                $skills = $value->skills;
+                $skills = [];
+                    if (is_string($value->skills)) {
+                        $skills = explode(",", $value->skills);
+                    } elseif (is_array($value->skills)) {
+                        $skills = $value->skills;
+                    }
+               
                 $candidate->skills = implode(",", $skills);
-                // $candidate->resume_file= $value->resume;
+               
                 $preferred_locations = $value->preferred_locations;
-                $candidate->preferred_location = implode(",", $preferred_locations);
+                $candidate->preferred_location = implode(",",array_slice($preferred_locations, 0, 6));
                 $candidate->notice_period = $value->notice_period;
                 $candidate->highest_qualification = $value->highest_edulevel;
                 $candidate->highest_qualification_type = $value->highest_edufield;
                 $candidate->save();
+
+                $Response_candidates = CandidateResponse::where([ 'job_id' => $x->position_id,])->first();
+                $Response_candidates = isset($Response_candidates) ? $Response_candidates : new CandidateResponse();
+                $Response_candidates->job_id = $x->position_id ? $x->position_id : 0;
+                $Response_candidates->publish_to = 'shine';
+                $Response_candidates->user_name = $value->name;
+                $Response_candidates->user_email = $value->email;
+                $Response_candidates->user_mobile = $value->phone;
+               
+                $Response_candidates->software_category=Auth::user()->software_category??'onrole';
                 $Response_candidates->candidate_id = $candidate->id;
                 $Response_candidates->save();
+
                 }
             }
             } else {

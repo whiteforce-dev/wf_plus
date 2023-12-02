@@ -55,8 +55,8 @@
                     <li class="liwithmargin"><a href="{{ url('analyse') }}">Job Analyse</a></li>
                     @if(Auth::user()->role == 'admin')
                     <li class="liwithmargin"><a href="{{ url('multiple_resume_matching') }}">Multiple Resume Matching</a></li>
-                    <li class="liwithmargin"><a href="{{ url('sync_email_attachments') }}">Sync Email Attachments</a></li>
                     @endif
+                    <li class="liwithmargin"><a href="{{ url('sync_email_attachments') }}">Sync Email Attachments</a></li>
 
 
                 </ul>
@@ -165,7 +165,7 @@
 
 
             <!-- Admin Specific -->
-            @if(Auth::user()->role == 'admin')
+            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
             <li class="nav-label">Investment Section</li>
             <li><a class="has-arrow ai-icon " href="javascript:void()" aria-expanded="false">
                     <i data-feather="dollar-sign"></i>

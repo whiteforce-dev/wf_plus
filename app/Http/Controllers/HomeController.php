@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\ClientAllotment;
 use App\Models\MonthlyTarget;
+use App\Models\UpdatePopup;
 use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
@@ -188,7 +189,7 @@ class HomeController extends Controller
 
         $candidateOfferedCtcCurrentMonth = Pipeline::whereIn('created_by', $childUsers)->whereNotNull('offerd_ctc')->where('stage','offered')->whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->where('software_category', Auth::user()->software_category)->sum('offerd_ctc');
 
-        $candidateJoinedAchivedCurrentMonth = Pipeline::whereIn('created_by', $childUsers)->where('stage', 'joined')->whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->where('software_category', Auth::user()->software_category)->sum('offerd_ctc');
+        $candidateJoinedAchivedCurrentMonth = Pipeline::whereIn('created_by', $childUsers)->where('stage', 'joined')->whereYear('joining_date', Carbon::now()->year)->whereMonth('joining_date', Carbon::now()->month)->where('software_category', Auth::user()->software_category)->sum('offerd_ctc');
 
         return [
             'candidateApproachCurrentMonth' => inc_format($candidateApproachCurrentMonth),
@@ -410,6 +411,45 @@ class HomeController extends Controller
             Cache::forget($dashboard);
         }
         return back();
+    }
+
+
+    function addUpdate(){
+        $popup = UpdatePopup::where('software_category', Auth::user()->software_category)->orderBy('id', 'desc')->first();
+        return view('pages.position.update-popup', compact('popup'));
+    }
+
+    function updatePopupDescription(Request $request){
+        $popup = UpdatePopup::where('software_category', Auth::user()->software_category)->orderBy('id', 'desc')->first();
+        if(!$popup){
+            $popup = new UpdatePopup();
+            $popup->software_category = Auth::user()->software_category;
+        }
+        $popup->description = $request->description;
+        $popup->save();
+        User::where('software_category', Auth::user()->software_category)->update(['is_pop_show' => 1]);
+        return back()->with('success', 'Description Updated successfully.');
+    }
+
+    function showPopupUser(){
+        $popup = UpdatePopup::where('software_category', Auth::user()->software_category)->orderBy('id', 'desc')->first();
+        $view = view('pages.position.show-popup', compact('popup'))->render();
+        $status = Auth::user()->is_pop_show;
+
+        $data = [
+            'response' => $view,
+            'status' => $status,
+        ];
+
+        return $data;
+    }
+
+
+    function closePopupUser(){
+        $user = User::find(Auth::user()->id);
+        $user->is_pop_show = 0;
+        $user->save();
+        return 1;
     }
 
 }

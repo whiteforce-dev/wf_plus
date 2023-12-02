@@ -1123,7 +1123,7 @@
                                         Paid
                                     </span>
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/shine.png" alt="">
+                                        <img src="{{ url('logo/shine.png') }}" alt="">
                                     </span>
     
                                 </span>
@@ -1223,7 +1223,7 @@
                                     value="linkedinATS">
                                 <span class="checkbox-tile" >
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/ats.png" alt="">
+                                        <img src="{{ url('logo/linkedin.png') }}" alt="">
                                     </span>
     
                                 </span>
@@ -1235,7 +1235,7 @@
                                     value="linkedin">
                                 <span class="checkbox-tile" >
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/linkedin.png"
+                                        <img src="{{ url('logo/Linkedin1.png') }}"
                                             alt="">
                                     </span>
                                 </span>
@@ -1247,7 +1247,7 @@
                                     value="facebook">
                                 <span class="checkbox-tile" >
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/facebook.png"
+                                        <img src="{{ url('logo/facebook.png') }}"
                                             alt="">
                                     </span>
                                 </span>
@@ -1271,7 +1271,7 @@
                                     value="jobIsJob">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/jobisjob.jpg"
+                                        <img src="{{ url('logo/jobisjob.png') }}"
                                             alt="">
                                     </span>
     
@@ -1308,7 +1308,7 @@
                                     value="jooble" onchange="showJoobleForm();">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/jooble.jpg" alt="">
+                                        <img src="{{ url('logo/Jooble1.png') }}" alt="">
                                     </span>
     
                                 </span>
@@ -1374,7 +1374,7 @@
                                     value="whatJobs">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/whatJobs.png"
+                                        <img src="{{ url('logo/whatjobs.png') }}"
                                             alt="">
                                     </span>
     
@@ -1559,21 +1559,21 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('logo/jobvertise.webp') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
-
+    
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" value="my_job_helper_inter" name="jobPortals[]"
                                     class="checkbox-input in_jobportal" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/job_helper.png"
+                                        <img src="{{ url('logo/MyJobHelper.png') }}"
                                             alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1583,10 +1583,9 @@
                                     class="checkbox-input in_jobportal" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/cv.png"
-                                            alt="">
+                                        <img src="{{ url('logo/CVLibrary.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1598,22 +1597,22 @@
                                     <span class="checkbox-icon">
                                         <img src="{{ url('images/jobpostingportal/Adzuna_Logo.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
-
-
+    
+    
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" value="whatjobs_inter" name="jobPortals[]"
                                     class="checkbox-input in_jobportal" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/whatJobs.png"
+                                        <img src="{{ url('logo/whatjobs.png') }}"
                                             alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1624,11 +1623,10 @@
                                     value="ziprecruiter_inter">
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/zip.png"
-                                            alt="">
+                                        <img src="{{ url('logo/ziprecruiter.png') }}" alt="">
                                     </span>
-
-
+    
+    
                             </label>
                         </div>
                         <div class="checkbox">
@@ -1637,24 +1635,23 @@
                                     class="checkbox-input in_jobportal" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/times-ascent.png"
+                                        <img src="{{ url('logo/TimeAscent.png') }}"
                                             alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
-
+    
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" value="tanqeeb_inter" name="jobPortals[]"
                                     class="checkbox-input in_jobportal" />
                                 <span class="checkbox-tile">
                                     <span class="checkbox-icon">
-                                        <img src="https://www.white-force.com/onrole/job-posting-assets/tanqeeb.png"
-                                            alt="">
+                                        <img src="{{ url('logo/tanqeeb.png') }}" alt="">
                                     </span>
-
+    
                                 </span>
                             </label>
                         </div>
@@ -1718,11 +1715,7 @@
                                 </span>
                             </label>
                         </div>
-                        <div class="checkbox">
-
-                        </div>
-
-
+                        
                     </div>
 
 

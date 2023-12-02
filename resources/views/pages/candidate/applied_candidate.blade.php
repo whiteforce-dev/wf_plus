@@ -93,6 +93,13 @@
     </div>
 </div>
 <body>
+    @if(session('success'))
+    <div class="bg bg-success">
+        <div class="text-center">
+            <h2 class="text-white m-4 p-2">{{ session('success') }}</h2>
+        </div>
+    </div>
+    @endif
     <div class="form-body">
         <div class="container">
             <div class="card header-custom image-wrapper bg-full bg-image bg-overlay mt-n50p mx-md-5 background-color:"
@@ -623,6 +630,65 @@
             </div>
         </div>
     </div>
+
+
+@php
+$description = strip_tags($position->job_description);
+$position_name = $position->position_name;
+$company_name = $position->clientname;
+$location = $position->locations ?? 'Jabalpur';
+$min_salary = $position->min_salary;
+$max_salary = $position->max_salary;
+$postal_code = $position->postal_code;
+$date_posted = \Carbon\Carbon::parse($position->created_at)->format('Y-m-d');
+$date_exp = \Carbon\Carbon::parse($date_posted)
+->addDays(15)
+->format('Y-m-d') . 'T00:00';
+@endphp
+
+<script type="application/ld+json">
+    {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "{{ $position_name }}",
+    "description": "<p>{{ $description }}</p>",
+    "identifier": {
+        "@type": "PropertyValue",
+        "name": "Google",
+        "value": "1234567"
+    },
+    "datePosted": "{{ $date_posted }}",
+    "validThrough": "{{ $date_exp }}",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+        "@type": "Organization",
+        "name": "White Force",
+        "sameAs": "https://white-force.com/",
+        "logo": "https://white-force.com/white_force_logo_150.png"
+    },
+    "jobLocation": {
+        "@type": "Place",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{$company_name}}",
+            "addressLocality": "{{$location}}",
+            "addressRegion": "India",
+            "postalCode": "{{$postal_code}}",
+            "addressCountry": "India"
+        }
+    },
+    "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "INR",
+        "value": {
+            "@type": "QuantitativeValue",
+            "minValue": {{ Js::from($min_salary)}},
+            "maxValue": {{ Js::from($max_salary)}},
+            "unitText": "YEAR"
+        }
+    }
+}
+</script>
     <script src="https://kit.fontawesome.com/aea6f081fa.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">

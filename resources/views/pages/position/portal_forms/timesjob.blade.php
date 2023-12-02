@@ -6,7 +6,7 @@
 
     <div class="mb-3 row mb-4 mt-5">
         <div class="col-sm-12">
-            <img class="img-logo" src="https://white-force.com/onrole/logo/timesjobs.png" alt="naukri" width="150">
+            <img class="img-logo" src="https://white-force.com/plus/images/jobpostingportal/TimesJobs-logo.png" alt="Timesjob" width="150">
         </div>
     </div>
     <div class="mb-3 row">

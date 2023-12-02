@@ -192,9 +192,6 @@
         content: unset;
     }
 </style>
-<a href="{{ url('https://white-force.com/plus/tutorial/#teamdiv') }}" target="_blank">
-    <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-</a>
 <div class="content-body">
     <div class="container-fluid">
         <div class="col-xl-12 col-lg-12">

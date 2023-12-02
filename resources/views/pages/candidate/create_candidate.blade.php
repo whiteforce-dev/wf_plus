@@ -55,9 +55,7 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <a href="{{ url('https://white-force.com/plus/tutorial/#addcandidatediv') }}" target="_blank">
-        <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-    </a>
+
     <div class="content-body">
         <div class="container-fluid">
             <div class="">

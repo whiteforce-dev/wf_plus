@@ -12,50 +12,38 @@
             <div class="card">
                 <div class="card-header bg-primary">
                     <h4 class="card-title" style="color:white">HR List</h4>
-                    <button class="btn btn-light btn-sm"><a href="{{ url('consolidated-investment') }}"><span
-                                class="btn-start text-info">
-                            </span>Show Consolidated</a></button>
+                    <a href="{{ url('consolidated-investment') }}"><span
+                                class="btn btn-dark ">
+                                Show Consolidated </span></a>
                 </div>
                 @if(count($hrs))
                 <div class="card-body">
-                    <table id="example" class="table table-striped">
-                        <thead>
+                    <table id="example" class="table table-hover table-bordered ">
+                        <thead class="bgl bgl-dark">
                             <tr>
-                                <th scope="col">S.No</th>
-                                <th scope="col">Company Name</th>
-                                <th scope="col">Hr Name</th>
-                                <th scope="col">Contact No.</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Action</th>
-                                {{-- <th scope="col">Remark</th> --}}
+                                <th scope="col"><h6>S.No</h6></th>
+                                <th scope="col"><h6>Company Name</h6></th>
+                                <th scope="col"><h6>Hr Name</h6></th>
+                                <th scope="col"><h6>Contact No.</h6></th>
+                                <th scope="col"><h6>Email</h6></th>
+                                <!-- <th scope="col"><h6>Total Amount</h6></th> -->
+                                <th scope="col"><h6>Action</h6></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $a = 1;
-                            @endphp
-                            
-                            @foreach ($hrs as $hr)
-                            <tr class="odd" role="row">
-                                <td>{{ $a++ }}. </td>
+                            @foreach ($hrs as $key => $hr)
+                            <tr class="" role="row">
+                                <td class="text-black">{{ ++$key }}. </td>
 
-                                <td>{{ $hr->hr_master->name ?? 'Na' }}</td>
-                                <td>{{ $hr->name }}</td>
-                                <td>{{ $hr->mobile }}</td>
-                                <td>{{ $hr->email }}</td>
-
-                                <td><a href="{{ url('gift-details', $hr->id) }}" style="color:#fff"><button
-                                            style="margin-left:-15px" class="btn btn-primary"
-                                            style="color:#fff !important">Add Gift</a>
-                                    &nbsp;
-
-                                    {{-- <a href="{{ url('gift-details', $hr->id) }}" class="btn btn-primary">Add
-                                        Gift</a> --}}
-                                    <a href="{{ url('show-investment', $hr->id) }}"><button style="margin-left:2px"
-                                            class="btn btn-info">Show Gift </button></a>
+                                <td class="text-danger"><h6>{{ ucwords($hr->hr_master->name ?? 'Na') }}</h6></td>
+                                <td class="text-black">{{ ucwords($hr->name) }}</td>
+                                <td class="text-black">{{ $hr->mobile }}</td>
+                                <td ><h6 class="text-primary">{{ $hr->email }}</h6></td>
+                                <!-- <td ><h6 class="text-success text-center">5000</h6></td> -->
+                                <td class="text-center"><a href="{{ url('gift-details', $hr->id) }}" ><span
+                                            class="btn px-3 py-1 btn-info btn-xs "
+                                           >Add </span></a> &nbsp;
                                 </td>
-
-
                             </tr>
                             @endforeach
                         </tbody>

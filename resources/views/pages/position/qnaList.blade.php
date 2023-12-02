@@ -5,7 +5,8 @@
 </style>
 <div class="p-4">
     <h5 style="border-bottom: 1px solid #dbdbdb; padding-bottom: 10px; margin-bottom: 10px;">Add Question & Answer</h5>
-    <form action="{{ url('save-questionAndAnswer') }}" method="get">
+    <form action="{{ url('save-questionAndAnswer') }}" method="post">
+        @csrf
         <input type="hidden" name="position" value="{{ $position }}">
         <textarea class="tinymce-editor" name="questionandanswer">
 

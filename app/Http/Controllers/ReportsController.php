@@ -23,7 +23,8 @@ class ReportsController extends Controller
 {
     public function index()
     {
-        return view('reports.index');
+        $user = Auth::user()->role;
+        return view('reports.index',compact('user'));
     }
 
 
@@ -76,7 +77,7 @@ class ReportsController extends Controller
             }
             $score =[];
             for ($i = 0; $i < count($dates); $i++) {
-                $score[$i] = Analysis::where('user_id', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->select('score', 'created_at')
+                $score[$i] = Analysis::where('user_id', $id)->whereDate('created_at', Carbon::parse($dates[$i]))->select('score', 'created_at','jd_name','resume_name')
                 ->get();
             }
 
@@ -345,27 +346,26 @@ class ReportsController extends Controller
     }
 
     public function hr_birthdays(Request $request)
-    {
+    { 
         $parent = User::find(Auth::user()->id);
         $allChilds = $parent->descendantIds();
         array_unshift($allChilds, (int)Auth::user()->id);
         $users = User::whereIn('id',$allChilds)->get();
-       
         $current_date = Carbon::now();
         $days = $request->days ?? 30;
         $last_date = $current_date->addDays($days)->format('d-m');
         $last = $last_date;
+        $client_id = Client::whereIn('created_by',$allChilds)->pluck('id')->toArray();
         $manager = $request->manager;
         if(isset($request->manager) && $request->manager != 1){
 
-            $hrdata = Hr::with('hr_master')->where('software_category', Auth::user()->software_category ?? 'onrole')->whereRaw("DATE_FORMAT(dob, '%m%d') IS NULL OR DATE_FORMAT(dob, '%m%d') BETWEEN DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $days DAY), '%m%d')")
+            $hrdata = Hr::with('hr_master')->whereIn('client_id',$client_id)->where('software_category',Auth::user()->software_category)
             ->whereHas('hr_master', function ($query) use ($request) {
                 $query->where('created_by',$request->manager );
             })->get();
             return view('reports.hr_birthday_report', compact('hrdata','users','manager'));
         }
-        $hrdata = Hr::with('hr_master')->where('software_category', Auth::user()->software_category ?? 'onrole')->whereRaw("DATE_FORMAT(dob, '%m%d') IS NULL OR DATE_FORMAT(dob, '%m%d') BETWEEN DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $days DAY), '%m%d')")->get();
-
+        $hrdata = Hr::with('hr_master')->whereIn('client_id',$client_id)->where('software_category',Auth::user()->software_category)->get();
         return view('reports.hr_birthday_report', compact('hrdata','users','manager'));
     }
 
@@ -418,10 +418,10 @@ class ReportsController extends Controller
                 $endOfDay = $d . ' 23:59:59';
                 $countsRow[$i] = Sheet::where('created_by', $id)->where('created_at', '>=', $startOfDay)
                 ->where('created_at', '<=', $endOfDay)->where('software_category', Auth::user()->software_category)->count();
-                $countsRow["number"] = Sheet::select('mobile')->where('created_by', $id)->where('created_at', '>=', $startOfDay)
-                ->where('created_at', '<=', $endOfDay)->where('software_category', Auth::user()->software_category)->groupBy('mobile')
-                ->havingRaw('COUNT(*) > 1')->get();
-                $countsRow["data"] = Sheet::select('mobile','candidate_name','company_name','position','created_at')->whereIn('mobile', $countsRow["number"])->get(); 
+                // $countsRow["number"] = Sheet::select('mobile')->where('created_by', $id)->where('created_at', '>=', $startOfDay)
+                // ->where('created_at', '<=', $endOfDay)->where('software_category', Auth::user()->software_category)->groupBy('mobile')
+                // ->havingRaw('COUNT(*) > 1')->get();
+                // $countsRow["data"] = Sheet::select('mobile','candidate_name','company_name','position','created_at')->whereIn('mobile', $countsRow["number"])->get(); 
                 
             }
             $user = User::where('id',$id)->first();
@@ -430,6 +430,10 @@ class ReportsController extends Controller
         }
         // return $counts;
         return view('reports.calling_sheet_report_data', compact('dates', 'counts'));
+    }
+
+    public function get_calling_detail(Request $request){
+        return $request;
     }
 
     public function daily_lineup_report()

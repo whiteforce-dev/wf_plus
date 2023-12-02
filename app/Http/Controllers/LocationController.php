@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\Cities;
-
-
+use App\Models\citiess;
+use App\Models\newstate;
 
 class LocationController extends Controller
 {
@@ -246,6 +246,20 @@ class LocationController extends Controller
     //Get City List
     function cityList($state){
         $state = State::findOrFail($state);
+        $cities = $state->cities()->pluck('name', 'id');
+        return response()->json($cities);
+    }
+
+    //Get State List
+    function state_List($country){
+        $country = newstate::findOrFail($country);
+        $states = $country->states()->pluck('name', 'id');
+        return response()->json($states);
+    }
+
+    //Get City List
+    function city_List($state){
+        $state = citiess::findOrFail($state);
         $cities = $state->cities()->pluck('name', 'id');
         return response()->json($cities);
     }

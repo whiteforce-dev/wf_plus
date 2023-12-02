@@ -33,7 +33,7 @@
                     
                     <li ><a href="{{ url('all_responses', ['job_id' => $position->id, 'portal' => 'all', 'data' => 'response']) }}
                         " target="_blank" style="color:#e66025">Applied Candidate</a>
-                    <span class="badge badge-danger badge-pill">0</span></li>
+                    <span class="badge badge-danger badge-pill">{{ $appliedCount ?? 0 }}</span></li>
                     @if(Auth::user()->id == $position->created_by)
                     <li onclick="openManagerlist({{ $position->id }});">Share Position</li>
                     @endif
@@ -443,7 +443,7 @@
                                 <div class="col-sm-3">
                                     <h4 class="ps">
                                         @php
-                                            $status = $position->portalResponse->where('portal', ' jobrapido')->first();
+                                            $status = $position->portalResponse->where('portal', 'jobrapido')->first();
                                         @endphp
                                         @include('pages.position.elements.portalStatus', [
                                             'status' => $status->is_success ?? 0,
@@ -454,7 +454,7 @@
                                 <div class="col-sm-3">
                                     <h4 class="ps">
                                         @php
-                                            $status = $position->portalResponse->where('portal', ' jobisite')->first();
+                                            $status = $position->portalResponse->where('portal', 'jobisite')->first();
                                         @endphp
                                         @include('pages.position.elements.portalStatus', [
                                             'status' => $status->is_success ?? 0,
@@ -465,7 +465,7 @@
                                 <div class="col-sm-3">
                                     <h4 class="ps">
                                         @php
-                                            $status = $position->portalResponse->where('portal', ' econ')->first();
+                                            $status = $position->portalResponse->where('portal', 'econ')->first();
                                         @endphp
                                         @include('pages.position.elements.portalStatus', [
                                             'status' => $status->is_success ?? 0,

@@ -184,7 +184,7 @@
                                        
                                            <tr>
                                             <td><b>Company</b> </td>
-                                           <td>{{ ucwords($client->client_name ?? '') }}</td>
+                                           <td>{{ ucwords($client ?? '') }}</td>
                                             {{-- <td style="white-space: normal;">{{ $Details->local_address}}</td> --}}
                                              <td><b>Salary CTC(P.A)</b> </td>
                                             <td>{{ $nj->salary }}</td>

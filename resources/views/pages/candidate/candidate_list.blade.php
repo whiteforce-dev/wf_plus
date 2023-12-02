@@ -403,10 +403,7 @@
 
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<a href="{{ url('https://white-force.com/plus/tutorial/#candidatelistdiv') }}"
-    target="_blank">
-    <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-</a>
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">

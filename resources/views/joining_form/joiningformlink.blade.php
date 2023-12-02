@@ -398,7 +398,7 @@ $strlink= url('joining-form/basic-details?email='.$email.'&type=offrole&user_id=
                                                                 <td class="pad"
                                                                     style="padding-bottom:10px;padding-left:30px;padding-right:30px;padding-top:5px;text-align:center;width:100%;">
                                                                     <div style="margin: 20px 0; width: 100%;">
-                                                                        <img src="http://167.71.233.129/whiteforce/asset/payroll/images/companies.jpg"
+                                                                        <img src="{{ url('email_img/companies.jpg') }}"
                                                                             width="100%" alt="Companies">
                                                                     </div>
                                                                 </td>
@@ -634,7 +634,7 @@ $strlink= url('joining-form/basic-details?email='.$email.'&type=offrole&user_id=
                                                                                             target="_blank"><img
                                                                                                 alt="Facebook"
                                                                                                 height="32"
-                                                                                                src="http://167.71.233.129/whiteforce/asset/payroll/images/facebook2x.png"
+                                                                                                src="{{ url('email_img/facebook2x.png') }}"
                                                                                                 style="display: block; height: auto; border: 0;"
                                                                                                 title="Facebook"
                                                                                                 width="32"></a></td>
@@ -643,7 +643,7 @@ $strlink= url('joining-form/basic-details?email='.$email.'&type=offrole&user_id=
                                                                                             target="_blank"><img
                                                                                                 alt="Twitter"
                                                                                                 height="32"
-                                                                                                src="http://167.71.233.129/whiteforce/asset/payroll/images/twitter2x.png"
+                                                                                                src="{{ url('email_img/twitter2x.png') }}"
                                                                                                 style="display: block; height: auto; border: 0;"
                                                                                                 title="Twitter"
                                                                                                 width="32"></a></td>
@@ -652,7 +652,7 @@ $strlink= url('joining-form/basic-details?email='.$email.'&type=offrole&user_id=
                                                                                             target="_blank"><img
                                                                                                 alt="Instagram"
                                                                                                 height="32"
-                                                                                                src="http://167.71.233.129/whiteforce/asset/payroll/images/instagram2x.png"
+                                                                                                src="{{ url('email_img/instagram2x.png') }}"
                                                                                                 style="display: block; height: auto; border: 0;"
                                                                                                 title="Instagram"
                                                                                                 width="32"></a></td>
@@ -744,7 +744,7 @@ $strlink= url('joining-form/basic-details?email='.$email.'&type=offrole&user_id=
                                                                                                             alt="white-force"
                                                                                                             class="icon"
                                                                                                             height="32"
-                                                                                                            src="http://167.71.233.129/whiteforce/asset/bee/bee.png"
+                                                                                                            src="{{ url('email_img/bee.png') }}"
                                                                                                             style="display: block; height: auto; margin: 0 auto; border: 0;"
                                                                                                             width="34"></a>
                                                                                                 </td>

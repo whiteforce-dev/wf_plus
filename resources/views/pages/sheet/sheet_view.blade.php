@@ -9,9 +9,6 @@
             padding-bottom: 15px;
         }
     </style>
-<a href="{{ url('https://white-force.com/plus/tutorial/#callingdiv') }}" target="_blank">
-    <span class="a14 btn btn-primary" style="bottom:50px;">Help</span>
-</a>
     <div class="content-body">
         <div class="container-fluid">
             <div class="form-head mb-sm-5 mb-3 d-flex flex-wrap align-items-center">

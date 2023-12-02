@@ -81,6 +81,8 @@ class AnalyseController extends Controller
 				$analysis->user_id = Auth::user()->id;
 				$analysis->software_category = Auth::user()->software_category;
 				$analysis->score = $score;
+				$analysis->resume_name =  $file1->getClientOriginalName();
+				$analysis->jd_name =  $file2->getClientOriginalName();
 				$analysis->save();
 
 
@@ -154,7 +156,8 @@ class AnalyseController extends Controller
 		$sync_request->save();
 
 		//EmailAttachmentSyncRequestJob::dispatch($sync_request->id)->delay(Carbon::today()->setTime(23, 0, 0));
-		EmailAttachmentSyncRequestJob::dispatch($sync_request->id);
+		EmailAttachmentSyncRequestJob::dispatch($sync_request->id)->delay(getDispatchTime());
+		// EmailAttachmentSyncRequestJob::dispatch($sync_request->id);
 		return back()->withSuccess('Your request is successfully generated. Attachment will sync sortly');
 	}
 

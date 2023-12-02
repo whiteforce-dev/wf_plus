@@ -9,7 +9,7 @@ use App\Models\citiess;
 use App\Models\ClientList;
 use App\Models\Degree;
 use App\Models\Degrees;
-use App\Models\Joiningdetail;
+use App\Models\JoiningDetail;
 use App\Models\MailDetail;
 use App\Models\newstate;
 use App\State;
@@ -38,6 +38,7 @@ class JoiningCandidateController extends Controller
         if($client->client_id == $company)
         {
             $clientname = $client->client_name;
+            $clientid = $client->client_id;
             // return $clientname;
         }
      }
@@ -51,7 +52,7 @@ class JoiningCandidateController extends Controller
         $tendername=$request->tendername;
         $candidate_id = $request->candidate_id;
         //  $clients= ClientList::where('client_id',$company)->find();
-        return view('joining_form.basic_details', compact('company', 'email', 'joblocation', 'candidate_recruiter_id', 'type', 'tendernumber', 'tendername', 'companytype', 'clients','candidate_id'));
+        return view('joining_form.basic_details', compact('company', 'email', 'joblocation', 'candidate_recruiter_id', 'type', 'tendernumber', 'tendername', 'companytype', 'clients','candidate_id','clientid'));
 
     }
 
@@ -328,7 +329,7 @@ else
         $tendername=$request->tendername;
         // return $emails;
         $request->validate([
-            'email'=>'required|unique:joiningdetails,emailid',
+            'email'=>'required',
 ]);
 
         if ($emails) {
@@ -447,21 +448,31 @@ else
             $nj= JoiningDetail::where(['sender_id'=> $uid , 'software_category'=> Auth::user()->software_category])->get();
          
             $nj_count= JoiningDetail::where(['sender_id'=> $uid , 'software_category'=> Auth::user()->software_category])->count();
-
-
-          
             return view('new_joinee.receiverEmail', compact(['nj','nj_count']));
         }
         //    return $nj;
     }
     public function newjoineefulldetail(Request $request, $id)
     {
-        // return $request;
-        $nj= JoiningDetail::where('id', $id)->first();
-        // return $nj;
-        $client = ClientList::where('client_id',$nj->company)->first();
-        // return $client->client_name;
-        return view('new_joinee.newjoineefulldetails', compact('nj','client'));
+        
+         $nj= JoiningDetail::where('id', $id)->first();
+         $client = Http::get('https://whiteforcepayroll.com/admin/api/get-client-list');
+         $client = json_decode($client);
+         $clientslist = $client->data;
+        //  return $clientslist;
+      foreach($clientslist as $client)
+      {
+        
+         if($client->client_id == (int)$nj->company)
+         {
+             $clientname = $client->client_name;
+            
+            //  return $clientname;
+         }
+      }
+      $client = $clientname;
+        //  return $client->client_name;
+         return view('new_joinee.newjoineefulldetails', compact('nj','client'));
     }
 
     public function approvedNewjoinee()
